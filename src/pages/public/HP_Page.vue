@@ -7,7 +7,7 @@
         <div style="background-image: url('./images/HP03/song.jpg');background-repeat: no-repeat; background-size: cover;background-position: center;">
             <div class="sm:w-[80%]  mx-auto px-2 sm:px-0 py-10">
                 <HPNavbar />
-                <HP02 class="my-6" />
+                <HP02 class="my-12" />
             </div>
         </div>
 
