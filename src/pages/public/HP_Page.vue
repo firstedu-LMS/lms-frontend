@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- NAV BAR -->
-        <HP01 class="sticky top-0 z-50" />
+        <HP01 />
 
         <!-- HERO SECTION -->
         <div style="background-image: url('./images/HP03/song.jpg');background-repeat: no-repeat; background-size: cover;background-position: center;">

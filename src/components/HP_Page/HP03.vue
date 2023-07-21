@@ -9,10 +9,10 @@
             </p>
             <ul class="flex-wrap text-lg sm:flex">
                 <li class="sm:w-1/2" v-for="program in programs" :key="program.name">
-                    <router-link class="flex p-4 hover:shadow-lg" :to="{name : program.path}">
+                    <div class="flex p-4">
                         <img :src="program.image" class="w-20" alt="">
                         <p class="my-auto ml-4">{{ program.name }}</p>
-                    </router-link>
+                    </div>
                 </li>
             </ul>
         </div>

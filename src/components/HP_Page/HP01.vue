@@ -1,6 +1,6 @@
 <template>
     <nav class="flex justify-between px-2 py-2 text-white sm:px-4 bg-blue">
-        <h1 class="text-xl">Documentation</h1>
+        <h1 class="text-xl font-bold">Documentation</h1>
         <ul class="flex my-auto">
             <li class="mx-2">
                 <a href="#" target="_blank">
