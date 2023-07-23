@@ -20,7 +20,7 @@
 <style  scoped>
 @media (min-width: 750px) {
     .shape {
-    background-image: url('../../../public/images/HP02/shape.png');
+    background-image: url('../../../../public/images/HP02/shape.png');
     background-repeat: no-repeat;
     background-size: contain;
 }

@@ -7,12 +7,16 @@ module.exports = {
   theme: {
     extend: {},
     colors : {
+      'transparent' : 'transparent',
       'black' : '#303030',
-      'gray' : '#1c1a1a',
+      'gray' : '#374151',
       'cyan' : '#06b6d4',
       'cyan-2' : '#06c7e0',
       'white' : '#f9fafb',
-      'blue' : '#003366'
+      'blue' : '#003366',
+      'blue-2' : '#0685e0',
+      'green' : '#22c55e',
+      'red' : '#f43f5e'
     }
   },
   plugins: [],

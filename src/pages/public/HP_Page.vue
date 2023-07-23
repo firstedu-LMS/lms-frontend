@@ -24,11 +24,11 @@
 </template>
 
 <script>
-import HP01 from '@/components/HP_Page/HP01.vue';
+import HP01 from '@/components/public/HP_Page/HP01.vue';
 import HPNavbar from '@/components/layouts/public/HPNavbar.vue';
-import HP02 from '@/components/HP_Page/HP02.vue';
-import HP03 from '@/components/HP_Page/HP03.vue';
-import HP04 from '@/components/HP_Page/HP04.vue';
+import HP02 from '@/components/public/HP_Page/HP02.vue';
+import HP03 from '@/components/public/HP_Page/HP03.vue';
+import HP04 from '@/components/public/HP_Page/HP04.vue';
     export default {
         components : {
             HP01,HPNavbar,HP02,HP03,HP04
