@@ -1,7 +1,9 @@
 <template>
     <div class="flex items-center justify-between px-4 py-2 bg-white shadow sm:px-8">
         <div class="w-1/4">
-            <img class="h-12" :src="logo" alt="">
+            <router-link to="/">
+                <img class="h-12" :src="logo" alt="">
+            </router-link>
         </div>
         <ul class="justify-around hidden w-1/2 px-6 pt-1 font-semibold sm:flex">
             <li v-for="item in items" :key="item.name">
@@ -33,7 +35,7 @@
                     },
                     {
                         name : 'Courses',
-                        path : 'HP_Page'
+                        path : 'HC_Page'
                     },
                     {
                         name : 'Career',
