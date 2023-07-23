@@ -3,15 +3,15 @@
         <div class=" text-white">
             <button class="px-2 py-1 mx-2 w-24 rounded-2xl bg-blue" v-for="status in courseStatusService.status" :key="status" >{{status}}</button>
         </div>
-        <div class="flex p-2 my-4 shadow-md" v-for="course in filteredCourses" :key="course" >
-                <img v-if="course.image" class="w-1/4"  :src="filePath.imagePath(course.image.image)" alt="">
+        <div class="flex p-6 my-6 shadow-md" v-for="course in filteredCourses" :key="course" >
+                <img v-if="course.image" class="w-1/4 h-fit"  :src="filePath.imagePath(course.image.image)" alt="">
                 <div class="px-4 w-1/2">
                     <h1 class="text-xl text-black">{{ course.name }}</h1>
                     <div class="flex flex-wrap text-sm font-semibold">
-                        <span class="w-1/2 py-2">available age - over {{ course.age }}</span>
-                        <span class="w-1/2 py-2 text-blue-2">{{course.status}}</span>
-                        <span class="w-1/2 py-2">fee - {{ course.fee }}</span>
-                        <span class="w-1/2 py-2">
+                        <span class="w-1/2 py-1.5">available age - over {{ course.age }}</span>
+                        <span class="w-1/2 py-1.5 text-blue-2">{{course.status}}</span>
+                        <span class="w-1/2 py-1.5">fee - {{ course.fee }}</span>
+                        <span class="w-1/2 py-1.5">
                             <p class="text-green" v-if="course.available">Available Now</p>
                             <p class="text-red" v-else>Temporary Closed</p>
                         </span>

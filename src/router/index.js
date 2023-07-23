@@ -1,19 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
+import PublicView from '../pages/public/layout/PublicView.vue'
 import HP_Page from '../pages/public/HP_Page.vue'
 import HC_Page from '../pages/public/HC_Page.vue'
 const routes = [
- 
+  
   {
     path : '/',
     name : 'HP_Page',
     component : HP_Page
   },
   {
-    path : '/courses',
-    name : 'HC_Page',
-    component : HC_Page
-  },
+    path : '/',
+    name : 'PublicView',
+    component : PublicView,
+    children : [
+      {
+        path : 'courses',
+        name : 'HC_Page',
+        component : HC_Page
+      },
+    ]
+  }
 
 ]
 
