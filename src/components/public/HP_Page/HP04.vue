@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="py-6 text-2xl font-bold text-center">Courses</h1>
+        <h1 class="py-6 text-2xl font-bold text-center">Latest Courses</h1>
         <div class="justify-around text-white sm:flex">
             <div v-for="course in courses" :key="course.name" class="pb-2 my-4 sm:w-1/5 sm:my-0 bg-blue">
                 <img :src="course.image" class="w-full" alt="">
