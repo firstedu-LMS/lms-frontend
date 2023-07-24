@@ -1,6 +1,6 @@
 <template>
-    <div class="justify-center">
-        <div v-for="career in careers " :key="career" class="shadow-lg  my-6 mx-16 px-6  p-4 ">
+    <div class="px-2">
+        <div v-for="career in careers " :key="career" class="shadow-md w-[90%] mx-auto my-6 px-6  py-4">
             <h1 class="font-semibold text-lg">{{ career.name }}</h1>
             <h6>Vacancy - {{ career.vacancy }}</h6>
             <h6>Position - {{ career.position }}</h6>
@@ -18,10 +18,10 @@ import axios from 'axios'
             }
         },
         mounted() {
-            axios.get(`http://localhost:8000/api/admin/careers`).then((res) => {
-                console.log(res.data.data);
+            axios.get(`admin/careers`).then((res) => {
                  this.careers = res.data.data 
             }).catch((res) => {
+                alert('Something went wrong!')
                 console.log(res);
             })
         },
