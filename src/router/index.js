@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import PublicView from '../pages/public/layout/PublicView.vue'
 import HP_Page from '../pages/public/HP_Page.vue'
 import HC_Page from '../pages/public/HC_Page.vue'
+import HJD_Page from '../pages/public/HJD_Page.vue'
+import HJD01 from '../components/public/HJD_Page/HJD01.vue'
 const routes = [
   
   {
@@ -19,6 +21,12 @@ const routes = [
         name : 'HC_Page',
         component : HC_Page
       },
+      {
+        path : 'careers',
+        name : 'HJD_Page',
+        component : HJD_Page
+      },
+
     ]
   }
 
