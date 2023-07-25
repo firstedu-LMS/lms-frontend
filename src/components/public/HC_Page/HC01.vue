@@ -16,7 +16,9 @@
                             <p class="text-red" v-else>Temporary Closed</p>
                         </span>
                     </div>
-                    <button class="w-full py-2 mt-4 text-white border sm:w-3/4 hover:bg-transparent bg-green hover:text-green border-green">Enroll Now</button>
+                    <router-link :to="{ name : 'HCD_Page',params : { id : course.id }}">
+                        <button class="w-full py-2 mt-4 text-white border sm:w-3/4 hover:bg-transparent bg-green hover:text-green border-green">Enroll Now</button>
+                    </router-link>
                 </div>
         </div>
     </div>

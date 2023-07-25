@@ -6,8 +6,14 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    screens: {
+      'sm': '800px',
+      'md': '1000px',
+      'lg': '1250px',
+    },
     colors : {
       'transparent' : 'transparent',
+      'indigo' : '#6366f1',
       'gray-2' : '#475569',
       'black' : '#303030',
       'gray' : '#374151',
