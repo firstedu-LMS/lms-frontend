@@ -3,7 +3,7 @@ import PublicView from '../pages/public/layout/PublicView.vue'
 import HP_Page from '../pages/public/HP_Page.vue'
 import HC_Page from '../pages/public/HC_Page.vue'
 import HJ_Page from '../pages/public/HJ_Page.vue'
-
+import HCD_Page from '../pages/public/HCD_Page.vue'
 const routes = [
   
   {
@@ -25,7 +25,12 @@ const routes = [
         path : 'careers',
         name : 'HJ_Page',
         component : HJ_Page
-      }
+      },
+      {
+        path : 'applications',
+        name : 'HCD_Page',
+        component : HCD_Page
+      },
 
     ]
   }
