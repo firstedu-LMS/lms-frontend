@@ -3,6 +3,7 @@ import HP_Page from "../pages/public/HP_Page.vue";
 import HC_Page from "../pages/public/HC_Page.vue";
 import HJ_Page from "../pages/public/HJ_Page.vue";
 import HJD_Page from "../pages/public/HJD_Page.vue";
+import HCD_Page from "../pages/public/HCD_Page.vue"
 
 const routes = [
   {
@@ -17,12 +18,17 @@ const routes = [
     component: HC_Page
   },
   {
+    path: "/courses/:id",
+    name: "HCD_Page",
+    component: HCD_Page
+  },
+  {
     path: "/careers",
     name: "HJ_Page",
     component: HJ_Page
   },
   {
-    path: "/careers/:id",
+    path: "/careers?:id",
     name: "HJD_Page",
     component: HJD_Page
   }
