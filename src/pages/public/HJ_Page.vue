@@ -1,17 +1,22 @@
 <template>
     <div class="px-2">
+        <HPNavbar />
         <div v-for="career in careers " :key="career" class="shadow-md w-[90%] mx-auto my-6 px-6  py-4">
             <h1 class="font-semibold text-lg">{{ career.name }}</h1>
             <h6>Vacancy - {{ career.vacancy }}</h6>
             <h6>Position - {{ career.position }}</h6>
-            <button  class="bg-blue-2 p-1 mt-2 text-white text-sm">Show Details</button>
+            <router-link :to="{name : 'HJD_Page' , params : {id : career.id}}"  class="bg-blue-2 p-1 mt-2 text-white text-sm">Show Details</router-link>
         </div>
     </div>
 </template>
 
 <script>
+import HPNavbar from '@/components/layouts/public/HPNavbar.vue';
 import axios from 'axios'
     export default {
+        components : {
+            HPNavbar
+        },
         data() {
             return {
                 careers : [],
