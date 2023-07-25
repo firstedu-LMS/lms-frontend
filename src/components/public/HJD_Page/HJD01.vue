@@ -1,14 +1,14 @@
 <template>
-    <div class="sm:flex p-4">
+    <div class="p-4 sm:flex">
 
         <div class="sm:w-2/3 sm:mx-8">
-            <h1 class="text-3xl my-6 font-bold text-black">{{ career.name }}</h1>
+            <h1 class="my-6 text-3xl font-bold text-black">{{ career.name }}</h1>
             <div class="my-6">
-                <h1 class="text-2xl my-2">Job Description</h1>
+                <h1 class="my-2 text-2xl">Job Description</h1>
                 <p class="ml-4" v-html="career.job_description"></p>
             </div>
             <div class="my-6">
-                <h1 class="text-2xl my-2">Job Requirement</h1>
+                <h1 class="my-2 text-2xl">Job Requirement</h1>
                 <p class="ml-4" v-html="career.job_requirement"></p>
             </div>
         </div>
@@ -25,8 +25,8 @@
                     <li>Salary Period - {{ career.salary_period }}</li>
                     <li>Publish on - {{ career.created_at }}</li>
                     <li>Deadline - {{ career.deadline }}</li>
-                    <li class="bg-blue text-white">
-                        <button>Apply Now</button>
+                    <li class="text-white bg-blue">
+                        <button @click="showForm" class="w-full">Apply Now</button>
                     </li>
                 </ul>
         </div>
@@ -59,6 +59,12 @@ import axios from 'axios'
             const styleElement = document.createElement('style');
             styleElement.innerHTML = `p ol {list-style: disc;}`;
             document.head.appendChild(styleElement);
+        },
+
+        methods : {
+            showForm() {
+                this.$emit('showForm')
+            }
         }
 
     }
