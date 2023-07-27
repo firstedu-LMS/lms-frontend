@@ -1,55 +1,61 @@
 <template>
-    <div>
-        <HPNavbar/>
-        <div class="p-4 mx-8 my-4">
-            <h1 class="font-bold sm:py-1 text-blue-2 text-xl">{{ course.name }}</h1>
-            <div class="sm:py-6  justify-around sm:flex">
-                <div class="w-2/3 sm:w-full">                
-                    <h1 class="font-bold sm:py-1 py-2 text-xl">{{ course.description }}</h1>
-                </div>
-                <div class="sm:w-1/3  text-center">
-                    <ul class="w-full sm:w-[55%] text-sm">
-                        <li class="text-white bg-indigo font-bold ">Summary</li>
-                        <li>Availabel age - over {{ course.age }}</li>
-                        <li>Fee - {{ course.fee }}</li>
-                        <li>Status - {{ course.status }}</li>
-                        <li class="text-green" v-if="course.available">Available Now</li>
-                        <li class="text-red" v-else>Temporary Closed</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <button class="w-[80%] py-2 ml-8 sm:mt-4 mt-2 text-white border sm:w-1/5 font-semibold  bg-blue-2 ">Enroll Now</button>
-        <button class="w-[80%] py-2 ml-8 sm:mt-4 mt-2 text-white border sm:w-[10%] font-semibold  bg-gray-2">Back</button>
+  <div>
+    <HPNavbar />
+    <div class="justify-between p-4 sm:m-12 sm:mb-0 sm:flex">
+      <div class="sm:w-1/2">
+        <h1 class="mb-6 text-3xl font-bold text-blue">{{ course.name }}</h1>
+        <p class="my-4" v-html="course.description"></p>
+      </div>
+
+      <div class="mt-6 sm:w-1/3 sm:mt-0">
+        <ul class="text-center">
+          <li class="text-white bg-indigo">Summary</li>
+          <li>Available age - over {{ course.age }}</li>
+          <li>Fee - {{ course.fee }}</li>
+          <li>Status - {{ course.status }}</li>
+          <li v-if="course.available" class="text-green">Available Now</li>
+          <li v-else class="text-red">Temporarily Closed</li>
+        </ul>
+      </div>
     </div>
+    <div class="p-4 text-lg text-white sm:mx-12">
+        <router-link to="/" class="px-6 py-2 mr-2 bg-green">Enroll now</router-link>
+        <router-link to="/" class="px-4 py-2 bg-gray">Back</router-link>
+    </div>
+  </div>
 </template>
 
 <script>
-import HPNavbar from '@/components/layouts/public/HPNavbar.vue'
-import axios from 'axios'
-    export default {
-        components : {
-            HPNavbar
-        },
-        data() {
-            return {
-                course : {},
-                id: this.$route.params.id,
-            }
-        },
-        mounted() {
-            axios.get(`/courses/${this.id}`).then((res) => {
-                this.course = res.data.data
-            })
-        },
-    }
+import HPNavbar from "@/components/layouts/public/HPNavbar.vue";
+import axios from "axios";
+export default {
+  components: {
+    HPNavbar,
+  },
+  data() {
+    return {
+      course: {},
+      id: this.$route.params.id,
+    };
+  },
+  mounted() {
+    axios
+      .get(`/courses/${this.id}`).then((res) => {
+        this.course = res.data.data;
+        console.log(res.data.data);
+      }).catch((res) => {
+        alert("Error!");
+        console.log(res);
+      });
+  },
+};
 </script>
 
 <style scoped>
- li{
-        font-weight: 600;
-        padding: 0.3rem;
-        text-align: center;
-        border: 1px solid gray;
-    }
+li {
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  border: 1px solid gray;
+}
 </style>
