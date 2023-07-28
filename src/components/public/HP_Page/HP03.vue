@@ -10,7 +10,7 @@
             <ul class="flex-wrap text-lg sm:flex">
                 <li class="sm:w-1/2" v-for="program in programs" :key="program.name">
                     <div class="flex p-4">
-                        <img :src="program.image" class="w-20" alt="">
+                        <img :src="program.image" class="w-16" alt="">
                         <p class="my-auto ml-4">{{ program.name }}</p>
                     </div>
                 </li>

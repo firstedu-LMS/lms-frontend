@@ -1,8 +1,8 @@
 <template>
-    <div class="p-4 sm:flex">
+    <div class="mt-6 sm:flex">
 
-        <div class="sm:w-2/3 sm:mx-8">
-            <h1 class="my-6 text-3xl font-bold text-black">{{ career.name }}</h1>
+        <div class="sm:w-2/3">
+            <h1 class="mb-6 text-3xl font-bold text-black">{{ career.name }}</h1>
             <div class="my-6">
                 <h1 class="my-2 text-2xl">Job Description</h1>
                 <p class="ml-4" v-html="career.job_description"></p>
@@ -13,23 +13,21 @@
             </div>
         </div>
 
-        <div class="sm:w-1/3">
-                <ul class="text-center">
-                    <li class="text-white bg-green">Summary</li>
-                    <li>Vacnacy - {{ career.vacancy }} posts</li>
-                    <li>Position - {{ career.position }}</li>
-                    <li>Employment Status - {{ career.employment_status }}</li>
-                    <li>Age - {{ career.age }}</li>
-                    <li>Gender - Any</li>
-                    <li>Salary - {{ career.salary }}</li>
-                    <li>Salary Period - {{ career.salary_period }}</li>
-                    <li>Publish on - {{ career.created_at }}</li>
-                    <li>Deadline - {{ career.deadline }}</li>
-                    <li class="text-white bg-blue">
-                        <button @click="showForm" class="w-full">Apply Now</button>
-                    </li>
-                </ul>
-        </div>
+        <ul class="m-10 mb-0 text-center sm:w-1/4 sm:mt-0">
+            <li class="text-white bg-green">Summary</li>
+            <li>Vacnacy - {{ career.vacancy }} posts</li>
+            <li>Position - {{ career.position }}</li>
+            <li>Employment Status - {{ career.employment_status }}</li>
+            <li>Age - {{ career.age }}</li>
+            <li>Gender - Any</li>
+            <li>Salary - {{ career.salary }}</li>
+            <li>Salary Period - {{ career.salary_period }}</li>
+            <li>Publish on - {{ career.created_at }}</li>
+            <li>Deadline - {{ career.deadline }}</li>
+            <li class="text-white bg-blue">
+                <button @click="showForm" class="w-full">Apply Now</button>
+            </li>
+        </ul>
 
     </div>
 </template>

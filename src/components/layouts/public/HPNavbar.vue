@@ -12,7 +12,7 @@
         </ul>
         <div class="flex justify-end w-1/4">
             <button class="mr-2 sm:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="28px" height="28px"><path d="M 0 9 L 0 11 L 50 11 L 50 9 Z M 0 24 L 0 26 L 50 26 L 50 24 Z M 0 39 L 0 41 L 50 41 L 50 39 Z"/></svg>
+                <span class="material-icons-sharp" style="font-size: 36px;">menu</span>
             </button>
             <router-link to="/">
                 <svg width="36px" height="36px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
