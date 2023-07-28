@@ -8,7 +8,9 @@
 
         <form v-else @submit.prevent="apply" class="p-6 bg-white shadow">
             <div class="flex justify-end">
-                <span @click="hideForm" class="mr-2 text-xl cursor-pointer">x</span>
+                <span @click="hideForm" class="mr-2 text-xl cursor-pointer">
+                    <span class="material-icons-sharp" style="font-size: 28px;">close</span>
+                </span>
             </div>
             <div class="my-4">
                 <label  for="email">Email</label>

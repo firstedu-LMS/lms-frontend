@@ -32,7 +32,7 @@ const routes = [
     component: HJ_Page
   },
   {
-    path: "/careers?:id",
+    path: "/careers/:id",
     name: "HJD_Page",
     component: HJD_Page
   },

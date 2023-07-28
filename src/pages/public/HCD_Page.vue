@@ -1,24 +1,22 @@
 <template>
   <div>
     <HPNavbar />
-    <div class="justify-between p-4 sm:m-12 sm:mb-0 sm:flex">
+    <div class="justify-between sm:w-[80%] p-2 mt-6 mx-auto sm:mb-0 sm:flex">
       <div class="sm:w-1/2">
         <h1 class="mb-6 text-3xl font-bold text-blue">{{ course.name }}</h1>
         <p class="my-4" v-html="course.description"></p>
       </div>
 
-      <div class="mt-6 sm:w-1/3 sm:mt-0">
-        <ul class="text-center">
-          <li class="text-white bg-indigo">Summary</li>
-          <li>Available age - over {{ course.age }}</li>
-          <li>Fee - {{ course.fee }}</li>
-          <li>Status - {{ course.status }}</li>
-          <li v-if="course.available" class="text-green">Available Now</li>
-          <li v-else class="text-red">Temporarily Closed</li>
-        </ul>
-      </div>
+      <ul class="m-10 mb-0 text-center sm:w-1/4 sm:mt-0">
+        <li class="text-white bg-indigo">Summary</li>
+        <li>Available age - over {{ course.age }}</li>
+        <li>Fee - {{ course.fee }}</li>
+        <li>Status - {{ course.status }}</li>
+        <li v-if="course.available" class="text-green">Available Now</li>
+        <li v-else class="text-red">Temporarily Closed</li>
+      </ul>
     </div>
-    <div class="p-4 text-lg text-white sm:mx-12">
+    <div class="p-4 text-lg text-white sm:w-[80%] mx-auto">
         <router-link to="/" class="px-6 py-2 mr-2 bg-green">Enroll now</router-link>
         <router-link to="/" class="px-4 py-2 bg-gray">Back</router-link>
     </div>
