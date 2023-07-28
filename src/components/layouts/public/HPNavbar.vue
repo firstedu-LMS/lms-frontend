@@ -39,7 +39,7 @@
                     },
                     {
                         name : 'Career',
-                        path : 'HP_Page'
+                        path : 'HJ_Page'
                     },
                 ]
             }

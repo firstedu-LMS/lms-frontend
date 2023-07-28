@@ -1,9 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
+
 import HP_Page from "../pages/public/HP_Page.vue";
 import HC_Page from "../pages/public/HC_Page.vue";
 import HJ_Page from "../pages/public/HJ_Page.vue";
 import HJD_Page from "../pages/public/HJD_Page.vue";
 import HCD_Page from "../pages/public/HCD_Page.vue"
+
+import AdminDashboardLayout from '../layouts/admin/AdminDashboardLayout.vue'
+import AdminDashboardPage from '../pages/admin/AdminDashboardPage.vue'
 
 const routes = [
   {
@@ -31,6 +35,19 @@ const routes = [
     path: "/careers?:id",
     name: "HJD_Page",
     component: HJD_Page
+  },
+
+  {
+    path : '/admin',
+    name : 'AdminDashboardLayout',
+    component : AdminDashboardLayout,
+    children : [
+      {
+        path : '',
+        name : 'AdminDashboardPage',
+        component : AdminDashboardPage
+      }
+    ]
   }
 ];
 
