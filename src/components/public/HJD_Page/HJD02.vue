@@ -61,7 +61,7 @@ import axios from 'axios';
                 form.set('email' , this.formData.email);
                 form.set('gender' , this.formData.gender);
                 form.set('cv' , this.formData.cv);
-                axios.post('applicatons' , form).then(() => {
+                axios.post('applications' , form).then(() => {
                     this.submitted = true;
                 }).catch(res => {
                     console.log(res);
