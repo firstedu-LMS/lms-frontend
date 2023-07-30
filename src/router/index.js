@@ -4,7 +4,7 @@ import HP_Page from "../pages/public/HP_Page.vue";
 import HC_Page from "../pages/public/HC_Page.vue";
 import HJ_Page from "../pages/public/HJ_Page.vue";
 import HJD_Page from "../pages/public/HJD_Page.vue";
-import HCD_Page from "../pages/public/HCD_Page.vue"
+import HCD_Page from "../pages/public/HCD_Page.vue";
 
 import AdminDashboardLayout from '../layouts/admin/AdminDashboardLayout.vue'
 import AdminDashboardPage from '../pages/admin/AdminDashboardPage.vue'
