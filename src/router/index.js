@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-
+import { useAuthStore } from "@/stores/auth";
 
 import HP_Page from "@/pages/public/HP_Page.vue";
 import HC_Page from "@/pages/public/HC_Page.vue";
@@ -57,6 +57,9 @@ const routes = [
     path : '/admin',
     name : 'AdminDashboardLayout',
     component : AdminDashboardLayout,
+    meta : {
+      middleware : "admin"
+    },
     children : [
       {
         path : '',
@@ -75,6 +78,20 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to , from , next) => {
+  let authStore = useAuthStore()
+  if(to.meta.middleware){
+    authStore.verifyAuth(to.meta.middleware);
+    if (authStore.authenticated) {
+      next();
+    } else {
+      router.go(-1)
+    }
+  } else {
+    next();
+  }
 })
 
 export default router
