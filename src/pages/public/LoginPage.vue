@@ -3,7 +3,7 @@
         <HPNavbar/>
         <div class="flex justify-center mt-6 sm:items-center sm:mx-20 sm:shadow-xl">
             <img :src="image" class="hidden w-2/3 sm:block" alt="">
-            <form class="p-2 mb-24 sm:w-1/3">
+            <form @submit.prevent="login" class="p-2 mb-24 sm:w-1/3">
                 <h1 class="text-2xl font-semibold text-center text-blue-2">Login Your Account</h1>
                 <div  class="px-4 py-2">
                     <label for="" class="text-sm font-semibold ">Email</label>
@@ -26,13 +26,29 @@
 
 <script>
 import HPNavbar from '@/components/layouts/public/HPNavbar.vue';
+import TokenService from '@/services/TokenService';
+import axios from 'axios';
     export default {
         components : {
             HPNavbar
         },
         data(){
             return {
-                image : './images/layout/auth.jpg'
+                image : './images/layout/auth.jpg',
+                form : {
+                    email : '',
+                    password : '',
+                }
+            }
+        },
+        methods : {
+            login () {
+                axios.post('login' , this.form).then((res) => {
+                    TokenService.setToken(res.data.data.token)
+                    this.$router.go(-1)
+                }).catch((res) => {
+                    console.log(res);
+                })
             }
         }
     }
