@@ -17,14 +17,6 @@
                 <input v-model="formData.email" class="w-full px-2 py-1 mt-1 border outline-none border-gray" type="email" required>
             </div>
             <div class="my-4">
-                <label  for="email">Gender</label>
-                <select v-model="formData.gender"  class="w-full bg-white px-2 py-1.5 mt-1 border outline-none border-gray" required>
-                    <option disabled selected>Choose your gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select>
-            </div>
-            <div class="my-4">
                 <label  for="email">Your Resume or Curriculum Vitae (PDF only)</label>
                 <input @change="insertCV" required type="file" class="w-full mt-1 border cursor-pointer file:cursor-pointer border-gray file:bg-transparent file:border-0 file:py-1 file:px-2">
             </div>
@@ -39,13 +31,14 @@
 <script>
 import axios from 'axios';
     export default {
+        props : ['name'],
         data(){
             return {
                 submitted : false,
                 formData :{
                     email : '',
-                    gender : '',
-                    cv : ''
+                    cv : '',
+                    career : this.name
                 }
             }
         },
@@ -54,14 +47,18 @@ import axios from 'axios';
                 this.$emit('hideForm')
             },
             insertCV(e){
-                this.formData.cv = e.target.files[0];
+                let file = e.target.files[0];
+                let form = new FormData();
+                form.set('cv' , file)
+                axios.post('admin/cv-forms' , form).then((res) => {
+                    this.formData.cv_id = res.data.data.id
+                }).catch((res) => {
+                    alert('ERROR !')
+                    console.log(res);
+                })
             },
             apply(){
-                let form = new FormData();
-                form.set('email' , this.formData.email);
-                form.set('gender' , this.formData.gender);
-                form.set('cv' , this.formData.cv);
-                axios.post('applications' , form).then(() => {
+                axios.post('admin/applications' , this.formData).then(() => {
                     this.submitted = true;
                 }).catch(res => {
                     console.log(res);
