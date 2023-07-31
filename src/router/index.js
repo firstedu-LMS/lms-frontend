@@ -6,12 +6,15 @@ import HC_Page from "@/pages/public/HC_Page.vue";
 import HJ_Page from "@/pages/public/HJ_Page.vue";
 import HJD_Page from "@/pages/public/HJD_Page.vue";
 import HCD_Page from "@/pages/public/HCD_Page.vue"
+
 import RegisterPage from "@/pages/public/RegisterPage.vue"
 import LoginPage from "@/pages/public/LoginPage.vue"
 
 
 import AdminDashboardLayout from '@/layouts/admin/AdminDashboardLayout.vue'
 import AdminDashboardPage from '@/pages/admin/AdminDashboardPage.vue'
+
+import AdminApplicationPage from '@/pages/admin/AdminApplicationPage.vue'
 
 const routes = [
   {
@@ -59,7 +62,12 @@ const routes = [
         path : '',
         name : 'AdminDashboardPage',
         component : AdminDashboardPage
-      }
+      },
+      {
+        path : 'applications',
+        name : 'AdminApplicationPage',
+        component : AdminApplicationPage
+      },
     ]
   }
 ];

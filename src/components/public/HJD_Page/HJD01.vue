@@ -50,6 +50,7 @@ import axios from 'axios'
             axios.get(`careers/${this.id}`).then(res => {
                 this.career = res.data.data
                 console.log(this.career);
+                this.$emit('name' , this.career.name)
             }).catch(res => {
                 console.log(res);
             })

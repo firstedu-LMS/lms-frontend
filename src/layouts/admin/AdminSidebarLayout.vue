@@ -65,7 +65,7 @@
                     },
                     {
                         name : 'Application Forms',
-                        path : 'HC_Page',
+                        path : 'AdminApplicationPage',
                         icon : 'contacts'
                     },
                     {
