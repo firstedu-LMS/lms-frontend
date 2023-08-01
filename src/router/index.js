@@ -80,14 +80,14 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to , from , next) => {
+router.beforeEach(async (to , from , next) => {
   let authStore = useAuthStore()
   if(to.meta.middleware){
     authStore.verifyAuth(to.meta.middleware);
-    if (authStore.authenticated) {
+    if (authStore.user) {
       next();
     } else {
-      router.go(-1)
+      alert("Error! Please loggin again")
     }
   } else {
     next();
