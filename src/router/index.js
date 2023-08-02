@@ -71,6 +71,7 @@ const routes = [
         name : 'AdminApplicationPage',
         component : AdminApplicationPage
       },
+
     ]
   }
 ];
