@@ -15,7 +15,7 @@ import AdminDashboardLayout from '@/layouts/admin/AdminDashboardLayout.vue'
 import AdminDashboardPage from '@/pages/admin/AdminDashboardPage.vue'
 
 import AdminApplicationPage from '@/pages/admin/AdminApplicationPage.vue'
-
+import AdminInstructorPage from '@/pages/admin/AdminInstructorPage.vue'
 const routes = [
   {
     path: "/",
@@ -57,9 +57,9 @@ const routes = [
     path : '/admin',
     name : 'AdminDashboardLayout',
     component : AdminDashboardLayout,
-    meta : {
-      middleware : "admin"
-    },
+    // meta : {
+    //   middleware : "admin"
+    // },
     children : [
       {
         path : '',
@@ -71,6 +71,11 @@ const routes = [
         name : 'AdminApplicationPage',
         component : AdminApplicationPage
       },
+      {
+        path : 'instructors',
+        name : 'AdminInstructorPage',
+        component : AdminInstructorPage
+      },
 
     ]
   }
@@ -81,14 +86,14 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to , from , next) => {
+router.beforeEach(async (to , from , next) => {
   let authStore = useAuthStore()
   if(to.meta.middleware){
     authStore.verifyAuth(to.meta.middleware);
-    if (authStore.authenticated) {
+    if (authStore.user) {
       next();
     } else {
-      router.go(-1)
+      alert("Error! Please loggin again")
     }
   } else {
     next();
