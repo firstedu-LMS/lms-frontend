@@ -45,7 +45,7 @@
                     },
                     {
                         name : 'Instructors',
-                        path : 'HC_Page',
+                        path : 'AdminInstructorPage',
                         icon : 'group'
                     },
                     {
