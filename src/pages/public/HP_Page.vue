@@ -29,8 +29,8 @@
 </template>
 
 <script>
+import HPNavbar from '@/layouts/public/HPNavbar.vue';
 import HP01 from '@/components/public/HP_Page/HP01.vue';
-import HPNavbar from '@/components/layouts/public/HPNavbar.vue';
 import HP02 from '@/components/public/HP_Page/HP02.vue';
 import HP03 from '@/components/public/HP_Page/HP03.vue';
 import HP04 from '@/components/public/HP_Page/HP04.vue';

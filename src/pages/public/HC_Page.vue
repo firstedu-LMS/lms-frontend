@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import HPNavbar from '@/components/layouts/public/HPNavbar.vue';
+import HPNavbar from '@/layouts/public/HPNavbar.vue';
 import HC01 from '@/components/public/HC_Page/HC01.vue'
     export default {
         components : {

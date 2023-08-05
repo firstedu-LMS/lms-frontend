@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import HPNavbar from '@/components/layouts/public/HPNavbar.vue';
+import HPNavbar from '@/layouts/public/HPNavbar.vue';
 import HJD01 from '../../components/public/HJD_Page/HJD01.vue';
 import HJD02 from '@/components/public/HJD_Page/HJD02.vue';
 

@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import HPNavbar from "@/components/layouts/public/HPNavbar.vue";
+import HPNavbar from "@/layouts/public/HPNavbar.vue";
 import axios from "axios";
 export default {
   components: {
