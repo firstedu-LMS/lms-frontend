@@ -16,22 +16,22 @@ class ApiService {
 
     static post(url , data) {
         let config = this.setConfig()
-        return axios.get(url , data , config)
+        return axios.post(url , data , config)
     }
 
     static put(url , data) {
         let config = this.setConfig()
-        return axios.get(url , data , config)
+        return axios.put(url , data , config)
     }
 
     static patch(url , data) {
         let config = this.setConfig()
-        return axios.get(url , data , config)
+        return axios.patch(url , data , config)
     }
 
     static delete(url) {
         let config = this.setConfig()
-        return axios.get(url , config)
+        return axios.delete(url , config)
     }
 }
 
