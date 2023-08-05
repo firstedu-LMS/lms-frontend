@@ -34,7 +34,7 @@
             </template>
 
             <template #table-actions-bottom>
-                <pagination-vue  v-if="paginationData.current_page"  :paginationProp="paginationData" @next="paginateNext" @previous="paginatePrevious" @random="paginateRandom"></pagination-vue>
+                <pagination-vue  v-if="paginationData.current_page"  :paginationProp="paginationData" @next="paginate" @previous="paginate" @random="paginate"></pagination-vue>
             </template>
 
         </vue-good-table>
@@ -119,13 +119,7 @@ import axios from 'axios'
                 }
             },
 
-            paginateNext(page){
-                this.getInstructors(page)
-            },
-            paginatePrevious(page){
-                this.getInstructors(page)
-            },
-            paginateRandom(page){
+            paginate(page){
                 this.getInstructors(page)
             },
 
@@ -153,20 +147,3 @@ import axios from 'axios'
 <style scoped>
 
 </style>
-
-<!-- :search-options="{
-    enabled: true,
-    searchFn: myFunc
-  }"
-  myFunc(row, col, cellValue, searchTerm){
-    return cellValue === 'my value';
-  }, -->
-
-  <!-- filterOptions: {
-      enabled: true,
-    filterFn: this.columnFilterFn, //custom filter function that
-  },
-  function(data, filterString) {
-    var x = parseInt(filterString)
-    return data >= x - 5 && data <= x + 5;
-  } -->

@@ -4,8 +4,14 @@
             <img class="w-1/3 m-1 mx-auto" src="../../../public/images/layout/logo.png" alt="">
         </router-link>
         <ul class="py-2 mx-2 border-b-2 border-gray">
+            <li>
+                <router-link class="flex items-center w-full my-1.5 py-1.5 px-3 hover:text-blue-2" :to="{name : 'AdminDashboardPage'}">
+                    <span class="material-icons-sharp" style="font-size: 20px;">apps</span> 
+                    &nbsp;Dashboard
+                </router-link>
+            </li>
             <li v-for="item in items" :key="item.name">
-                <router-link active-class="text-white bg-blue-2 hover:text-white" class="flex items-center w-full my-1 py-1.5 px-3 hover:text-blue-2" :to="{name : item.path}">
+                <router-link active-class="text-white bg-blue-2 hover:text-white" class="flex items-center w-full my-1.5 py-1.5 px-3 hover:text-blue-2" :to="{name : item.path}">
                     <span class="material-icons-sharp" style="font-size: 20px;">{{ item.icon }}</span> 
                     &nbsp;{{ item.name }}
                 </router-link>
@@ -19,7 +25,7 @@
                 </router-link>
             </li>
             <li>
-                <button class="flex items-center w-full my-1 py-1.5 px-4 hover:text-red">
+                <button class="flex items-center w-full my-1 py-1.5 px-4 text-red">
                     <span class="material-icons-sharp">logout</span>
                     &nbsp;&nbsp;Logout
                 </button>
@@ -33,11 +39,6 @@
         data(){
             return {
                 items : [
-                    {
-                        name : 'Dashboard',
-                        path : 'AdminDashboardPage',
-                        icon : 'apps'
-                    },
                     {
                         name : 'Courses',
                         path : 'HC_Page',
