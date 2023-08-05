@@ -6,7 +6,6 @@ export const useAuthStore = defineStore('auth' , {
     state : () => {
         return {
             user : {},
-            authenticated : false
         }
     },
 
@@ -24,7 +23,6 @@ export const useAuthStore = defineStore('auth' , {
         },
         destroyAuth(){
             this.user = {};
-            this.authenticated = false;
             TokenService.destroyToken();
         }
     }

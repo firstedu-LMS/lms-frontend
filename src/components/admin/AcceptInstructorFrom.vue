@@ -31,9 +31,7 @@ import axios from 'axios';
                     email : '',
                     cv_id : '',
                     name : '',
-                    password : '',
-                    phone : '09123456789',
-                    address : 'Hlaing Thar Yar,Yangon'
+                    password : ''
                 }
             }
         },
