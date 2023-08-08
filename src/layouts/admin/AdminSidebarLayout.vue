@@ -61,7 +61,7 @@
                     },
                     {
                         name : 'Careers',
-                        path : 'HJ_Page',
+                        path : 'AdminCareerPage',
                         icon : 'work'
                     },
                     {
