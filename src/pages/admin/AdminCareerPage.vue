@@ -1,119 +1,57 @@
 <template>
-    <div class="relative">
-        <vue-good-table 
-        :columns="columns" 
-        :rows="careers"
-        :search-options="{enabled: true}"
-        :select-options="{ enabled: true , selectOnCheckboxOnly: true, }"
-        v-on:selected-rows-change="selectionChanged"
-        >
-        <template #selected-row-actions>
-            <button class="px-2 py-1 m-1 text-white bg-red">Action 1</button>
-        </template>
-            <template #table-row="props">
-                <span class="relative block w-full text-center" v-if="props.column.field == 'actions'">
-                    <span @click="showCareerDialog(props.row)"  class="material-icons-outlined" style="padding: 0px 2rem;cursor: pointer;">more_horiz</span>
-                    <div v-if="careerDialog.id == props.row.id" class="absolute text-sm px-1 text-white top-[-4rem] left-[-6rem] bg-gray">
-                        <router-link to="/" class="flex items-center w-full px-2 my-2">
-                            <span class="material-icons-sharp">account_circle</span>&nbsp;&nbsp;profile
-                        </router-link>
-                        <router-link to="/" class="flex items-center w-full px-2 my-2">
-                            <span class="material-icons-sharp">email</span>&nbsp;&nbsp;send email
-                        </router-link>
-                        <router-link to="/" class="flex items-center w-full px-2 my-2">
-                            <span class="material-icons-sharp">article</span>&nbsp;&nbsp;show cv
-                        </router-link>
-                        <button class="flex items-center w-full px-2 my-2 hover:text-red">
-                            <span class="material-icons-sharp">cancel</span>&nbsp;&nbsp;remove
-                        </button>
-                    </div>
-                </span>
-                
-            </template>
-        </vue-good-table>
+    <div>
+        <div class="flex justify-end px-6 py-2 text-white">
+            <span @click="showCareersTable" :class="careersTable ? 'bg-blue-2' : 'bg-gray'" class="px-6 py-0.5">table</span>
+            <span @click="showCreateForm" :class="createForm ? 'bg-blue-2' : 'bg-gray'" class="px-6 py-0.5">new</span>
+        </div>
+        <div>
+            <CareersView v-if="careersTable" />
+            <CreateCareer v-if="createForm" />
+            <EditCareer v-if="editForm" :id="idForEdit" />
+        </div>
+        <div class="my-4">
+            this is just a sample of how we go to editForm
+            <p @click="showEditForm(1)">edit career 1</p>
+            <p @click="showEditForm(2)">edit career 2</p>
+        </div>
+        <h1>You have to write delete function in CareersView component</h1>
     </div>
 </template>
 
 <script>
-
-import { VueGoodTable } from 'vue-good-table-next'
-import axios from 'axios'
+import CareersView from '@/components/admin/careers/CareersView.vue'
+import CreateCareer from '@/components/admin/careers/CreateCareer.vue'
+import EditCareer from '@/components/admin/careers/EditCareer.vue'
     export default {
         components : {
-            VueGoodTable
+            CareersView , CreateCareer ,  EditCareer 
         },
-        data() {
+        data () {
             return {
-                careers : [],
-                careerDialog : {},
-                columns : [
-                    {
-                        label : 'Name',
-                        field : 'name'
-                    },
-                    {
-                        label : 'Vacancy',
-                        field : 'vacancy'
-                    },   
-
-                    {
-                        label : 'Age',
-                        field : 'id'
-                    },
-                    {
-                        label : 'Employment Status',
-                        field : 'employment_status'
-                    },
-                    {
-                        label : 'Salary',
-                        field : 'salary'
-                    },
-                    {
-                        label : 'Salary Period',
-                        field : 'salary_period'
-                    },
-                    {
-                        label : 'Position',
-                        field : 'position'
-                    },
-                    {
-                        label : 'Publish on',
-                        field : 'created_at'
-                    },
-                    {
-                        label : 'Deadline',
-                        field : 'deadline'
-                    },
-                    {
-                        label : '',
-                        field : 'actions'
-                    }
-                ]
+                careersTable : true,
+                createForm : false,
+                editForm : false,
+                idForEdit : null,
             }
         },
-        methods: {
-            selectionChanged(e){
-                console.log(e.selectedRows);
+        methods : {
+            showCreateForm () {
+                this.careersTable = this.editForm = false;
+                this.createForm = true;
             },
-            showCareerDialog(career){
-                if (this.careerDialog.id == career.id) {
-                    this.careerDialog = {};
-                } else {
-                    this.careerDialog = career
-                }
+            showCareersTable () {
+                this.createForm = this.editForm = false;
+                this.careersTable = true;
             },
-        },
-        mounted() {
-            axios.get('admin/careers').then((res) =>{
-                this.careers = res.data.data
-            }).catch((res) => {
-                console.log(res)
-            })
-            
-        },
+            showEditForm (id) {
+                this.careersTable = this.createForm = false;
+                this.editForm = true;
+                this.idForEdit = id;
+            }
+        }
     }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>
