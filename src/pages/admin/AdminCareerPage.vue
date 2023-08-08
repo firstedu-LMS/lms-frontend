@@ -24,7 +24,7 @@ import CreateCareer from '@/components/admin/careers/CreateCareer.vue'
 import EditCareer from '@/components/admin/careers/EditCareer.vue'
     export default {
         components : {
-            CareersView , CreateCareer ,  EditCareer
+            CareersView , CreateCareer ,  EditCareer 
         },
         data () {
             return {
