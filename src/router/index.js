@@ -16,6 +16,8 @@ import AdminDashboardPage from '@/pages/admin/AdminDashboardPage.vue'
 
 import AdminApplicationPage from '@/pages/admin/AdminApplicationPage.vue'
 import AdminInstructorPage from '@/pages/admin/AdminInstructorPage.vue'
+import AdminCareerPage from "@/pages/admin/AdminCareerPage.vue";
+
 const routes = [
   {
     path: "/",
@@ -75,6 +77,11 @@ const routes = [
         path : 'instructors',
         name : 'AdminInstructorPage',
         component : AdminInstructorPage
+      },
+      {
+        path : 'careers',
+        name : 'AdminCareerPage',
+        component : AdminCareerPage
       },
 
     ]
