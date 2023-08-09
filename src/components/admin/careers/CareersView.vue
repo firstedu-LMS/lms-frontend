@@ -9,18 +9,15 @@
             <template #table-row="props">
                 <span class="relative block w-full text-center" v-if="props.column.field == 'actions'">
                     <span @click="showCareerDialog(props.row)"  class="material-icons-outlined" style="padding: 0px 2rem;cursor: pointer;">more_horiz</span>
-                    <div v-if="careerDialog.id == props.row.id" class="absolute text-sm px-1 text-white top-[-4rem] left-[-6rem] bg-gray">
-                        <router-link to="/" class="flex items-center w-full px-2 my-2">
-                            <span class="material-icons-sharp">account_circle</span>&nbsp;&nbsp;profile
+                    <div v-if="careerDialog.id == props.row.id" class="absolute text-sm px-2 text-white top-[-4rem] left-[-6rem] bg-gray">
+                        <router-link :to="{name : 'HJD_Page' , params: {id : props.row.id}}" class="flex items-center w-full px-2 my-2">
+                            <span class="material-icons-sharp">info</span>&nbsp;&nbsp;Details
                         </router-link>
-                        <router-link to="/" class="flex items-center w-full px-2 my-2">
-                            <span class="material-icons-sharp">email</span>&nbsp;&nbsp;send email
-                        </router-link>
-                        <router-link to="/" class="flex items-center w-full px-2 my-2">
-                            <span class="material-icons-sharp">article</span>&nbsp;&nbsp;show cv
-                        </router-link>
-                        <button class="flex items-center w-full px-2 my-2 hover:text-red">
-                            <span class="material-icons-sharp">cancel</span>&nbsp;&nbsp;remove
+                        <button @click="editCareer(props.row.id)" class="flex items-center w-full px-2 my-2">
+                            <span class="material-icons-sharp">info</span>&nbsp;&nbsp;Edit
+                        </button>
+                        <button @click="deleteCareer(props.row.id)" class="flex items-center w-full px-2 my-2 text-red">
+                            <span class="material-icons-sharp">delete</span>&nbsp;&nbsp;Delete
                         </button>
                     </div>
                 </span>
@@ -30,7 +27,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import ApiService from '@/services/ApiService';
 import { VueGoodTable } from 'vue-good-table-next';
     export default {
         components : {
@@ -51,11 +48,7 @@ import { VueGoodTable } from 'vue-good-table-next';
                         field : 'vacancy'
                     },
                     {
-                        label : 'Age',
-                        field : 'age'
-                    },
-                    {
-                        label : 'Employment Status',
+                        label : 'Status',
                         field : 'employment_status'
                     },
                     {
@@ -69,10 +62,6 @@ import { VueGoodTable } from 'vue-good-table-next';
                     {
                         label : 'Position',
                         field : 'position'
-                    },
-                    {
-                        label : 'Public on',
-                        field : 'created_at'
                     },
                     {
                         label : 'Deadline',
@@ -93,10 +82,21 @@ import { VueGoodTable } from 'vue-good-table-next';
                 }else {
                     this.careerDialog = career
                 }
+            },
+            editCareer(id){
+                this.$emit('edit' , id)
+            },
+            deleteCareer(id){
+                ApiService.delete(`admin/careers/${id}`).then(() => {
+                    window.location.reload()
+                }).catch((res) => {
+                    alert('Error!')
+                    console.log(res);
+                })
             }
         },
         mounted() {
-            axios.get('admin/careers').then((res) => {
+            ApiService.get('admin/careers').then((res) => {
                 this.careers = res.data.data
             }).catch((res) => {
                 console.log(res);

@@ -1,5 +1,6 @@
 <template>
     <div class="relative">
+        <h1 class="p-2 text-xl font-bold text-gray">Careers</h1>
         <vue-good-table
          :columns="columns"
          :rows="instructors"
@@ -25,7 +26,7 @@
                     <router-link to="/" class="flex items-center w-full px-2 my-2">
                         <span class="material-icons-sharp">article</span>&nbsp;&nbsp;show cv
                     </router-link>
-                    <button class="flex items-center w-full px-2 my-2 hover:text-red">
+                    <button class="flex items-center w-full px-2 my-2text-red">
                         <span class="material-icons-sharp">cancel</span>&nbsp;&nbsp;remove
                     </button>
                 </div>
