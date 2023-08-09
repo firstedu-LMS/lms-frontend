@@ -49,14 +49,13 @@ import axios from 'axios'
         mounted(){
             axios.get(`careers/${this.id}`).then(res => {
                 this.career = res.data.data
-                console.log(this.career);
                 this.$emit('name' , this.career.name)
             }).catch(res => {
                 console.log(res);
             })
 
             const styleElement = document.createElement('style');
-            styleElement.innerHTML = `p ol {list-style: disc;}`;
+            styleElement.innerHTML = `p ol , p ul {list-style: disc;}`;
             document.head.appendChild(styleElement);
         },
 

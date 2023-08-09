@@ -17,7 +17,6 @@
                 <button class="px-2 py-1 rounded-sm bg-blue-2">Submit</button>
             </div>
         </form>
-
     </div>
 </template>
 
