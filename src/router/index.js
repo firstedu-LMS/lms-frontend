@@ -17,7 +17,9 @@ import AdminDashboardPage from '@/pages/admin/AdminDashboardPage.vue'
 import AdminApplicationPage from '@/pages/admin/AdminApplicationPage.vue'
 import AdminInstructorPage from '@/pages/admin/AdminInstructorPage.vue'
 import AdminCareerPage from "@/pages/admin/AdminCareerPage.vue";
+import AdminCoursePage from "@/pages/admin/AdminCoursePage.vue"
 import AdminBatchPage from '@/pages/admin/AdminBatchPage.vue'
+
 
 const routes = [
   {
@@ -83,6 +85,11 @@ const routes = [
         path : 'careers',
         name : 'AdminCareerPage',
         component : AdminCareerPage
+      },
+      {
+        path : 'courses',
+        name : 'AdminCoursePage',
+        component : AdminCoursePage
       },
       {
         path : 'courses/:id/batches',
