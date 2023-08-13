@@ -41,7 +41,7 @@
                 items : [
                     {
                         name : 'Courses',
-                        path : 'HC_Page',
+                        path : 'AdminCoursePage',
                         icon : 'interests'
                     },
                     {
