@@ -1,6 +1,6 @@
 <template>
     <div class="relative">
-        <h1 class="p-2 text-xl font-bold text-gray">Careers</h1>
+        <h1 class="p-2 text-xl font-bold text-gray">Instructors</h1>
         <vue-good-table
          :columns="columns"
          :rows="instructors"
@@ -27,11 +27,11 @@
                         <span class="material-icons-sharp">article</span>&nbsp;&nbsp;show cv
                     </router-link>
                     <button class="flex items-center w-full px-2 my-2text-red">
-                        <span class="material-icons-sharp">cancel</span>&nbsp;&nbsp;remove
+                        <span @click="deleteInstructor(props.row.id)" class="material-icons-sharp">cancel</span>&nbsp;&nbsp;remove
                     </button>
                 </div>
             </span>
-            <span v-else>{{props.formattedRow[props.column.field]}}</span>
+            <span class="text-sm block mx-5" v-else>{{props.formattedRow[props.column.field]}}</span>
             </template>
 
             <template #table-actions-bottom>
@@ -46,7 +46,7 @@
 import 'vue-good-table-next/dist/vue-good-table-next.css'
 import { VueGoodTable } from 'vue-good-table-next'
 import PaginationVue from '@/components/admin/PaginationVue.vue'
-import axios from 'axios'
+import ApiService from '@/services/ApiService'
     export default {
         components : {
             VueGoodTable , PaginationVue
@@ -61,6 +61,10 @@ import axios from 'axios'
                     {
                         label : 'Id',
                         field : 'instructor_id',
+                        filterOptions : {
+                            enabled : true,
+                            placeholder: 'Filter by ID',
+                        }
                     },
                     {
                         label : 'Name',
@@ -104,9 +108,16 @@ import axios from 'axios'
         
         methods : {
             getInstructors(page){
-                axios.get(`admin/instructors?page=${page}`).then((res) => {
+                ApiService.get(`admin/instructors?page=${page}`).then((res) => {
                     this.paginationData = res.data.data.pagination;
                     this.instructors = res.data.data.instructors;
+                }).catch((res) => {
+                    console.log(res);
+                })
+            },
+            deleteInstructor(id){
+                ApiService.delete(`admin/instructors/${id}`).then(() => {
+                    window.location.reload()
                 }).catch((res) => {
                     console.log(res);
                 })
