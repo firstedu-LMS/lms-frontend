@@ -12,7 +12,7 @@
             </div>
             <div class="w-[27%] my-8">
                 <label for="age">Age</label>
-                <input v-model="career.age" type="number" class="w-full px-2 py-1 border-b outline-none">
+                <input v-model="career.age" type="text" class="w-full px-2 py-1 border-b outline-none">
             </div>
             <div class="w-[27%] my-8">
                 <label for="status">Employment Status</label>
@@ -28,7 +28,7 @@
             </div>
             <div class="w-[27%] my-8">
                 <label for="salary">Salary</label>
-                <input v-model="career.salary" type="number" class="w-full px-2 py-1 border-b outline-none">
+                <input v-model="career.salary" type="text" class="w-full px-2 py-1 border-b outline-none">
             </div>
             <div class="w-[27%] my-8">
                 <label for="salary">Salary Period</label>
@@ -71,10 +71,10 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
                 career : {
                     name : '',
                     vacancy : null,
-                    age : null,
+                    age : '',
                     position : '',
                     deadline : '',
-                    salary : null,
+                    salary : '',
                     salary_period : '',
                     employment_status : '',
                     job_description : '',

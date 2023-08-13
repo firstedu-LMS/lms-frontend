@@ -4,7 +4,7 @@
             <h1 class="p-2 text-xl font-bold text-gray">Careers</h1>
             <div class="my-auto mr-6">
                 <span @click="showCareersTable" :class="careersTable ? 'bg-blue-2' : 'bg-gray-2'" class="px-6 py-1.5 cursor-pointer">table</span>
-                <span @click="showCreateForm" :class="createForm ? 'bg-blue-2' : 'bg-gray-2'" class="px-6 py-1.5 cursor-pointer">new</span>
+                <span @click="showCreateForm" :class="createForm ? 'bg-blue-2' : 'bg-gray-2'" class="px-6 py-1.5 cursor-pointer">+ new</span>
             </div>
         </div>
         <div>

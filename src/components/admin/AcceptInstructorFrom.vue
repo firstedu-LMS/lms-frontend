@@ -41,8 +41,8 @@ import axios from 'axios';
         },
         methods : {
             accept(){
-                axios.post('admin/instructors' , this.formData).then(() => {
-                    window.location.reload();
+                axios.post('admin/applications/add-instructor' , this.formData).then(() => {
+                    this.$router.push({name : 'AdminInstructorPage'})
                 }).catch((res) => {
                     console.log(res);
                 })
