@@ -1,10 +1,11 @@
 <template>
     <div>
-        <form @submit.prevent="createBatch" class="flex flex-wrap justify-around w-2/3 text-sm font-semibold">
+        <form @submit.prevent="editBatch" class="flex flex-wrap justify-around w-2/3 text-sm font-semibold">
             
             <div class="w-1/2 p-4 my-4">
                 <label for="instructor">Instructor</label>
                 <select  class="w-[60%] px-2 ml-2 bg-transparent border-b outline-none" v-model="batch.instructor_id">
+                    <option disabled selected></option>
                     <option v-for="instructor in instructors" :key="instructor.id" :value="instructor.id">{{ instructor.user.name }}</option>
                 </select>
             </div>
@@ -50,52 +51,53 @@
 </template>
 
 <script>
-import ApiService from '@/services/ApiService'
+import ApiService from '@/services/ApiService';
+
     export default {
         props : {
-            course_id : {
+            batch_id : {
                 required : true
             }
         },
-        data(){
+        data () {
             return {
                 instructors : [],
-                batch : {
-                    instructor_id : null,
-                    course_id : this.$props.course_id,
-                    start_date : '',
-                    end_date : '',
-                    start_time : '',
-                    end_time : '',
-                    status : ''
-                }
+                batch : {}
             }
         },
-        mounted(){
+
+        mounted () {
+            ApiService.get(`admin/batches/${this.batch_id}`).then((res) => {
+                this.batch = res.data.data;
+            }).catch((res) => {
+                console.log(res);
+            });
             ApiService.get('admin/instructors').then((res) => {
                 this.instructors = res.data.data.instructors;
             }).catch((res) => {
                 console.log(res);
-            })
+            });
         },
+
         methods : {
-            createBatch(){
+            editBatch(){
                 if (this.batch.status == 'true') {
                     this.batch.status = true;
                 } else {
                     this.batch.status = false;
                 }
                 this.batch.course_id = this.$props.course_id;
-                ApiService.post('admin/batches' , this.batch).then(() => {
+                ApiService.patch(`admin/batches/${this.batch_id}` , this.batch).then(() => {
                     window.location.reload();
                 }).catch((res) => {
                     console.log(res);
                 })
             }
         }
+
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="p-4">
         <h1 class="px-4 font-black">NEW</h1>
-        <form class="flex justify-around flex-wrap" @submit.prevent="createCourse" >
+        <form class="flex flex-wrap justify-around" @submit.prevent="createCourse" >
                 <div class="w-[30%] my-8">
                     <label for="name">Name</label>
                     <input v-model="course.name" type="text" class="w-full px-2 py-1 border-b outline-none">
@@ -11,18 +11,18 @@
                     <input v-model="course.fee" type="number" class="w-full px-2 py-1 border-b outline-none">
                 </div>
             <div class="w-[30%] flex justify-center my-8">
-                <span class="text-center mr-4">
+                <span class="mr-4 text-center">
                     <input type="radio" class="" v-model="course.available" value="true" />
                     <br><label>open now</label>     
                 </span>
-                <span class="text-center ml-4">
+                <span class="ml-4 text-center">
                     <input type="radio" class="" v-model="course.available" value="false" />
                     <br><label>temporary closed</label>
                 </span>
             </div>
             <div class="w-[30%] my-8">
                 <label for="image">Image</label>
-                <input @change="saveImage" type="file" class="w-full file:border-0 file:text-sm px-2 py-1 border-b outline-none">
+                <input @change="saveImage" type="file" class="w-full px-2 py-1 border-b outline-none file:border-0 file:text-sm">
             </div>
             <div class="w-[30%] my-8">
                 <label for="age">Age</label>
@@ -85,6 +85,11 @@ import ApiService from '@/services/ApiService';
             },
 
             createCourse() {
+                if (this.course.available == 'true') {
+                    this.course.available = true;
+                } else {
+                    this.course.available = false;
+                }
                 ApiService.post('admin/courses' , this.course).then(() => {
                     window.location.reload()
                 }).catch((res) => {
