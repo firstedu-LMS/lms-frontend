@@ -2,14 +2,22 @@
 <div class="relative">
 
     <h1 class="p-2 text-xl font-bold">Application Forms</h1>
-    <vue-good-table :columns="columns" :rows="applications" :search-options="{enabled: true,}">
+    <vue-good-table
+     :columns="columns"
+      :rows="applications"
+       :search-options="{enabled: true,}">
+        
+       <template #table-column="props">
+            <span class="text-sm">{{ props.column.field }}</span>
+        </template>
+        
         <template #table-row="props">
             <span v-if="props.column.field == 'actions'">
                 <span class="material-icons-sharp" style="cursor: pointer; margin: 0px 15px ;color: rgb(68, 142, 240);">email</span>
                 <span @click="toggleForm(props.row)" class="material-icons-sharp" style="cursor: pointer; margin: 0px 15px ;color: rgb(37, 211, 37);">task_alt</span>
                 <span @click="deleteApplication(props.row.id)" class="material-icons-sharp" style="cursor: pointer; margin: 0px 15px ;color: red;">cancel</span>
             </span>
-            <span v-else>{{props.formattedRow[props.column.field]}}</span>
+            <span class="text-sm" v-else>{{props.formattedRow[props.column.field]}}</span>
         </template>
     </vue-good-table>
 

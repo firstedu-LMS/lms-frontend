@@ -5,16 +5,44 @@
          :rows="batches"
          :search-options="{enabled: true}"
         >
+        <template #table-column="props">
+            <span class="text-sm">{{ props.column.field }}</span>
+        </template>
+            <template #table-row="props">
+                <span class="relative flex justify-center w-full text-xs text-center" v-if="props.column.field == 'actions'">
+                    <router-link to="/" class="mx-3 hover:text-blue-2">
+                        weeks
+                        <span style="color: green;display: block;" class="material-icons-sharp">calendar_today</span>
+                    </router-link>
+                    <button @click="emitIdForEdit(props.row.id)" class="mx-3 hover:text-blue-2">
+                        edit
+                        <span style="color: goldenrod;display: block;" class="material-icons-sharp">tune</span>
+                    </button>
+                    <button @click="deleteBatch(props.row.id)" class="mx-3 hover:text-red">
+                        delete
+                        <span style="color: red;display: block;" class="material-icons-sharp">delete</span>
+                    </button>
+                </span>
+
+                <span v-if="props.column.field == 'status'">
+                    <span v-if="props.row.status" class="text-green">Ongoing</span>
+                    <span v-else class="text-red">Finished</span>
+                </span>
+
+                <span class="text-sm" v-else>{{props.formattedRow[props.column.field]}}</span>
+
+            </template>
 
         </vue-good-table>
     </div>
 </template>
 
 <script>
+import ApiService from '@/services/ApiService';
 import { VueGoodTable } from 'vue-good-table-next';
     export default {
         props : {
-            id : {
+            course_id : {
                 required : true
             }
         },
@@ -31,7 +59,7 @@ import { VueGoodTable } from 'vue-good-table-next';
                     },
                     {
                         label : 'Instructor',
-                        field : 'instructor'
+                        field : 'instructor.name'
                     },
                     {
                         label : 'Start-Date',
@@ -59,10 +87,34 @@ import { VueGoodTable } from 'vue-good-table-next';
                     },
                 ]
             }
+        },
+
+        methods : {
+            deleteBatch(id){
+                ApiService.delete(`admin/batches/${id}`).then(() => {
+                    window.location.reload()
+                }).catch((res) => {
+                    console.log(res);
+                })
+            },
+            emitIdForEdit(id) {
+                this.$emit('edit' , id)
+            }
+        },
+
+        mounted(){
+            ApiService.get(`admin/batches`).then((res) => {
+                console.log(res.data.data);
+                this.batches = res.data.data
+            }).catch((res) => {
+                console.log(res);
+            })
         }
     }
 </script>
 
 <style scoped>
-
+thead{
+    color: blue;
+}
 </style>
