@@ -3,8 +3,8 @@
         <div class="flex justify-between text-white ">
             <h1 class="p-2 text-xl font-bold text-gray">Courses</h1>
             <div class="my-auto mr-6">
-                <span @click="showTable" class="px-4 py-1"  :class="courseTable ? 'bg-blue-2' : 'bg-gray-2'">table</span>
-                <span @click="showCreate" class="px-4 py-1 " :class="courseCreate ? 'bg-blue-2': 'bg-gray-2' ">+ new</span>
+                <button @click="showTable" class="px-6 py-1"  :class="courseTable ? 'bg-cyan' : 'bg-white text-black'">table</button>
+                <button @click="showCreate" class="px-6 py-1" :class="courseCreate ? 'bg-cyan': 'bg-white text-black' ">+ new</button>
             </div>
         </div>
         <div>

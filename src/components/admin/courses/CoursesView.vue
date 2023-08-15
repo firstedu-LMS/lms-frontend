@@ -10,7 +10,7 @@
                 <span class="relative block w-full text-center " v-if="props.column.field == 'actions'">
                     <div  class="flex justify-around text-sm w-[85%] text-white ">
                         <router-link :to="{name : 'HCD_Page' , params: {id : props.row.id}}" class="flex items-center my-2">
-                            <button class="bg-cyan-2 py-1 px-4 text-sm rounded-sm">Details</button>
+                            <button class="bg-cyan-2 py-1 px-4 text-sm rounded-sm">Batch</button>
                         </router-link>
                         <button @click="editCourse(props.row.id)" class="flex text-sm items-center py-1 rounded-sm bg-cyan-2 px-6 my-2">
                             Edit
