@@ -13,7 +13,7 @@
 
             <div class="w-[30%] my-8">
                 <label class="text-[12px] font-semibold" for="image">Image</label>
-                <input @change="storeImage" type="file" class=" w-[60%] mx-5 file:border-0 file:text-sm px-2 py-1 border-b outline-none">
+                <input @change="saveImage" type="file" class=" w-[60%] mx-5 file:border-0 file:text-sm px-2 py-1 border-b outline-none">
             </div>
             <div class="w-[30%] my-8">
                 <label class="text-[12px] font-semibold" for="age">Age</label>
@@ -53,7 +53,6 @@
 
 <script>
 import ApiService from '@/services/ApiService';
-import image_path from '@/services/public/image_path'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
     export default {
@@ -76,27 +75,22 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
                     console.log(res);
                 })
             },
-            storeImage(event) {
-            let formData = new FormData();
-            formData.set('image' , event.target.files[0])
-            ApiService.post('admin/images' , formData)
-                .then((res) => {
-                   this.course.image_id = res.data.data.image.id;
-                   this.course.image.image = image_path(res.data.data.image)
-                   console.log(res.data.data);
-                })
-                .catch((res) => {
+            saveImage(e) {
+                let file = e.target.files[0];
+                let form = new FormData();
+                form.set('course_image' , file);
+                ApiService.post('admin/images' , form).then((res) => {
+                    this.course.image_id = res.data.data.id;
+                }).catch((res) => {
                     console.log(res);
-                    alert('something went wrong')
                 })
-        },
+            },
+
         },
 
         mounted(){
             ApiService.get(`admin/courses/${this.id}`).then((res) => {
                 this.course = res.data.data;
-                this.course.image.image = image_path(this.course.image.image)
-
             }).catch((res) => {
                 console.log(res);
             })

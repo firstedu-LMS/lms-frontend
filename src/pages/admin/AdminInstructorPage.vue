@@ -13,6 +13,13 @@
                 <button class="px-2 py-1 m-1 text-white bg-red">Action 1</button>
             </template>
 
+            <template #table-column="props">
+                <span class="text-sm" v-if="props.column.field == 'instructor_id'">ID</span>
+                <span class="text-sm" v-else-if="props.column.field == 'user.name'">name</span>
+                <span class="text-sm" v-else-if="props.column.field == 'user.email'">email</span>
+                <span v-else class="text-sm">{{ props.column.field }}</span>
+            </template>
+
             <template #table-row="props">
             <span class="relative block w-full text-center" v-if="props.column.field == 'actions'">
                 <span @click="showInstructorDialog(props.row)"  class="material-icons-outlined" style="padding: 0px 2rem;cursor: pointer;">more_horiz</span>
@@ -26,7 +33,7 @@
                     <router-link to="/" class="flex items-center w-full px-2 my-2">
                         <span class="material-icons-sharp">article</span>&nbsp;&nbsp;show cv
                     </router-link>
-                    <button class="flex items-center w-full px-2 my-2text-red">
+                    <button class="flex items-center w-full px-2 my-2 text-red">
                         <span @click="deleteInstructor(props.row.id)" class="material-icons-sharp">cancel</span>&nbsp;&nbsp;remove
                     </button>
                 </div>

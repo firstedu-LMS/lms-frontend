@@ -6,25 +6,27 @@
          :search-options="{enabled: true}"
          :select-options="{ enabled: true , selectOnCheckboxOnly: true, }"
         >
+            <template #table-column="props">
+                <span class="text-sm">{{ props.column.field }}</span>
+            </template>
+            
             <template #table-row="props">
-                <span class="relative block w-full text-center " v-if="props.column.field == 'actions'">
-                    <div  class="flex justify-around text-sm w-[85%] text-white ">
-                        <router-link :to="{name : 'HCD_Page' , params: {id : props.row.id}}" class="flex items-center my-2">
-                            <button class="bg-cyan-2 py-1 px-4 text-sm rounded-sm">Batch</button>
+                <span class="relative flex justify-around w-full text-center text-white " v-if="props.column.field == 'actions'">
+                        <router-link :to="{name : 'AdminBatchPage' , params: {id : props.row.id}}" class="px-6 py-1 text-sm rounded-sm bg-cyan-2">
+                            Batch
                         </router-link>
-                        <button @click="editCourse(props.row.id)" class="flex text-sm items-center py-1 rounded-sm bg-cyan-2 px-6 my-2">
+                        <button @click="editCourse(props.row.id)" class="px-6 py-1 text-sm rounded-sm bg-cyan-2">
                             Edit
                         </button>
-                        <button @click="deleteCourse(props.row.id)" class="flex text-sm items-center py-1 rounded-sm bg-red px-4 my-2 text-white">
+                        <button @click="deleteCourse(props.row.id)" class="px-4 py-1 text-sm rounded-sm bg-red">
                             Delete
                         </button>
-                    </div>
                 </span>
                 <span v-if="props.column.field == 'available'">
-                    <span v-if="props.row.availabe" class="text-green text-sm">{{props.row}}</span>
-                    <span v-else class="text-red text-sm">temporary closed</span>
+                    <span v-if="props.row.availabe" class="text-sm text-green">{{props.row}}</span>
+                    <span v-else class="text-sm text-red">temporary closed</span>
                 </span>
-                <span class="text-sm block mx-5" v-else>{{props.formattedRow[props.column.field]}}</span>
+                <span class="text-sm" v-else>{{props.formattedRow[props.column.field]}}</span>
             </template>
         </vue-good-table>       
     </div>
@@ -88,9 +90,8 @@ import { VueGoodTable } from 'vue-good-table-next'
         mounted() {
             ApiService.get('admin/courses').then((res) => {
                 this.courses = res.data.data
-                console.log(res.data.data);
             }).catch((res) => {
-                console.log(res.data.data);
+                console.log(res);
             })
             
         },
