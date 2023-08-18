@@ -36,24 +36,12 @@
                     <option class="text-[10px]" value="offline">offline</option>
                 </select>
             </div>
-            <div class="w-[30%] flex justify-center my-8">
-                <label class="text-[12px] font-semibold">Condition</label>
-                <span class="text-center mx-2">
-                    <input type="radio" class="" v-model="course.available" value="true" />
-                    <br><label class="text-[9px]">open now</label>     
-                </span>
-                <span class="text-center mx-2">
-                    <input type="radio" class="" v-model="course.available" value="false" />
-                    <br><label class="text-[9px]">temporary closed</label>
-                </span>
-            </div>
-
             <div class="w-full mt-8 mb-32">
                 <label class="font-semibold text-[12px]" for="description">Description</label>
                 <quill-editor class="shadow-md shadow-black w-[90%]" v-model:content="course.description" theme="snow" toolbar="full" contentType="html"></quill-editor>
             </div>
 
-            <div class="flex  w-full my-2">
+            <div class="flex w-full my-2">
                 <button class="px-3 py-1 text-black bg-white shadow-sm">Submit</button>
             </div>
         </form>

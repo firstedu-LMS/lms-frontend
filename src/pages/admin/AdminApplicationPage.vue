@@ -13,7 +13,7 @@
         
         <template #table-row="props">
             <span v-if="props.column.field == 'actions'">
-                <span class="material-icons-sharp" style="cursor: pointer; margin: 0px 15px ;color: rgb(68, 142, 240);">email</span>
+                <span @click="showCv(props.row.cv.cv)" class="material-icons-sharp" style="cursor: pointer; margin: 0px 15px ;color: rgb(68, 142, 240);">email</span>
                 <span @click="toggleForm(props.row)" class="material-icons-sharp" style="cursor: pointer; margin: 0px 15px ;color: rgb(37, 211, 37);">task_alt</span>
                 <span @click="deleteApplication(props.row.id)" class="material-icons-sharp" style="cursor: pointer; margin: 0px 15px ;color: red;">cancel</span>
             </span>
@@ -31,12 +31,14 @@ import 'vue-good-table-next/dist/vue-good-table-next.css'
 import { VueGoodTable } from 'vue-good-table-next';
 import AcceptInstructorFrom from '@/components/admin/AcceptInstructorFrom.vue';
 import axios from 'axios';
+import filePath from '../../services/public/filePath';
     export default {
         components: {
             VueGoodTable,AcceptInstructorFrom
         },
         data(){
             return {
+                filePath : filePath,
                 applications : [],
                 acceptForm : false,
                 acceptInstructorProps : {},
@@ -61,6 +63,10 @@ import axios from 'axios';
             }
         },
         methods : {
+            showCv(cv) {
+                let path = this.filePath.cvPath(cv)
+                window.open(path , '_blank')
+            },
             toggleForm(data){
                 this.acceptInstructorProps = data
                 this.acceptForm = !this.acceptForm;
