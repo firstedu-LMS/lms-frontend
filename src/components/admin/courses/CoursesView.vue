@@ -12,9 +12,9 @@
             
             <template #table-row="props">
                 <span class="relative flex justify-around w-full text-center text-white " v-if="props.column.field == 'actions'">
-                        <router-link :to="{name : 'AdminBatchPage' , params: {id : props.row.id}}" class="px-6 py-1 text-sm rounded-sm bg-cyan-2">
+                        <button @click="nevigateBatch(props.row)" class="px-6 py-1 text-sm rounded-sm bg-cyan-2">
                             Batch
-                        </router-link>
+                        </button>
                         <button @click="editCourse(props.row.id)" class="px-6 py-1 text-sm rounded-sm bg-cyan-2">
                             Edit
                         </button>
@@ -35,12 +35,14 @@
 <script>
 import ApiService from '@/services/ApiService';
 import { VueGoodTable } from 'vue-good-table-next'
+import { useLessonStore } from '@/stores/lesson';
     export default {
         components : {
             VueGoodTable
         },
         data() {
             return {
+                lessonStore : useLessonStore(),
                 courses : [],
                 courseDialog : {},
                 columns : [
@@ -68,6 +70,12 @@ import { VueGoodTable } from 'vue-good-table-next'
             }
         },
         methods: {
+
+            nevigateBatch(course) {
+                this.lessonStore.setCourse(course);
+                this.$router.push({name : 'AdminBatchPage' , params : {id : course.id}})
+            },
+
             showCourseDialog(course){
                 if (this.courseDialog.id == course.id) {
                     this.courseDialog = {}

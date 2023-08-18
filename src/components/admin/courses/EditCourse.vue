@@ -68,6 +68,11 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
         methods : {
             editCourse(){
+                if (this.course.available == 'true') {
+                    this.course.available = true;
+                } else {
+                    this.course.available = false;
+                }
                 ApiService.put(`admin/courses/${this.id}` , this.course).then(() => {
                     window.location.reload()
                 }).catch((res) => {

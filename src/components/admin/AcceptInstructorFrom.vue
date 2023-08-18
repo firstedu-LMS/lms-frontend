@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import ApiService from '@/services/ApiService';
     export default {
         props : ['instructor'],
         data(){
@@ -41,7 +41,7 @@ import axios from 'axios';
         },
         methods : {
             accept(){
-                axios.post('admin/applications/add-instructor' , this.formData).then(() => {
+                ApiService.post('admin/applications/add-instructor' , this.formData).then(() => {
                     this.$router.push({name : 'AdminInstructorPage'})
                 }).catch((res) => {
                     console.log(res);
