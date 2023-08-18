@@ -1,9 +1,13 @@
 <template>
     <div>
         <div class="flex justify-between text-white ">
-            <h1 class="p-2 text-xl font-bold text-gray">Courses</h1>
+            <h1 v-if="weeks[0]" class="flex items-center p-2 font-semibold text-gray">
+                Courses <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
+                 {{ weeks[0].course.name }} <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
+                 {{ weeks[0].batch.name }}
+            </h1>
             <div class="my-auto mr-6">
-                <button @click="addWeek" class="px-4 py-1 bg-indigo">New +</button>
+                <button @click="addWeek" class="px-6 rounded shadow-lg py-0.5 bg-indigo">New +</button>
             </div>
         </div>
         <vue-good-table
@@ -16,9 +20,13 @@
         </template>
             <template #table-row="props">
 
-                <span v-if="props.column.field == 'actions'">
-                    <button @click="navigateLesson(props.row)">Lessons</button>
-                    <button @click="deleteWeek(props.row.id)">Delete</button>
+                <span class="flex" v-if="props.column.field == 'actions'">
+                    <router-link :to="{name : 'AdminLessonPage' , params : {course_id : props.row.course.id , batch_id : props.row.batch.id, week_id : props.row.id}}" class="px-3 text-sm rounded-lg py-0.5 mx-2 text-white bg-indigo flex items-center" >
+                        Lessons<span style="font-size: 0.8rem;margin-left:4px;" class="material-icons-sharp">check_circle</span>
+                    </router-link>
+                    <button class="px-3 text-sm rounded-lg py-0.5 mx-2 text-white bg-red flex items-center" @click="deleteWeek(props.row.id)">
+                        Delete<span style="font-size: 0.8rem;margin-left:4px;"  class="material-icons-sharp">cancel</span>
+                    </button>
                 </span>
 
                 <span class="text-sm" v-else>{{props.formattedRow[props.column.field]}}</span>
@@ -31,7 +39,6 @@
 
 <script>
 import ApiService from '@/services/ApiService'
-import { useLessonStore } from '@/stores/lesson'
 import { VueGoodTable } from 'vue-good-table-next'
     export default {
         components : {
@@ -39,7 +46,6 @@ import { VueGoodTable } from 'vue-good-table-next'
         },
         data() {
             return {
-                lessonStore : useLessonStore(),
                 weeks : [],
                 columns : [
                     {
@@ -61,12 +67,8 @@ import { VueGoodTable } from 'vue-good-table-next'
                     console.log(res);
                 })
             },
-            navigateLesson(week){
-                this.lessonStore.setWeek(week);
-                this.$router.push({name : 'AdminLessonPage' , params : {id : week.id}})
-            },
             addWeek(){
-                ApiService.post(`admin/weeks`,{"course_id" : 1 , "batch_id" : 1}).then(() => {
+                ApiService.post(`admin/weeks`,{"course_id" : this.$route.params.course_id , "batch_id" : this.$route.params.batch_id}).then(() => {
                     window.location.reload()
                 }).catch((res) => {
                     console.log(res);
@@ -74,8 +76,9 @@ import { VueGoodTable } from 'vue-good-table-next'
             }
         },
         mounted() {
-            ApiService.get(`admin/weeks/all/${this.$route.params.id}`).then((res) => {
+            ApiService.get(`admin/weeks/all/${this.$route.params.batch_id}`).then((res) => {
                 this.weeks = res.data.data
+                console.log(this.weeks);
             }).catch((res) => {
                 console.log(res);
             })

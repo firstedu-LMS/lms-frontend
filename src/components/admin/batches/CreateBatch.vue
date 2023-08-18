@@ -16,7 +16,7 @@
                     <br><label>on going</label>     
                 </span>
                 <span class="ml-4 text-center">
-                    <input type="radio" class="" v-model="batch.status" value="false" />
+                    <input type="radio" disabled class="" v-model="batch.status" value="false" />
                     <br><label>finished</label>
                 </span>
             </div>

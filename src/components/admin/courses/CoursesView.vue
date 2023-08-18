@@ -12,9 +12,9 @@
             
             <template #table-row="props">
                 <span class="relative flex justify-around w-full text-center text-white " v-if="props.column.field == 'actions'">
-                        <button @click="nevigateBatch(props.row)" class="px-6 py-1 text-sm rounded-sm bg-cyan-2">
+                        <router-link :to="{name : 'AdminBatchPage' , params : {course_id : props.row.id}}" class="px-6 py-1 text-sm rounded-sm bg-cyan-2">
                             Batch
-                        </button>
+                        </router-link>
                         <button @click="editCourse(props.row.id)" class="px-6 py-1 text-sm rounded-sm bg-cyan-2">
                             Edit
                         </button>
@@ -23,7 +23,7 @@
                         </button>
                 </span>
                 <span v-if="props.column.field == 'available'">
-                    <span v-if="props.row.availabe" class="text-sm text-green">{{props.row}}</span>
+                    <span v-if="props.row.available" class="text-sm text-green">open now</span>
                     <span v-else class="text-sm text-red">temporary closed</span>
                 </span>
                 <span class="text-sm" v-else>{{props.formattedRow[props.column.field]}}</span>
@@ -35,14 +35,12 @@
 <script>
 import ApiService from '@/services/ApiService';
 import { VueGoodTable } from 'vue-good-table-next'
-import { useLessonStore } from '@/stores/lesson';
     export default {
         components : {
             VueGoodTable
         },
         data() {
             return {
-                lessonStore : useLessonStore(),
                 courses : [],
                 courseDialog : {},
                 columns : [
@@ -70,12 +68,6 @@ import { useLessonStore } from '@/stores/lesson';
             }
         },
         methods: {
-
-            nevigateBatch(course) {
-                this.lessonStore.setCourse(course);
-                this.$router.push({name : 'AdminBatchPage' , params : {id : course.id}})
-            },
-
             showCourseDialog(course){
                 if (this.courseDialog.id == course.id) {
                     this.courseDialog = {}

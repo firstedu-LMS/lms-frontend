@@ -94,17 +94,17 @@ const routes = [
         component : AdminCoursePage
       },
       {
-        path : 'courses/:id/batches',
+        path : 'courses/:course_id/batches',
         name : 'AdminBatchPage',
         component : AdminBatchPage
       },
       {
-        path : 'batches/:id/weeks',
+        path : 'courses/:course_id/batches/:batch_id/weeks',
         name : 'AdminWeekPage',
         component : AdminWeekPage
       },
       {
-        path : 'weeks/:id/lessons',
+        path : 'courses/:course_id/batches/:batch_id/weeks/:week_id/lessons',
         name : 'AdminLessonPage',
         component : AdminLessonPage
       },

@@ -10,10 +10,10 @@
         </template>
             <template #table-row="props">
                 <span class="relative flex justify-center w-full text-xs text-center" v-if="props.column.field == 'actions'">
-                    <button @click="navigateWeek(props.row)" class="mx-3 hover:text-blue-2">
+                    <router-link :to="{name : 'AdminWeekPage' , params : {course_id : this.course_id , batch_id : props.row.id}}" class="mx-3 hover:text-blue-2">
                         weeks
                         <span style="color: green;display: block;" class="material-icons-sharp">calendar_today</span>
-                    </button>
+                    </router-link>
                     <button @click="emitIdForEdit(props.row.id)" class="mx-3 hover:text-blue-2">
                         edit
                         <span style="color: goldenrod;display: block;" class="material-icons-sharp">tune</span>
@@ -40,7 +40,6 @@
 <script>
 import ApiService from '@/services/ApiService';
 import { VueGoodTable } from 'vue-good-table-next';
-import { useLessonStore } from '@/stores/lesson';
     export default {
         props : {
             course_id : {
@@ -52,7 +51,6 @@ import { useLessonStore } from '@/stores/lesson';
         },
         data() {
             return {
-                lessonStore : useLessonStore(),
                 batches : [],
                 columns : [
                     {
@@ -84,6 +82,10 @@ import { useLessonStore } from '@/stores/lesson';
                         field : 'status'
                     },
                     {
+                        label : 'Deleted At',
+                        field : 'deleted_at'
+                    },
+                    {
                         label : 'Actions',
                         field : 'actions'
                     },
@@ -92,10 +94,6 @@ import { useLessonStore } from '@/stores/lesson';
         },
 
         methods : {
-            navigateWeek(batch) {
-                this.lessonStore.setBatch(batch);
-                this.$router.push({name : 'AdminWeekPage' , params : {id : batch.id}})
-            },
             deleteBatch(id){
                 ApiService.delete(`admin/batches/${id}`).then(() => {
                     window.location.reload()
@@ -111,7 +109,7 @@ import { useLessonStore } from '@/stores/lesson';
         mounted(){
             ApiService.get(`admin/batches/all/${this.course_id}`).then((res) => {
                 this.batches = res.data.data
-                
+                console.log(res.data.data);
             }).catch((res) => {
                 console.log(res);
             })
