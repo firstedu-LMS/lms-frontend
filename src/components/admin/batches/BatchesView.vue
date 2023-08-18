@@ -6,14 +6,14 @@
          :search-options="{enabled: true}"
         >
         <template #table-column="props">
-            <span class="text-sm">{{ props.column.field }}</span>
+            <span class="text-sm">{{ props.column.label }}</span>
         </template>
             <template #table-row="props">
                 <span class="relative flex justify-center w-full text-xs text-center" v-if="props.column.field == 'actions'">
-                    <router-link to="/" class="mx-3 hover:text-blue-2">
+                    <button @click="navigateWeek(props.row)" class="mx-3 hover:text-blue-2">
                         weeks
                         <span style="color: green;display: block;" class="material-icons-sharp">calendar_today</span>
-                    </router-link>
+                    </button>
                     <button @click="emitIdForEdit(props.row.id)" class="mx-3 hover:text-blue-2">
                         edit
                         <span style="color: goldenrod;display: block;" class="material-icons-sharp">tune</span>
@@ -40,6 +40,7 @@
 <script>
 import ApiService from '@/services/ApiService';
 import { VueGoodTable } from 'vue-good-table-next';
+import { useLessonStore } from '@/stores/lesson';
     export default {
         props : {
             course_id : {
@@ -51,6 +52,7 @@ import { VueGoodTable } from 'vue-good-table-next';
         },
         data() {
             return {
+                lessonStore : useLessonStore(),
                 batches : [],
                 columns : [
                     {
@@ -59,7 +61,7 @@ import { VueGoodTable } from 'vue-good-table-next';
                     },
                     {
                         label : 'Instructor',
-                        field : 'instructor.name'
+                        field : 'instructor.user.name'
                     },
                     {
                         label : 'Start-Date',
@@ -90,6 +92,10 @@ import { VueGoodTable } from 'vue-good-table-next';
         },
 
         methods : {
+            navigateWeek(batch) {
+                this.lessonStore.setBatch(batch);
+                this.$router.push({name : 'AdminWeekPage' , params : {id : batch.id}})
+            },
             deleteBatch(id){
                 ApiService.delete(`admin/batches/${id}`).then(() => {
                     window.location.reload()
@@ -103,9 +109,9 @@ import { VueGoodTable } from 'vue-good-table-next';
         },
 
         mounted(){
-            ApiService.get(`admin/batches`).then((res) => {
-                console.log(res.data.data);
+            ApiService.get(`admin/batches/all/${this.course_id}`).then((res) => {
                 this.batches = res.data.data
+                
             }).catch((res) => {
                 console.log(res);
             })

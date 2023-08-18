@@ -11,6 +11,9 @@ module.exports = {
       'md': '1000px',
       'lg': '1250px',
     },
+    texts : {
+      'small' : '12px'
+    },
     colors : {
       'transparent' : 'transparent',
       'indigo' : '#6366f1',

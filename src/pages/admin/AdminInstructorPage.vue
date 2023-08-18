@@ -38,7 +38,7 @@
                     </button>
                 </div>
             </span>
-            <span class="text-sm" v-else>{{props.formattedRow[props.column.field]}}</span>
+            <span class="text-[12px] block mx-5" v-else>{{props.formattedRow[props.column.field]}}</span>
             </template>
 
             <template #table-actions-bottom>

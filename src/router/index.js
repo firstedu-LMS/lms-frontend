@@ -16,9 +16,11 @@ import AdminDashboardPage from '@/pages/admin/AdminDashboardPage.vue'
 
 import AdminApplicationPage from '@/pages/admin/AdminApplicationPage.vue'
 import AdminInstructorPage from '@/pages/admin/AdminInstructorPage.vue'
-import AdminCareerPage from "@/pages/admin/AdminCareerPage.vue";
+import AdminCareerPage from "@/pages/admin/AdminCareerPage.vue"
 import AdminCoursePage from "@/pages/admin/AdminCoursePage.vue"
 import AdminBatchPage from '@/pages/admin/AdminBatchPage.vue'
+import AdminWeekPage from "@/pages/admin/AdminWeekPage.vue";
+import AdminLessonPage from "@/pages/admin/AdminLessonPage.vue"
 
 
 const routes = [
@@ -95,7 +97,17 @@ const routes = [
         path : 'courses/:id/batches',
         name : 'AdminBatchPage',
         component : AdminBatchPage
-      }
+      },
+      {
+        path : 'batches/:id/weeks',
+        name : 'AdminWeekPage',
+        component : AdminWeekPage
+      },
+      {
+        path : 'weeks/:id/lessons',
+        name : 'AdminLessonPage',
+        component : AdminLessonPage
+      },
 
     ]
   }

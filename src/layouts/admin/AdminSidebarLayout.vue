@@ -55,11 +55,6 @@
                         icon : 'groups'
                     },
                     {
-                        name : 'Lessons',
-                        path : 'HC_Page',
-                        icon : 'auto_stories'
-                    },
-                    {
                         name : 'Careers',
                         path : 'AdminCareerPage',
                         icon : 'work'
