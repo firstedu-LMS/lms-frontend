@@ -1,7 +1,14 @@
 <template>
     <div class="p-4">
         <h1 class="px-4 font-black">NEW</h1>
-        <form class="flex flex-wrap justify-around" @submit.prevent="createCourse" >
+        <transition name="dialog">
+                <dialog v-if="created" class="fixed z-50 flex flex-col items-center p-6 text-gray" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;" open>
+                    <span style="color: #22c55e; font-size: 6rem;" class="material-icons-sharp">check_circle</span>
+                    <p class="my-6 text-xl">Course Has Been Created Successfully.</p>
+                    <button class="w-full py-1.5 text-white rounded hover:bg-transparent hover:text-green border border-green bg-green" @click="reload">Okay</button>
+                </dialog>
+        </transition>
+        <form :class="created ? 'blur-[1px]' : ''" class="z-30 flex flex-wrap justify-around" @submit.prevent="createCourse" >
                 <div class="w-[30%] my-8">
                     <label class="text-[12px] font-semibold" for="name">Name</label>
                     <input v-model="course.name" type="text" class="px-2 w-[60%] mx-5 py-1 border-b outline-none">
@@ -16,7 +23,7 @@
                     <br><label>open now</label>     
                 </span>
                 <span class="ml-4 text-center">
-                    <input type="radio" class="" v-model="course.available" value="false" />
+                    <input disabled type="radio" class="" v-model="course.available" value="false" />
                     <br><label>temporary closed</label>
                 </span>
             </div>
@@ -30,19 +37,19 @@
             </div>
             <div class="w-[30%] my-8">
                 <label for="status" class="text-[12px] font-semibold">Status</label>
-                <select v-model="course.status" class=" w-[60%] mx-5 px-2 py-1.5 bg-transparent border-b outline-none">
+                <select v-model="course.status" class=" w-3/5 mx-5 px-2 py-1.5 bg-transparent border-b outline-none">
                     <option class="text-[12px]" disabled selected></option>
                     <option class="text-[10px]" value="online">online</option>
                     <option class="text-[10px]" value="offline">offline</option>
                 </select>
             </div>
-            <div class="w-full mt-8 mb-32">
+            <div class="w-[90%] mt-8 mb-32">
                 <label class="font-semibold text-[12px]" for="description">Description</label>
-                <quill-editor class="shadow-md shadow-black w-[90%]" v-model:content="course.description" theme="snow" toolbar="full" contentType="html"></quill-editor>
+                <quill-editor class="shadow-sm shadow-black" v-model:content="course.description" theme="snow" toolbar="full" contentType="html"></quill-editor>
             </div>
 
             <div class="flex w-full my-2">
-                <button class="px-3 py-1 text-black bg-white shadow-sm">Submit</button>
+                <button class="px-3 py-1 bg-white shadow-lg text-gray">Submit</button>
             </div>
         </form>
     </div>
@@ -59,6 +66,7 @@ import ApiService from '@/services/ApiService';
 
         data() {
             return {
+                created : false,
                 course : {
                     name : '',
                     age : '',
@@ -72,6 +80,9 @@ import ApiService from '@/services/ApiService';
         },
 
         methods : {
+            reload() {
+                window.location.reload();
+            },
             saveImage(e) {
                 let file = e.target.files[0];
                 let form = new FormData();
@@ -90,7 +101,7 @@ import ApiService from '@/services/ApiService';
                     this.course.available = false;
                 }
                 ApiService.post('admin/courses' , this.course).then(() => {
-                    window.location.reload()
+                    this.created = true;
                 }).catch((res) => {
                     console.log(res);
                 })
@@ -99,6 +110,11 @@ import ApiService from '@/services/ApiService';
     }
 </script>
 
-<style lang="scss" scoped>
-
+<style  scoped>
+.dialog-enter-from , .dialog-leave-to {
+  transform: scale(90%)
+}
+.dialog-enter-active , .dialog-leave-active {
+  transition: all 0.2s ease-out;
+}
 </style>

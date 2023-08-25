@@ -62,15 +62,16 @@ import { VueGoodTable } from 'vue-good-table-next';
             }
         },
         mounted() {
-            console.log(this.parameters.week_id );
             ApiService.get(`admin/lessons/all/${this.parameters.week_id}`).then((res) => {
                 this.lessons = res.data.data;
-                let heading = {
+                if (this.lessons.length) {
+                    let heading = {
                     'course' : this.lessons[0].course.name,
                     'batch' : this.lessons[0].batch.name,
                     'week' : this.lessons[0].week.week_number
                 }
                 this.$emit('setHeading' , heading)
+                }
             }).catch((res) => {
                 console.log(res);
             })
