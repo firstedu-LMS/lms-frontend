@@ -2,9 +2,11 @@
     <div>
         <div class="flex justify-between text-white ">
             <h1 v-if="weeks[0]" class="flex items-center p-2 font-semibold text-gray">
-                Courses <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
-                 {{ weeks[0].course.name }} <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
-                 {{ weeks[0].batch.name }}
+                <router-link :to="{name : 'AdminCoursePage'}">Courses</router-link>
+                <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
+                 <router-link :to="{name : 'AdminBatchPage' , params : {course_id : weeks[0].course.id}}">{{ weeks[0].course.name }}</router-link>
+                 <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
+                 <span class="text-blue-2">{{ weeks[0].batch.name }}</span>
             </h1>
             <div class="my-auto mr-6">
                 <button @click="addWeek" class="px-6 rounded shadow-lg py-0.5 bg-indigo">New +</button>

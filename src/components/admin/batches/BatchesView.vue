@@ -109,7 +109,7 @@ import { VueGoodTable } from 'vue-good-table-next';
         mounted(){
             ApiService.get(`admin/batches/all/${this.course_id}`).then((res) => {
                 this.batches = res.data.data
-                console.log(res.data.data);
+                this.$emit('course' , this.batches[0].course)
             }).catch((res) => {
                 console.log(res);
             })

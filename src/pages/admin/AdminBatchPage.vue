@@ -3,8 +3,9 @@
 
         <div class="flex justify-between text-white ">
             <h1 class="p-4 text-lg font-semibold text-gray">
-                Courses <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
-                {{ course_name }}
+                <router-link :to="{name : 'AdminCoursePage'}">Courses</router-link>
+                <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
+                <span class="text-blue-2">{{ course.name }}</span>
             </h1>
             <div class="my-auto mr-6">
                 <span @click="showTable" :class="batchTable ? 'bg-blue-2' : 'bg-gray-2'" class="px-6 py-1.5 cursor-pointer">table</span>
@@ -13,7 +14,7 @@
         </div>
 
         <div>
-            <BatchesView  @edit="showEdit" v-if="batchTable" :course_id="courseId" />
+            <BatchesView @course="setCourse"  @edit="showEdit" v-if="batchTable" :course_id="courseId" />
             <CreateBatch v-if="createForm" :course_id="courseId" />
             <EditBatch v-if="editForm" :batch_id="idForEdit" />
         </div>
@@ -32,7 +33,7 @@ import EditBatch from '@/components/admin/batches/EditBatch.vue'
         data () {
             return {
                 courseId : this.$route.params.course_id,
-                course_name : '',
+                course : '',
                 batchTable : true,
                 createForm : false,
                 editForm : false,
@@ -40,8 +41,8 @@ import EditBatch from '@/components/admin/batches/EditBatch.vue'
             }
         },
         methods : {
-            setCourseName(name) {
-                this.course_name = name
+            setCourse(course) {
+                this.course = course
             },
             showCreate() {
                 this.batchTable = false;
