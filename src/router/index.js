@@ -22,7 +22,6 @@ import AdminBatchPage from '@/pages/admin/AdminBatchPage.vue'
 import AdminWeekPage from "@/pages/admin/AdminWeekPage.vue";
 import AdminLessonPage from "@/pages/admin/AdminLessonPage.vue"
 
-
 const routes = [
   {
     path: "/",
@@ -103,11 +102,13 @@ const routes = [
         name : 'AdminWeekPage',
         component : AdminWeekPage
       },
+
       {
         path : 'courses/:course_id/batches/:batch_id/weeks/:week_id/lessons',
         name : 'AdminLessonPage',
         component : AdminLessonPage
       },
+
 
     ]
   }

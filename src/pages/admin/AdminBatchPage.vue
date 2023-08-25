@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div class="flex justify-between text-white ">
             <h1 class="p-4 text-lg font-semibold text-gray">
                 Courses <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>

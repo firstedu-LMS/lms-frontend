@@ -12,14 +12,14 @@
             
             <template #table-row="props">
                 <span class="relative flex justify-around w-full text-center text-white " v-if="props.column.field == 'actions'">
-                        <router-link :to="{name : 'AdminBatchPage' , params : {course_id : props.row.id}}" class="px-6 py-1 text-sm rounded-sm bg-cyan-2">
-                            Batch
+                        <router-link :to="{name : 'AdminBatchPage' , params : {course_id : props.row.id}}" class="px-6 py-1 text-sm rounded-sm bg-cyan">
+                            batch
                         </router-link>
-                        <button @click="editCourse(props.row.id)" class="px-6 py-1 text-sm rounded-sm bg-cyan-2">
-                            Edit
+                        <button @click="editCourse(props.row.id)" class="px-6 py-1 text-sm rounded-sm bg-cyan">
+                            edit
                         </button>
                         <button @click="deleteCourse(props.row.id)" class="px-4 py-1 text-sm rounded-sm bg-red">
-                            Delete
+                            delete
                         </button>
                 </span>
                 <span v-if="props.column.field == 'available'">

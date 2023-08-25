@@ -17,7 +17,7 @@
       </ul>
     </div>
     <div class="p-4 text-lg text-white sm:w-[80%] mx-auto">
-        <router-link to="/" class="px-6 py-2 mr-2 bg-green">Enroll now</router-link>
+        <button @click="enrollCourse(course.id)" class="px-6 py-2 mr-2 bg-green">Enroll now</button>
         <router-link to="/" class="px-4 py-2 bg-gray">Back</router-link>
     </div>
   </div>
@@ -26,6 +26,7 @@
 <script>
 import HPNavbar from "@/layouts/public/HPNavbar.vue";
 import axios from "axios";
+import { useAuthStore } from "@/stores/auth";
 export default {
   components: {
     HPNavbar,
@@ -34,7 +35,18 @@ export default {
     return {
       course: {},
       id: this.$route.params.id,
+      authStore : useAuthStore()
     };
+  },
+  methods : {
+    enrollCourse(id) {
+      let user = this.authStore.user;
+      if (user.email) {
+        console.log(id);
+      } else {
+        this.$router.push({name : 'LoginPage'})
+      }
+    }
   },
   mounted() {
     axios
