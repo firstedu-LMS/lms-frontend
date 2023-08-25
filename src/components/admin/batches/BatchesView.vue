@@ -55,7 +55,7 @@ import { VueGoodTable } from 'vue-good-table-next';
                 columns : [
                     {
                         label : 'Batch',
-                        field : 'id'
+                        field : 'name'
                     },
                     {
                         label : 'Instructor',

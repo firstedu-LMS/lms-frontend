@@ -8,7 +8,7 @@
                  {{ heading.week }}  <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
                  <span v-if="heading.lesson">{{ heading.lesson }}</span>
             </h1>
-            <div class="my-auto mr-6">
+            <div v-if="!show" class="my-auto mr-6">
                 <button @click="showLessonsTable" :class="lessonsTable ? 'bg-blue-2' : 'bg-white text-black'" class="px-6 py-1 cursor-pointer">table</button>
                 <button @click="showLessonForm" :class="createForm ? 'bg-blue-2' : 'bg-white text-black'" class="px-6 py-1 cursor-pointer">+ new</button>
             </div>

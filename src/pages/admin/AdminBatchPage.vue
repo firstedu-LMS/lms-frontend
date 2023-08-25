@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div class="flex justify-between text-white ">
             <h1 class="p-4 text-lg font-semibold text-gray">
                 <router-link :to="{name : 'AdminCoursePage'}">Courses</router-link>

@@ -32,7 +32,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
         } ,
         data() {
             return {
-                parameters  : this.$route.params,
+                
                 lesson : {
                     name : '',
                     description : '',
