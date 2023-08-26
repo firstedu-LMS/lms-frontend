@@ -9,6 +9,10 @@
                  <span class="text-blue-2">{{ weeks[0].batch.name }}</span>
             </h1>
             <div class="my-auto mr-6">
+                <select @change="changePage" class="px-2 py-1 m-3 bg-transparent border outline-none border-gray text-gray" v-model="page">
+                    <option selected value="assignments">Assignments</option>
+                    <option value="weeks">Weeks</option>
+                </select>
                 <button @click="addWeek" class="px-6 rounded shadow-lg py-0.5 bg-indigo">New +</button>
             </div>
         </div>
@@ -48,6 +52,7 @@ import { VueGoodTable } from 'vue-good-table-next'
         },
         data() {
             return {
+                page : 'weeks',
                 weeks : [],
                 columns : [
                     {
@@ -62,6 +67,11 @@ import { VueGoodTable } from 'vue-good-table-next'
             }
         },
         methods: {
+            changePage(e) {
+                if (e.target.value == 'assignments') {
+                    this.$router.push({name : 'AdminAssignmentPage' , params : {course_id : this.$route.params.course_id , batch_id : this.$route.params.batch_id}})
+                }
+            },
             deleteWeek(id){
                 ApiService.delete(`admin/weeks/${id}`).then(()=>{
                     this.$router.push({name : "AdminCoursePage"})

@@ -1,6 +1,6 @@
 <template>
     <div>
-        hello
+        this is the table madafaca
     </div>
 </template>
 
