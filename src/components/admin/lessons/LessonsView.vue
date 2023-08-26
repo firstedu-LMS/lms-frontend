@@ -66,9 +66,12 @@ import { VueGoodTable } from 'vue-good-table-next';
                 this.lessons = res.data.data;
                 if (this.lessons.length) {
                     let heading = {
-                    'course' : this.lessons[0].course.name,
-                    'batch' : this.lessons[0].batch.name,
-                    'week' : this.lessons[0].week.week_number
+                    'courseName' : this.lessons[0].course.name,
+                    'courseId' : this.lessons[0].course.id,
+                    'batchName' : this.lessons[0].batch.name,
+                    'batchId' : this.lessons[0].batch.id,
+                    'weekName' : this.lessons[0].week.week_number,
+                    'weekId' : this.lessons[0].week.id
                 }
                 this.$emit('setHeading' , heading)
                 }
