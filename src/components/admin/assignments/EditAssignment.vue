@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="createAssignment" class="flex flex-wrap justify-between p-4 text-sm text-gray">
+    <form @submit.prevent="editAssignment" class="flex flex-wrap justify-between p-4 text-sm text-gray">
         <h1 class="w-full mb-6 text-xl font-bold">New</h1>
         <div class="w-1/2 mb-16">
             <label class="inline-block font-semibold w-[15%]" for="title">Title</label>
@@ -34,39 +34,32 @@ import { QuillEditor } from '@vueup/vue-quill'
         components : {
             QuillEditor
         },
+        props : {
+            id : {
+                required : true
+            }
+        },
         data(){
             return {
-                assignment : {
-                    title : '',
-                    course_id : this.$route.params.course_id,
-                    batch_id : this.$route.params.batch_id,
-                    test_date : '',
-                    test_time : '',
-                    agenda : '',
-                    file_id : null
-                }
+                assignment : {}
             }
         },
         methods : {
-            saveFile(e){
-                if (e.target.files[0]) {
-                    let form = new FormData();
-                    form.set('video' , e.target.files[0])
-                    ApiService.post('admin/videos' , form).then((res) => {
-                        this.assignment.file_id = res.data.data.id
-                    }).catch((res) => {
-                        console.log(res);
-                    })
-                }
-            },
-
-            createAssignment() {
-                ApiService.post('admin/assignments' , this.assignment).then(() => {
-                    window.location.reload()
+            editAssignment(){
+                ApiService.patch(`admin/assignments/${this.id}` , this.assignment).then((res) => {
+                    window.location.reload();
+                    console.log(res);
                 }).catch((res) => {
                     console.log(res);
                 })
             }
+        },
+        mounted(){
+            ApiService.get(`admin/assignments/${this.id}`).then((res) => {
+                this.assignment = res.data.data
+            }).catch((res) => {
+                console.log(res);
+            })
         }
     }
 </script>

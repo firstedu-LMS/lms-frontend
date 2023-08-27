@@ -13,8 +13,8 @@
                  <span class="text-blue-2" v-if="heading.lesson">{{ heading.lesson }}</span>
             </h1>
             <div v-if="!show" class="my-auto mr-6">
-                <button @click="showLessonsTable" :class="lessonsTable ? 'bg-blue-2' : 'bg-white text-black'" class="px-6 py-1 cursor-pointer">table</button>
-                <button @click="showLessonForm" :class="createForm ? 'bg-blue-2' : 'bg-white text-black'" class="px-6 py-1 cursor-pointer">+ new</button>
+                <button @click="showLessonsTable" :class="lessonsTable ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'" class="px-6 py-1 cursor-pointer rounded-l-md">table</button>
+                <button @click="showLessonForm" :class="createForm ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'" class="px-6 py-1 cursor-pointer rounded-r-md">+ new</button>
             </div>
         </div>    
         <div>

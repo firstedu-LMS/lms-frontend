@@ -7,8 +7,8 @@
                 <span class="text-blue-2">{{ course.name }}</span>
             </h1>
             <div class="my-auto mr-6">
-                <span @click="showTable" :class="batchTable ? 'bg-blue-2' : 'bg-gray-2'" class="px-6 py-1.5 cursor-pointer">table</span>
-                <span @click="showCreate" :class="createForm ? 'bg-blue-2' : 'bg-gray-2'" class="px-6 py-1.5 cursor-pointer">+ new</span>
+                <span @click="showTable"  :class="batchTable ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'" class="px-6 py-1.5 cursor-pointer rounded-l-md">table</span>
+                <span @click="showCreate"  :class="createForm ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'" class="px-6 py-1.5 cursor-pointer rounded-r-md">+ new</span>
             </div>
         </div>
 
