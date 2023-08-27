@@ -61,7 +61,8 @@ import { VueGoodTable } from 'vue-good-table-next'
                     },
                     {
                         field : 'actions',
-                        label : 'Actions'
+                        label : 'Actions',
+                        width : '30%'
                     }
                 ]
             }
