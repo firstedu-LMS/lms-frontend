@@ -44,7 +44,8 @@ import { VueGoodTable } from 'vue-good-table-next';
                 },
                 {
                     label : 'actions',
-                    field : 'actions'
+                    field : 'actions',
+                    width : '30%'
                 }
             ]
            } 
@@ -62,15 +63,19 @@ import { VueGoodTable } from 'vue-good-table-next';
             }
         },
         mounted() {
-            console.log(this.parameters.week_id );
             ApiService.get(`admin/lessons/all/${this.parameters.week_id}`).then((res) => {
                 this.lessons = res.data.data;
-                let heading = {
-                    'course' : this.lessons[0].course.name,
-                    'batch' : this.lessons[0].batch.name,
-                    'week' : this.lessons[0].week.week_number
+                if (this.lessons.length) {
+                    let heading = {
+                    'courseName' : this.lessons[0].course.name,
+                    'courseId' : this.lessons[0].course.id,
+                    'batchName' : this.lessons[0].batch.name,
+                    'batchId' : this.lessons[0].batch.id,
+                    'weekName' : this.lessons[0].week.week_number,
+                    'weekId' : this.lessons[0].week.id
                 }
                 this.$emit('setHeading' , heading)
+                }
             }).catch((res) => {
                 console.log(res);
             })

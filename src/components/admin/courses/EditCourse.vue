@@ -1,7 +1,7 @@
 <template>
     <div class="p-4">
         <h1 class="px-4 font-black" v-if="course">{{ course.name }}</h1>
-        <form class="flex justify-around flex-wrap" @submit.prevent="editCourse" >
+        <form class="flex flex-wrap justify-around" @submit.prevent="editCourse" >
                 <div class="w-[30%] my-8">
                     <label class="text-[12px] font-semibold" for="name">Name</label>
                     <input v-model="course.name" type="text" class="px-2 w-[60%] mx-5 py-1 border-b outline-none">
@@ -29,11 +29,11 @@
             </div>
             <div class="w-[30%] flex justify-center my-8">
                 <label class="text-[12px] font-semibold">Condition</label>
-                <span class="text-center mx-2">
+                <span class="mx-2 text-center">
                     <input type="radio" class="" v-model="course.available" value="true" />
                     <br><label class="text-[9px]">open now</label>     
                 </span>
-                <span class="text-center mx-2">
+                <span class="mx-2 text-center">
                     <input type="radio" class="" v-model="course.available" value="false" />
                     <br><label class="text-[9px]">temporary closed</label>
                 </span>
@@ -44,7 +44,7 @@
                 <quill-editor class="shadow-md shadow-black w-[90%]" v-model:content="course.description" theme="snow" toolbar="full" contentType="html"></quill-editor>
             </div>
 
-            <div class="flex  w-full my-2">
+            <div class="flex w-full my-2">
                 <button class="px-3 py-1 text-black bg-white shadow-sm">Submit</button>
             </div>
         </form>

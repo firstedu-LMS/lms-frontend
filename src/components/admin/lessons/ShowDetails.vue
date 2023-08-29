@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="w-3/4 mx-auto pb-10" >
+        <div class="w-3/4 pb-10 mx-auto" >
             <video v-if="lesson.video" controls>
                 <source :src="filePath.videoPath(lesson.video.video)" type="video/mp4">
                 Your browser does not support the video tag.
@@ -9,69 +9,69 @@
             <p v-html="lesson.description"></p>
 
             <div>
-                <button v-if="addQues" @click="showForm" class="bg-blue-2 px-3 py-1 mt-2 rounded text-white">Add Ques +</button>
-                <form v-if="quesForm" class="py-2" @submit.prevent="CreateQues">
-                    <button class="bg-blue-2 px-3 py-1 my-2 rounded text-white">Add Ques +</button>
-                    <div class="relative flex flex-wrap">
-                        <span class="flex px-3 py-1 items-center rounded-l border border-r-0 border-solid">
-                            Question
-                        </span>
-                        <input v-model="question.title" type="text" class="w-[84%] block rounded-r border border-gray-2 bg-transparent"/>
-                    </div>
-                    <div class="relative flex flex-wrap">
-                        <span class="flex px-3 py-1 items-center rounded-l border border-r-0 border-solid">
-                            Option-1
-                        </span>
-                        <input v-model="question.choice1" type="text" class="w-[85%] block rounded-r border border-gray-2 bg-transparent"/>
-                    </div>
-                    <div class="relative flex flex-wrap">
-                        <span class="flex px-3 py-1 items-center rounded-l border border-r-0 border-solid">
-                            Option-2
-                        </span>
-                        <input v-model="question.choice2" type="text" class="w-[85%] block rounded-r border border-gray-2 bg-transparent"/>
-                    </div>
-                    <div class="relative flex flex-wrap">
-                        <span class="flex px-3 py-1 items-center rounded-l border border-r-0 border-solid">
-                            Option-3
-                        </span>
-                        <input v-model="question.choice3" type="text" class="w-[85%] block rounded-r border border-gray-2 bg-transparent"/>
-                    </div>
-                    <div class="relative flex flex-wrap">
-                        <span class="flex px-4 py-1 items-center rounded-l border border-r-0 border-solid">
-                            Answer
-                        </span>
-                        <input v-model="question.answer" type="text" class="w-[85%] block rounded-r border border-gray-2 bg-transparent"/>
-                    </div>
-                </form>
+                <button @click="showForm" class="px-3 py-1 my-4 text-white rounded bg-blue-2">Add Question +</button>
+
                 <div>
-                    <div v-for="question in questions" :key="question" class="relative flex flex-wrap">
-                        <span class="flex px-3 py-1 items-center rounded-l border border-r-0 border-solid">
-                            Question
-                        </span>
-                        <input v-model="question.title" type="text" class="w-[84%] block rounded-r border border-gray-2 bg-transparent"/>
-           
-                            <span class="flex px-3 py-1 items-center rounded-l border border-r-0 border-solid">
-                                Option-1
-                            </span>
-                            <input v-model="question.choice1" type="text" class="w-[85%] block rounded-r border border-gray-2 bg-transparent"/>
-      
-                            <span class="flex px-3 py-1 items-center rounded-l border border-r-0 border-solid">
-                                Option-2
-                            </span>
-                            <input v-model="question.choice2" type="text" class="w-[85%] block rounded-r border border-gray-2 bg-transparent"/>
-                            <span class="flex px-3 py-1 items-center rounded-l border border-r-0 border-solid">
-                                Option-3
-                            </span>
-                            <input v-model="question.choice3" type="text" class="w-[85%] block rounded-r border border-gray-2 bg-transparent"/>
-                            <span class="flex px-4 py-1 items-center rounded-l border border-r-0 border-solid">
-                                Answer
-                            </span>
-                            <input v-model="question.answer" type="text" class="w-[85%] block rounded-r border border-gray-2 bg-transparent"/>
-                        <div class="w-[95%] flex justify-end">
-                            <button @click="deleteQues(question.id)" class="bg-red px-3 py-1 rounded my-1 text-white">Remove -</button>
+                    <div v-for="question in questions" :key="question">
+                        <div class="flex border border-b-0">
+                            <p class="py-1 text-center border-r w-[15%]">Question</p>
+                            <p class="py-1 px-4 w-[85%]">{{ question.title }}</p>
                         </div>
+                        <div class="flex border border-b-0">
+                            <p class="py-1 text-center border-r w-[15%]">Option 1</p>
+                            <p class="py-1 px-4 w-[85%]">{{ question.choice1 }}</p>
+                        </div>
+                        <div class="flex border border-b-0">
+                            <p class="py-1 text-center border-r w-[15%]">Option 2</p>
+                            <p class="py-1 px-4 w-[85%]">{{ question.choice2 }}</p>
+                        </div>
+                        <div class="flex border border-b-0">
+                            <p class="py-1 text-center border-r w-[15%]">Option 3</p>
+                            <p class="py-1 px-4 w-[85%]">{{ question.choice3 }}</p>
+                        </div>
+                        <div class="flex border">
+                            <p class="py-1 text-center border-r w-[15%]">Answer</p>
+                            <p class="py-1 px-4 w-[85%]">{{ question.answer }}</p>
+                        </div>
+                        <button class="float-right px-4 py-1 my-2 text-white rounded-sm bg-red">remove</button>
+                        <button @click="showForm" class="px-3 py-1 mt-10 mb-2 text-white rounded bg-blue-2">Add Question +</button>
                     </div>
                 </div>
+
+                <form v-if="quesForm" class="py-4" @submit.prevent="CreateQues">
+                    <div class="flex border border-b-0">
+                        <span class="text-center w-[15%] border-r py-1">
+                            Question
+                        </span>
+                        <input v-model="question.title" type="text" class="w-[85%] outline-none px-2 bg-transparent"/>
+                    </div>
+                    <div class="flex border border-b-0">
+                        <span class="text-center w-[15%] border-r py-1">
+                            Option-1
+                        </span>
+                        <input v-model="question.choice1" type="text" class="w-[85%] outline-none px-2 bg-transparent"/>
+                    </div>
+                    <div class="flex border border-b-0">
+                        <span class="text-center w-[15%] border-r py-1">
+                            Option-2
+                        </span>
+                        <input v-model="question.choice2" type="text" class="w-[85%] outline-none px-2 bg-transparent"/>
+                    </div>
+                    <div class="flex border border-b-0">
+                        <span class="text-center w-[15%] border-r py-1">
+                            Option-3
+                        </span>
+                        <input v-model="question.choice3" type="text" class="w-[85%] outline-none px-2 bg-transparent"/>
+                    </div>
+                    <div class="flex border">
+                        <span class="text-center w-[15%] border-r py-1">
+                            Answer
+                        </span>
+                        <input v-model="question.answer" type="text" class="w-[85%] outline-none px-2 bg-transparent"/>
+                    </div>
+                    <button class="float-right px-4 py-1 my-4 bg-white shadow-lg">create</button>
+                </form>
+
             </div>
         </div>
     </div>
@@ -110,8 +110,10 @@ import filePath from '../../../services/public/filePath';
             },
             CreateQues(){
                 this.question.lesson_id = this.lesson.id
-                ApiService.post('admin/questions', this.question).then(() => {
-                  window.location.reload()  
+                ApiService.post('admin/questions', this.question).then((res) => {
+                  console.log(res.data.data);
+                  this.questions.push(res.data.data);
+                  this.question = {};
                 }).catch((res) => {
                     console.log(res);
                 })

@@ -2,15 +2,19 @@
     <div>
         <div class="flex justify-between text-white ">
             <h1 v-if="heading" class="flex items-center p-4 font-semibold text-gray">
-                Courses <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
-                 {{ heading.course}} <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
-                 {{ heading.batch }} <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
-                 {{ heading.week }}  <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
-                 <span v-if="heading.lesson">{{ heading.lesson }}</span>
+                <router-link :to="{name : 'AdminCoursePage'}">Courses</router-link>
+                <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
+                 <router-link :to="{name : 'AdminBatchPage' , params : {course_id : heading.courseId}}">{{ heading.courseName}}</router-link>
+                 <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
+                 <router-link :to="{name : 'AdminWeekPage' , params : {batch_id : heading.batchId , course_id : heading.courseId}}">{{ heading.batchName}}</router-link>
+                 <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
+                 <router-link :class="!heading.lesson ? 'text-blue-2' : ''" :to="{name : 'AdminLessonPage' , params : {batch_id : heading.batchId , course_id : heading.courseId , week_id : heading.weekId}}">{{ heading.weekName}}</router-link>
+                 <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
+                 <span class="text-blue-2" v-if="heading.lesson">{{ heading.lesson }}</span>
             </h1>
             <div v-if="!show" class="my-auto mr-6">
-                <button @click="showLessonsTable" :class="lessonsTable ? 'bg-blue-2' : 'bg-white text-black'" class="px-6 py-1 cursor-pointer">table</button>
-                <button @click="showLessonForm" :class="createForm ? 'bg-blue-2' : 'bg-white text-black'" class="px-6 py-1 cursor-pointer">+ new</button>
+                <button @click="showLessonsTable" :class="lessonsTable ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'" class="px-6 py-1 cursor-pointer rounded-l-md">table</button>
+                <button @click="showLessonForm" :class="createForm ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'" class="px-6 py-1 cursor-pointer rounded-r-md">+ new</button>
             </div>
         </div>    
         <div>
