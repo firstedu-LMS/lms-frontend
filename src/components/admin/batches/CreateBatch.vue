@@ -7,6 +7,8 @@
                 <select  class="w-[60%] px-2 ml-2 bg-transparent border-b outline-none" v-model="batch.instructor_id">
                     <option v-for="instructor in instructors" :key="instructor.id" :value="instructor.id">{{ instructor.user.name }}</option>
                 </select>
+                <p v-if="errors.instructor_id" class="text-red py-1 mx-8">{{ errors.instructor_id[0] }}</p>
+
             </div>
 
             <div class="flex w-1/2 p-4 my-4">
@@ -24,21 +26,29 @@
             <div class="w-1/2 p-4 my-4">
                 <label for="start_date">Start Date</label>
                 <input type="date" class="w-[60%] px-2 ml-2 bg-transparent border-b outline-none" v-model="batch.start_date">
+                <p v-if="errors.start_date" class="text-red py-1 mx-12">{{ errors.start_date[0] }}</p>
+
             </div>
 
             <div class="w-1/2 p-4 my-4">
                 <label for="start_date">End Date</label>
                 <input type="date" class="w-[60%] px-2 ml-2 bg-transparent border-b outline-none" v-model="batch.end_date">
+                <p v-if="errors.end_date" class="text-red py-1 mx-12">{{ errors.end_date[0] }}</p>
+
             </div>
 
             <div class="w-1/2 p-4 my-4">
                 <label for="start_time">Start Time</label>
                 <input type="time" class="w-[60%] px-2 ml-2 bg-transparent border-b outline-none" v-model="batch.start_time">
+                <p v-if="errors.start_time" class="text-red py-1 mx-4">{{ errors.start_time[0] }}</p>
+
             </div>
 
             <div class="w-1/2 p-4 my-4">
                 <label for="start_time">End Time</label>
                 <input type="time" class="w-[60%] px-2 ml-2 bg-transparent border-b outline-none" v-model="batch.end_time">
+                <p v-if="errors.end_time" class="text-red py-1 mx-12">{{ errors.end_time[0] }}</p>
+
             </div>
 
             <div class="w-full px-4">
@@ -68,7 +78,8 @@ import ApiService from '@/services/ApiService'
                     start_time : '',
                     end_time : '',
                     status : ''
-                }
+                },
+                errors : {}
             }
         },
         mounted(){
@@ -89,7 +100,10 @@ import ApiService from '@/services/ApiService'
                 ApiService.post('admin/batches' , this.batch).then(() => {
                     window.location.reload();
                 }).catch((res) => {
-                    console.log(res);
+                    this.errors = res.response.data.errors
+                    setTimeout(() => {
+                        this.errors = {}
+                    },3000)
                 })
             }
         }
