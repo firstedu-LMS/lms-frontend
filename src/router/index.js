@@ -23,6 +23,10 @@ import AdminWeekPage from "@/pages/admin/AdminWeekPage.vue"
 import AdminAssignmentPage from '@/pages/admin/AdminAssignmentPage.vue'
 import AdminLessonPage from "@/pages/admin/AdminLessonPage.vue"
 
+
+import StudentDashboardLayout from '@/layouts/student/StudentDashboardLayout.vue'
+import StudentProfilePage from "@/pages/student/StudentProfilePage.vue";
+
 const routes = [
   {
     path: "/",
@@ -64,9 +68,9 @@ const routes = [
     path : '/admin',
     name : 'AdminDashboardLayout',
     component : AdminDashboardLayout,
-    // meta : {
-    //   middleware : "admin"
-    // },
+    meta : {
+      middleware : "admin"
+    },
     children : [
       {
         path : '',
@@ -113,8 +117,21 @@ const routes = [
         name : 'AdminLessonPage',
         component : AdminLessonPage
       },
+    ]
+  },
 
 
+  //student
+  {
+    path : '/student',
+    name : 'StudentDashboardLayout',
+    component : StudentDashboardLayout,
+    children : [
+      {
+        path : '',
+        name : 'StudentProfilePage',
+        component : StudentProfilePage
+      }
     ]
   }
 ];

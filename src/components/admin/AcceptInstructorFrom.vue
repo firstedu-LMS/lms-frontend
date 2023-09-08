@@ -48,7 +48,6 @@ import ApiService from '@/services/ApiService';
         mounted () {
             this.formData.email = this.instructor.email;
             this.formData.cv_id = this.instructor.cv_id;
-            console.log(this.formData);
         },
         methods : {
             promptToAccept() {
@@ -56,8 +55,10 @@ import ApiService from '@/services/ApiService';
             },
             accept(){
                 ApiService.post('admin/applications/add-instructor' , this.formData).then(() => {
+                    console.log('hello');
                     this.$router.push({name : 'AdminInstructorPage'})
                 }).catch((res) => {
+                    console.log('error');
                     console.log(res);
                 })
             }
