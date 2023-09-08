@@ -83,7 +83,6 @@ import filePath from '../../services/public/filePath';
         mounted () {
             axios.get('admin/applications').then((res) => {
                     this.applications = res.data.data;
-                    console.log(this.applications);
                 }).catch((res) => {
                     console.log(res);
                 })

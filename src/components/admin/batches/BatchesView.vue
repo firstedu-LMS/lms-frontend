@@ -18,7 +18,7 @@
                         edit
                         <span style="color: goldenrod;display: block;" class="material-icons-sharp">tune</span>
                     </button>
-                    <button @click="deleteBatch(props.row.id)" class="mx-3 hover:text-red">
+                    <button :class="props.row.deleted_at ? 'cursor-not-allowed' : '' "  @click="deleteBatch(props.row.id)" class="mx-3 hover:text-red">
                         delete
                         <span style="color: red;display: block;" class="material-icons-sharp">delete</span>
                     </button>
@@ -80,10 +80,6 @@ import { VueGoodTable } from 'vue-good-table-next';
                     {
                         label : 'Status',
                         field : 'status'
-                    },
-                    {
-                        label : 'Deleted At',
-                        field : 'deleted_at'
                     },
                     {
                         label : 'Actions',

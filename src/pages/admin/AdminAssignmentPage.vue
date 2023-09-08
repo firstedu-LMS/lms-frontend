@@ -10,13 +10,16 @@
                 <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
                 <span class="text-blue-2">Assignments</span>
             </h1>
-            <div class="mx-4">
-                <select @change="changePage" class="px-2 py-1.5 m-3 mr-6 bg-transparent border outline-none border-gray text-gray" v-model="page">
-                    <option selected value="assignments">Assignments</option>
-                    <option value="weeks">Weeks</option>
-                </select>
-                <button @click="showTable" class="px-6 py-1 font-semibold rounded-l-md"  :class="table ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'">table</button>
-                <button @click="showCreate" class="px-6 py-1 font-semibold rounded-r-md" :class="createForm ? 'bg-cyan shadow-inner': 'bg-white text-black  shadow-lg' ">+ new</button>
+            <div class="flex mx-4">
+                <div class="relative flex h-fit my-auto flex-col items-center py-0.5 bg-white mx-6 text-gray">
+                    <button class="flex items-center justify-between w-32 px-4 rounded" @click="onSelect = !onSelect">
+                        <span>Assignments</span> 
+                        <span class="material-icons-outlined">arrow_drop_down</span>
+                    </button>
+                    <button @click="changePage" class="absolute z-50 w-32 px-4 py-1 bg-white rounded top-8" v-if="onSelect">Weeks</button>
+                </div>
+                <button @click="showTable" class="px-6 py-1 my-auto font-semibold h-fit rounded-l-md"  :class="table ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'">table</button>
+                <button @click="showCreate" class="px-6 py-1 font-semibold h-fit rounded-r-md" :class="createForm ? 'bg-cyan shadow-inner': 'bg-white text-black  shadow-lg' ">+ new</button>
             </div>
         </div>
 
@@ -41,15 +44,14 @@ import EditAssignment from '@/components/admin/assignments/EditAssignment.vue'
                 page : 'assignments',
                 createForm : false,
                 editForm : false,
+                onSelect : false,
                 table : true,
                 idforEdit : null
             }
         },
         methods : {
-            changePage(e) {
-                if (e.target.value == 'weeks') {
+            changePage() {
                     this.$router.push({name : 'AdminWeekPage' , params : {course_id : this.$route.params.course_id , batch_id : this.$route.params.batch_id}})
-                }
             },
             editAssignment(id){
                 this.idforEdit = id

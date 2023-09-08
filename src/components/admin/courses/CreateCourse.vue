@@ -12,12 +12,12 @@
                 <div class="w-[30%] my-8">
                     <label class="text-[12px] font-semibold" for="name">Name</label>
                     <input v-model="course.name" type="text" class="px-2 w-[60%] mx-5 py-1 border-b outline-none">
-                    <p v-if="errors.name" class="text-red py-1 mx-12">{{ errors.name[0] }}</p>
+                    <p v-if="errors.name" class="py-1 mx-12 text-red">{{ errors.name[0] }}</p>
                 </div>
                 <div class="w-[30%] my-8">
                     <label class="text-[12px] font-semibold" for="fee">Fee</label>
                     <input v-model="course.fee" type="number" class=" w-[60%] mx-5 px-2 py-1 border-b outline-none">
-                    <p v-if="errors.fee" class="text-red py-1 mx-12">{{ errors.fee[0] }}</p>
+                    <p v-if="errors.fee" class="py-1 mx-12 text-red">{{ errors.fee[0] }}</p>
 
                 </div>
             <div class="w-[30%] flex justify-center my-8">
@@ -33,13 +33,13 @@
             <div class="w-[30%] my-8">
                 <label for="image">Image</label>
                 <input @change="saveImage" type="file" class="w-full px-2 py-1 border-b outline-none file:border-0 file:text-sm">
-                <p v-if="errors.image_id" class="text-red py-1 mx-12">{{ errors.image_id[0] }}</p>
+                <p v-if="errors.image_id" class="py-1 mx-12 text-red">{{ errors.image_id[0] }}</p>
 
             </div>
             <div class="w-[30%] my-8">
                 <label class="text-[12px] font-semibold" for="age">Age</label>
                 <input v-model="course.age" type="text" class=" w-[60%] mx-5 px-2 py-1 border-b outline-none">
-                <p v-if="errors.age" class="text-red py-1 mx-12">{{ errors.age[0] }}</p>
+                <p v-if="errors.age" class="py-1 mx-12 text-red">{{ errors.age[0] }}</p>
 
             </div>
             <div class="w-[30%] my-8">
@@ -49,13 +49,13 @@
                     <option class="text-[10px]" value="online">online</option>
                     <option class="text-[10px]" value="offline">offline</option>
                 </select>
-                <p v-if="errors.status" class="text-red py-1 mx-12">{{ errors.status[0] }}</p>
+                <p v-if="errors.status" class="py-1 mx-12 text-red">{{ errors.status[0] }}</p>
 
             </div>
             <div class="w-[90%] mt-8 mb-32">
                 <label class="font-semibold text-[12px]" for="description">Description</label>
-                <quill-editor class="shadow-md shadow-black w-[90%]" v-model:content="course.description" theme="snow" toolbar="full" contentType="html"></quill-editor>
-                <p v-if="errors.description" class="text-red py-1 mx-12">{{ errors.description[0] }}</p>
+                <quill-editor class="w-full shadow-md shadow-black" v-model:content="course.description" theme="snow" toolbar="full" contentType="html"></quill-editor>
+                <p v-if="errors.description" class="py-1 mx-12 text-red">{{ errors.description[0] }}</p>
 
             </div>
 

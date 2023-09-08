@@ -6,14 +6,24 @@
                 <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
                  <router-link :to="{name : 'AdminBatchPage' , params : {course_id : weeks[0].course.id}}">{{ weeks[0].course.name }}</router-link>
                  <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
-                 <span class="text-blue-2">{{ weeks[0].batch.name }}</span>
+                 <span>{{ weeks[0].batch.name }}</span>
+                 <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
+                 <span class="text-blue-2">Weeks</span>
             </h1>
-            <div class="my-auto mr-6">
-                <select @change="changePage" class="px-2 py-1 m-3 bg-transparent border outline-none border-gray text-gray" v-model="page">
-                    <option selected value="assignments">Assignments</option>
-                    <option value="weeks">Weeks</option>
-                </select>
-                <button @click="addWeek" class="px-6 rounded shadow-lg py-0.5 bg-indigo">New +</button>
+            <h1 v-else class="flex items-center p-2 font-semibold text-gray">
+                <router-link :to="{name : 'AdminCoursePage'}">Courses</router-link>
+            </h1>
+            <div class="flex my-auto mr-6">
+
+                <div class="relative flex flex-col items-center py-0.5 bg-white mx-6 text-gray">
+                    <button class="flex items-center justify-between w-32 px-4 rounded" @click="onSelect = !onSelect">
+                        <span>Weeks</span> 
+                        <span class="material-icons-outlined">arrow_drop_down</span>
+                    </button>
+                    <button @click="changePage" class="absolute z-50 w-32 px-4 py-1 bg-white rounded top-8" v-if="onSelect">Assignment</button>
+                </div>
+
+                <button @click="addWeek" class="px-6 h-fit my-auto rounded shadow-lg py-0.5 bg-indigo">New +</button>
             </div>
         </div>
         <vue-good-table
@@ -54,6 +64,8 @@ import { VueGoodTable } from 'vue-good-table-next'
             return {
                 page : 'weeks',
                 weeks : [],
+                batch_deleted : false,
+                onSelect : false,
                 columns : [
                     {
                         field : 'week_number',
@@ -68,10 +80,8 @@ import { VueGoodTable } from 'vue-good-table-next'
             }
         },
         methods: {
-            changePage(e) {
-                if (e.target.value == 'assignments') {
+            changePage() {
                     this.$router.push({name : 'AdminAssignmentPage' , params : {course_id : this.$route.params.course_id , batch_id : this.$route.params.batch_id}})
-                }
             },
             deleteWeek(id){
                 ApiService.delete(`admin/weeks/${id}`).then(()=>{
@@ -91,9 +101,10 @@ import { VueGoodTable } from 'vue-good-table-next'
         mounted() {
             ApiService.get(`admin/weeks/all/${this.$route.params.batch_id}`).then((res) => {
                 this.weeks = res.data.data
-                console.log(this.weeks);
             }).catch((res) => {
-                console.log(res);
+                if(res.response.status == 500) {
+                    this.batch_deleted = true;
+                }
             })
         },
     }
