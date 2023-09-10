@@ -53,7 +53,6 @@ import axios from 'axios'
                     email : '',
                     password : '',
                     password_confirmation : '',
-                    role : 'admin'
                 }
             }
         },
