@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="profile && profile.user" class="my-8 sm:flex">
-            <img v-if="profile && profile.user" :src="filePath.imagePath(profile.user.image.image)" style="height : 220px;width : 220px;" class="mx-16 border-8 rounded-full border-teal sm:my-8 sm:mx-16 sm:px-6 " alt="">
+            <img v-if="profile && profile.user && profile.user.image" :src="filePath.imagePath(profile.user.image.image)" style="height : 220px;width : 220px;" class="mx-16 border-8 rounded-full border-teal sm:my-8 sm:mx-16 sm:px-6 " alt="">
             <div class="sm:w-[70%]">
                 <h1 class="px-8 py-4 text-3xl font-bold sm:px-12 sm:py-8 sm:mt-4 sm:mx-1">{{ profile.user.name }}</h1>
                 <p class="font-semibold px-8 py-1 text-lg sm:px-1.5 sm:mx-12">Student ID - {{ profile.id }}</p>
@@ -126,7 +126,6 @@ import filePath from '@/services/public/filePath'
         mounted(){
             ApiService.get('student/user').then((res) => {
                 this.profile = res.data.data;
-                console.log(res.data.data);
             }).catch((res) => {
                 console.log(res);
             })
