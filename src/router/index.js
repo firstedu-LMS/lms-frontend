@@ -152,9 +152,7 @@ router.beforeEach(async (to , from , next) => {
   if(to.meta.middleware){
     let token = TokenService.getToken();
     if (token) {
-      console.log(token);
         ApiService.get(`${to.meta.middleware}/user`).then((res) => {
-          console.log(res.data);
             authStore.setAuth(res.data)
         }).catch((res) => {
             console.log(res);

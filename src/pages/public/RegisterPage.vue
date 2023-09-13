@@ -11,7 +11,7 @@
                 </div>
                 <div  class="px-4 py-2">
                     <label for="" class="text-sm font-semibold">Profile Picture</label>
-                    <input type="file" class="w-full mt-1 outline-none bg-transparent border px-2 py-0.5 file:bg-transparent file:border-0">
+                    <input @change="saveImage" type="file" class="w-full mt-1 outline-none bg-transparent border px-2 py-0.5 file:bg-transparent file:border-0">
                 </div>
                 <div  class="px-4 py-2">
                     <label for="" class="text-sm font-semibold ">Email</label>
@@ -57,10 +57,19 @@ import axios from 'axios'
             }
         },
         methods : {
+            saveImage(e) {
+                let form = new FormData();
+                form.set('user_image' , e.target.files[0])
+                axios.post('images' , form).then((res) => {
+                    this.form.image_id = res.data.data.id;
+                }).catch((res) => {
+                    console.log(res);
+                })
+            },
             register () {
                 axios.post('register' , this.form).then((res) => {
                     TokenService.setToken(res.data.data.token)
-                    this.$router.go(-1)
+                    this.$router.push({name : "LoginPage"});
                 }).catch((res) => {
                     console.log(res);
                 })
