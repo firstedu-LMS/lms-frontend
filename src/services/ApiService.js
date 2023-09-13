@@ -2,16 +2,18 @@ import axios from "axios";
 import TokenService from "./TokenService";
 
 class ApiService {
+    config = {};
     static setConfig(){
         let token = TokenService.getToken();
-        return {
+        console.log('token from api' , token);
+        this.config = {
             headers : {'Authorization' : `Bearer ${token}`}
         };
     }
 
     static get(url) {
-        let config = this.setConfig()
-        return axios.get(url , config)
+        this.setConfig()
+        return axios.get(url , this.config)
     }
 
     static post(url , data) {

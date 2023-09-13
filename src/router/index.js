@@ -27,6 +27,9 @@ import AdminLessonPage from "@/pages/admin/AdminLessonPage.vue"
 import StudentDashboardLayout from '@/layouts/student/StudentDashboardLayout.vue'
 import StudentProfilePage from "@/pages/student/StudentProfilePage.vue";
 
+import ApiService from "@/services/ApiService";
+import TokenService from "@/services/TokenService";
+
 const routes = [
   {
     path: "/",
@@ -126,6 +129,9 @@ const routes = [
     path : '/student',
     name : 'StudentDashboardLayout',
     component : StudentDashboardLayout,
+    meta : {
+      middleware : 'student'
+    },
     children : [
       {
         path : '',
@@ -144,11 +150,21 @@ const router = createRouter({
 router.beforeEach(async (to , from , next) => {
   let authStore = useAuthStore()
   if(to.meta.middleware){
-    authStore.verifyAuth(to.meta.middleware);
-    if (authStore.user) {
+    let token = TokenService.getToken();
+    if (token) {
+        ApiService.get(`${to.meta.middleware}/user`).then((res) => {
+            authStore.setAuth(res.data)
+        }).catch((res) => {
+            console.log(res);
+            authStore.destroyAuth();
+        })
+    } else {
+        authStore.destroyAuth();
+    }
+    if (authStore.authenticated) {
       next();
     } else {
-      alert("Error! Please loggin again")
+      next('/login')
     }
   } else {
     next();

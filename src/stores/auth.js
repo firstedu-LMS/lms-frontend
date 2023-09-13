@@ -6,15 +6,22 @@ export const useAuthStore = defineStore('auth' , {
     state : () => {
         return {
             user : {},
+            authenticated : !!TokenService.getToken(),
         }
     },
 
     actions : {
+        setAuth(user)  {
+            this.user = user,
+            this.authenticated = true
+        },
         verifyAuth(middleware){
-            if (TokenService.getToken()) {
+            let token = TokenService.getToken();
+            if (token) {
                 ApiService.get(`${middleware}/user`).then((res) => {
-                    this.user = res.data
-                }).catch(() => {
+                    this.setAuth(res.data)
+                }).catch((res) => {
+                    console.log(res);
                     this.destroyAuth();
                 })
             } else {
@@ -23,6 +30,7 @@ export const useAuthStore = defineStore('auth' , {
         },
         destroyAuth(){
             this.user = {};
+            this.authenticated = false;
             TokenService.destroyToken();
         }
     }
