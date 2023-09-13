@@ -46,7 +46,7 @@ import axios from 'axios';
                 axios.post('login' , this.form).then((res) => {
                     TokenService.setToken(res.data.data.token)
                     console.log(res.data.data);
-                    this.$router.push({name : 'StudentProfilePage'})
+                    this.$router.push('/')
                 }).catch((res) => {
                     console.log(res);
                 })
