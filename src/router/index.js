@@ -152,19 +152,20 @@ router.beforeEach(async (to , from , next) => {
   if(to.meta.middleware){
     let token = TokenService.getToken();
     if (token) {
-        ApiService.get(`${to.meta.middleware}/user`).then((res) => {
+        await ApiService.get(`${to.meta.middleware}/user`).then((res) => {
             authStore.setAuth(res.data)
-        }).catch((res) => {
-            console.log(res);
+            if (authStore.authenticated) {
+              let isAuthenticatedByRole = authStore.roles.find((role) => role.name == to.meta.middleware);
+              isAuthenticatedByRole ? next() : next('/login');
+            } else {
+              next('/login')
+            }
+        }).catch(() => {
             authStore.destroyAuth();
         })
     } else {
         authStore.destroyAuth();
-    }
-    if (authStore.authenticated) {
-      next();
-    } else {
-      next('/login')
+        next('/login');
     }
   } else {
     next();

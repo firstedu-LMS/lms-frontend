@@ -5,7 +5,6 @@ class ApiService {
     config = {};
     static setConfig(){
         let token = TokenService.getToken();
-        console.log('token from api' , token);
         this.config = {
             headers : {'Authorization' : `Bearer ${token}`}
         };

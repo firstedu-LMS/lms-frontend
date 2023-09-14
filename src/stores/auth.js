@@ -1,4 +1,3 @@
-import ApiService from "@/services/ApiService";
 import TokenService from "@/services/TokenService";
 import { defineStore } from "pinia";
 
@@ -6,27 +5,21 @@ export const useAuthStore = defineStore('auth' , {
     state : () => {
         return {
             user : {},
+            roles : [],
             authenticated : !!TokenService.getToken(),
         }
     },
 
     actions : {
-        setAuth(user)  {
-            this.user = user,
-            this.authenticated = true
-        },
-        verifyAuth(middleware){
-            let token = TokenService.getToken();
-            if (token) {
-                ApiService.get(`${middleware}/user`).then((res) => {
-                    this.setAuth(res.data)
-                }).catch((res) => {
-                    console.log(res);
-                    this.destroyAuth();
-                })
-            } else {
-                this.destroyAuth();
+        setAuth(data)  {
+            if (data.user) {
+                this.user = data.user;
+                this.roles = data.user.roles;
+            } else if(data.roles) {
+                this.user = data;
+                this.roles  = data.roles;
             }
+            this.authenticated = true
         },
         destroyAuth(){
             this.user = {};
