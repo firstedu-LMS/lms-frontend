@@ -1,42 +1,42 @@
 <template>
   <div>
-    <div class="sm:w-5/6 w-full h-fit">
-      <nav class="flex items-between sticky top-0 justify-between px-2 bg-white">
+    <div class="w-full sm:w-5/6 h-fit">
+      <nav class="sticky top-0 flex justify-between px-2 bg-white items-between">
         <div>
           <img src="/images/layout/logo.png" class="w-24 p-2" alt="" />
         </div>
         <div class="flex items-center justify-end">
           <span class=""><i class="material-icons-sharp">notifications</i></span>
-          <span @click="showSidebar" class="sm:hidden ml-3"><i class="material-icons-sharp">menu</i></span>
+          <span @click="showSidebar" class="ml-3 sm:hidden"><i class="material-icons-sharp">menu</i></span>
         </div>
       </nav>
       <main>
         <router-view></router-view>
       </main>
     </div>
-    <div v-if="sideBar" class="fixed max-sm:w-2/3 top-0 right-0 sm:w-1/6 h-screen bg-teal">
+    <div v-if="sideBar" class="fixed top-0 right-0 h-screen bg-teal">
       <div class="border-b-4 border-b-gray">
         <span v-for="item in sideItems" :key="item">
           <router-link :to="{ name: item.path }">
-            <p class="text-center my-8 py-2 text-white hover:text-gray font-semibold text-lg">
+            <p class="py-2 my-8 text-lg font-semibold text-center text-white hover:text-gray">
               {{ item.name }}
             </p>
           </router-link>
         </span>
       </div>
-        <span class="text-red text-center text-lg py-5 my-2 mx-20 font-semibold">Log Out</span>
+        <span class="py-5 mx-20 my-2 text-lg font-semibold text-center text-red">Log Out</span>
     </div>
-    <div class="fixed max-sm:hidden max-sm:w-2/3 top-0 right-0 sm:w-1/6 h-screen bg-teal">
-      <div class="border-b-4 border-b-gray">
+    <div class="fixed top-0 right-0 hidden w-1/6 h-screen sm:block bg-teal">
+      <div class="border-b-2 border-b-gray-2">
         <span v-for="item in sideItems" :key="item">
           <router-link :to="{ name: item.path }">
-            <p class="text-center my-8 py-2 text-white hover:text-gray font-semibold text-lg">
+            <p class="py-2 my-4 text-lg font-semibold text-center text-white hover:text-gray">
               {{ item.name }}
             </p>
           </router-link>
         </span>
       </div>
-        <span class="text-red text-center text-lg py-5 px-1 mt-4 mx-16 font-semibold">Log Out</span>
+        <p class="px-1 mt-4 text-lg font-semibold text-center text-red">Log Out</p>
     </div>  
   </div>
 </template>

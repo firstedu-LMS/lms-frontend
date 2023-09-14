@@ -125,7 +125,7 @@ import filePath from '@/services/public/filePath'
         },
         mounted(){
             ApiService.get('student/user').then((res) => {
-                this.profile = res.data.data;
+                this.profile = res.data;
             }).catch((res) => {
                 console.log(res);
             })
