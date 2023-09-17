@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="flex justify-between text-white ">
+        <div class="flex justify-between py-2">
             <h1 v-if="heading" class="flex items-center p-2 font-semibold text-gray">
                 <router-link :to="{name : 'AdminCoursePage'}">Courses</router-link>
                 <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
@@ -19,7 +19,7 @@
                     <button @click="changePage" class="absolute z-50 w-32 px-4 py-1 bg-white rounded top-8" v-if="onSelect">Weeks</button>
                 </div>
                 <button @click="showTable" class="px-6 py-1 my-auto font-semibold h-fit rounded-l-md"  :class="table ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'">table</button>
-                <button @click="showCreate" class="px-6 py-1 font-semibold h-fit rounded-r-md" :class="createForm ? 'bg-cyan shadow-inner': 'bg-white text-black  shadow-lg' ">+ new</button>
+                <button @click="showCreate" class="px-6 py-1 my-auto font-semibold h-fit rounded-r-md" :class="createForm ? 'bg-cyan shadow-inner': 'bg-white text-black  shadow-lg' ">+ new</button>
             </div>
         </div>
 

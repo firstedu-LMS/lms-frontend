@@ -74,7 +74,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
                     this.course.available = false;
                 }
                 ApiService.put(`admin/courses/${this.id}` , this.course).then(() => {
-                    window.location.reload()
+                    this.$emit('reload');
                 }).catch((res) => {
                     alert('Error!')
                     console.log(res);

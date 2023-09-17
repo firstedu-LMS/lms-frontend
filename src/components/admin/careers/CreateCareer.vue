@@ -12,19 +12,19 @@
             <div class="w-[27%] my-8">
                 <label class="text-[12px] font-semibold" for="name">Name</label>
                 <input v-model="career.name" type="text" class="px-2 w-[60%] mx-5 py-1 border-b outline-none">
-                <p v-if="errors.name" class="text-red py-1 mx-8">{{ errors.name[0] }}</p>
+                <p v-if="errors.name" class="py-1 mx-8 text-red">{{ errors.name[0] }}</p>
 
             </div>
             <div class="w-[27%] my-8">
                 <label class="text-[12px] font-semibold" for="vacancy">Vacancy</label>
                 <input v-model="career.vacancy" type="number" class="px-2 w-[60%] mx-5 py-1 border-b outline-none">
-                <p v-if="errors.vacancy" class="text-red py-1 mx-4">{{ errors.vacancy[0] }}</p>
+                <p v-if="errors.vacancy" class="py-1 mx-4 text-red">{{ errors.vacancy[0] }}</p>
 
             </div>
             <div class="w-[27%] my-8">
                 <label class="text-[12px] font-semibold" for="age">Age</label>
                 <input v-model="career.age" type="text" class="px-2 w-[60%] mx-5 py-1 border-b outline-none">
-                <p v-if="errors.age" class="text-red py-1 mx-4">{{ errors.age[0] }}</p>
+                <p v-if="errors.age" class="py-1 mx-4 text-red">{{ errors.age[0] }}</p>
 
             </div>
             <div class="w-[27%] my-8">
@@ -34,19 +34,19 @@
                     <option class="text-[11px] " value="Full Time">Full Time</option>
                     <option class="text-[11px] " value="Part Time">Part Time</option>
                 </select>
-                <p v-if="errors.employment_status" class="text-red py-1">{{ errors.employment_status[0] }}</p>
+                <p v-if="errors.employment_status" class="py-1 text-red">{{ errors.employment_status[0] }}</p>
 
             </div>
             <div class="w-[27%] my-8">
                 <label class="text-[12px] font-semibold" for="position">Position</label>
                 <input v-model="career.position" type="text" class="w-full px-2 py-1 border-b outline-none">
-                <p v-if="errors.position" class="text-red py-1 mx-4">{{ errors.position[0] }}</p>
+                <p v-if="errors.position" class="py-1 mx-4 text-red">{{ errors.position[0] }}</p>
 
             </div>
             <div class="w-[27%] my-8">
                 <label class="text-[12px] font-semibold" for="salary">Salary</label>
                 <input v-model="career.salary" type="text" class="w-full px-2 py-1 border-b outline-none">
-                <p v-if="errors.salary" class="text-red py-1 mx-4">{{ errors.salary[0] }}</p>
+                <p v-if="errors.salary" class="py-1 mx-4 text-red">{{ errors.salary[0] }}</p>
 
             </div>
             <div class="w-[27%] my-8">
@@ -57,25 +57,25 @@
                     <option class="text-[11px]" value="Monthly">Monthly</option>
                     <option class="text-[11px]" value="Yearly">Yearly</option>
                 </select>
-                <p v-if="errors.salary_period" class="text-red py-1 ">{{ errors.salary_period[0] }}</p>
+                <p v-if="errors.salary_period" class="py-1 text-red ">{{ errors.salary_period[0] }}</p>
 
             </div>
             <div class="w-[27%] my-8">
                 <label class="text-[12px] font-semibold" for="deadline">Deadline</label>
                 <input  v-model="career.deadline" type="date" class="w-full px-2 py-1 border-b outline-none">
-                <p v-if="errors.deadline" class="text-red py-1 mx-4">{{ errors.deadline[0] }}</p>
+                <p v-if="errors.deadline" class="py-1 mx-4 text-red">{{ errors.deadline[0] }}</p>
 
             </div>
             <div class="w-full my-8">
                 <label class="text-[12px] font-semibold" for="description">Job Description</label>
                 <quill-editor v-model:content="career.job_description" theme="snow" toolbar="full" contentType="html"></quill-editor>
-                <p v-if="errors.job_description" class="text-red py-1 mx-12">{{ errors.job_description[0] }}</p>
+                <p v-if="errors.job_description" class="py-1 mx-12 text-red">{{ errors.job_description[0] }}</p>
 
             </div>
             <div class="w-full my-28">
                 <label class="text-[12px] font-semibold" for="description">Job Requirement</label>
                 <quill-editor v-model:content="career.job_requirement" theme="snow" toolbar="full" contentType="html"></quill-editor>
-                <p v-if="errors.job_requirement" class="text-red py-1 mx-12">{{ errors.job_requirement[0] }}</p>
+                <p v-if="errors.job_requirement" class="py-1 mx-12 text-red">{{ errors.job_requirement[0] }}</p>
 
             </div>
             <div class="w-full my-4">
@@ -114,7 +114,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
         methods : {
             reload() {
-                window.location.reload();
+                this.$emit('reload')
             },
             createCareer(){
                 ApiService.post('admin/careers' , this.career).then(() => {

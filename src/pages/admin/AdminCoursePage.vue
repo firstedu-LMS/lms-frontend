@@ -9,8 +9,8 @@
         </div>
         <div>
             <CoursesView @edit="showEdit" v-if="courseTable" />
-            <CreateCourse v-if="courseCreate" />
-            <EditCourse :id="idToEdit"  v-if="courseEdit" />
+            <CreateCourse @reload="showTable" v-if="courseCreate" />
+            <EditCourse @reload="showTable" :id="idToEdit"  v-if="courseEdit" />
         </div>
     </div>
 </template>
