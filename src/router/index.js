@@ -22,7 +22,7 @@ import AdminBatchPage from '@/pages/admin/AdminBatchPage.vue'
 import AdminWeekPage from "@/pages/admin/AdminWeekPage.vue"
 import AdminAssignmentPage from '@/pages/admin/AdminAssignmentPage.vue'
 import AdminLessonPage from "@/pages/admin/AdminLessonPage.vue"
-
+import AdminEnrollmentPage from "@/pages/admin/AdminEnrollmentPage.vue"
 
 import StudentDashboardLayout from '@/layouts/student/StudentDashboardLayout.vue'
 import StudentProfilePage from "@/pages/student/StudentProfilePage.vue";
@@ -99,6 +99,11 @@ const routes = [
         path : 'courses',
         name : 'AdminCoursePage',
         component : AdminCoursePage
+      },
+      {
+        path : 'enrollments',
+        name : 'AdminEnrollmentPage',
+        component : AdminEnrollmentPage
       },
       {
         path : 'courses/:course_id/batches',

@@ -50,8 +50,8 @@
                         icon : 'group'
                     },
                     {
-                        name : 'Students',
-                        path : 'HC_Page',
+                        name : 'Enrollments',
+                        path : 'AdminEnrollmentPage',
                         icon : 'groups'
                     },
                     {
