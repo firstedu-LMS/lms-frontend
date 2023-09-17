@@ -80,32 +80,35 @@ import { VueGoodTable } from 'vue-good-table-next'
             }
         },
         methods: {
+            getWeeks(){
+                ApiService.get(`admin/weeks/all/${this.$route.params.batch_id}`).then((res) => {
+                    this.weeks = res.data.data
+                }).catch((res) => {
+                    if(res.response.status == 500) {
+                        this.batch_deleted = true;
+                    }
+                })
+            },
             changePage() {
                     this.$router.push({name : 'AdminAssignmentPage' , params : {course_id : this.$route.params.course_id , batch_id : this.$route.params.batch_id}})
             },
             deleteWeek(id){
                 ApiService.delete(`admin/weeks/${id}`).then(()=>{
-                    this.$router.push({name : "AdminCoursePage"})
+                    this.getWeeks();
                 }).catch(res => {
                     console.log(res);
                 })
             },
             addWeek(){
                 ApiService.post(`admin/weeks`,{"course_id" : this.$route.params.course_id , "batch_id" : this.$route.params.batch_id}).then(() => {
-                    window.location.reload()
+                    this.getWeeks();
                 }).catch((res) => {
                     console.log(res);
                 })
             }
         },
         mounted() {
-            ApiService.get(`admin/weeks/all/${this.$route.params.batch_id}`).then((res) => {
-                this.weeks = res.data.data
-            }).catch((res) => {
-                if(res.response.status == 500) {
-                    this.batch_deleted = true;
-                }
-            })
+            this.getWeeks();
         },
     }
 </script>

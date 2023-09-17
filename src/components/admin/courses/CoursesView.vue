@@ -63,12 +63,19 @@ import { VueGoodTable } from 'vue-good-table-next'
                     {
                         label : 'Actions',
                         field : 'actions',
-                        width : '30%'
+                        width : '35%'
                     }
                 ]
             }
         },
         methods: {
+            getCourses(){
+                ApiService.get('admin/courses').then((res) => {
+                    this.courses = res.data.data
+                }).catch((res) => {
+                    console.log(res);
+                })
+            },
             showCourseDialog(course){
                 if (this.courseDialog.id == course.id) {
                     this.courseDialog = {}
@@ -81,7 +88,7 @@ import { VueGoodTable } from 'vue-good-table-next'
             },
             deleteCourse(id){
                 ApiService.delete(`admin/courses/${id}`).then(() => {
-                    window.location.reload()
+                    this.getCourses();
                 }).catch((res) => {
                     alert('Error!')
                     console.log(res);
@@ -89,12 +96,7 @@ import { VueGoodTable } from 'vue-good-table-next'
             }
         },
         mounted() {
-            ApiService.get('admin/courses').then((res) => {
-                this.courses = res.data.data
-            }).catch((res) => {
-                console.log(res);
-            })
-            
+            this.getCourses();
         },
     }
 </script>

@@ -41,26 +41,21 @@ export default {
   },
   methods : {
     async enrollCourse(id) {
-      ApiService.get('/user').then(res => {
-        this.authStore.setAuth(res.data)
-        let isStudent = this.authStore.roles.find((role) => role.name == 'student');
-        if (isStudent) {
-          console.log(isStudent);
-          let obj = {
-            course_id : id,
-            student_id : this.authStore.user.id
-          } 
-          ApiService.post('student/enrollments' , obj).then((res) => {
-            console.log(res);
-          }).catch((res) => {
-            console.log(res);
-          })
-        } else {
-          alert(`You are ${this.authStore.roles[0].name}. You can't enroll this course!`)
-        }
-      }).catch(() => {
-        this.$router.push({name : 'LoginPage'});
-      })
+      await this.authStore.getUser();
+      let isStudent = this.authStore.roles.find((role) => role.name == 'student');
+      if (isStudent) {
+        let obj = {
+          course_id : id,
+          student_id : this.authStore.user.id
+        } 
+        ApiService.post('student/enrollments' , obj).then((res) => {
+          console.log(res);
+        }).catch((res) => {
+          console.log(res);
+        })
+      } else {
+        alert(`You are ${this.authStore.roles[0].name}. You can't enroll this course!`)
+      }
     }
   },
   mounted() {

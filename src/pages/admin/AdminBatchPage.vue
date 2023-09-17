@@ -14,7 +14,7 @@
 
         <div>
             <BatchesView @course="setCourse"  @edit="showEdit" v-if="batchTable" :course_id="courseId" />
-            <CreateBatch v-if="createForm" :course_id="courseId" />
+            <CreateBatch @reload="showTable" v-if="createForm" :course_id="courseId" />
             <EditBatch v-if="editForm" :batch_id="idForEdit" />
         </div>
 

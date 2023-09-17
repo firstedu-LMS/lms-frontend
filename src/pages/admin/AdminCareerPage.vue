@@ -9,7 +9,7 @@
         </div>
         <div>
             <CareersView @edit="showEditForm" v-if="careersTable" />
-            <CreateCareer v-if="createForm" />
+            <CreateCareer @reload="showCareersTable" v-if="createForm" />
             <EditCareer v-if="editForm" :id="idForEdit" />
         </div>
     </div>

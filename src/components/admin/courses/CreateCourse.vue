@@ -82,7 +82,7 @@ import ApiService from '@/services/ApiService';
                     name : '',
                     age : '',
                     fee : null,
-                    available : '',
+                    available : true,
                     status : '',
                     description : '',
                     image_id : null
@@ -93,7 +93,7 @@ import ApiService from '@/services/ApiService';
 
         methods : {
             reload() {
-                window.location.reload();
+                this.$emit('reload');
             },
             saveImage(e) {
                 let file = e.target.files[0];
@@ -118,7 +118,7 @@ import ApiService from '@/services/ApiService';
                     this.errors = res.response.data.errors
                     setTimeout(() => {
                         this.errors = {}
-                    },3000)
+                    },5000)
                 })
             }
         }
