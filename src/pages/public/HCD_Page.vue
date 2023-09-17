@@ -17,8 +17,8 @@
       </ul>
     </div>
     <div class="p-4 text-lg text-white sm:w-[80%] mx-auto">
-        <button @click="enrollCourse(course.id)" class="px-6 py-2 mr-2 bg-green">Enroll now</button>
-        <router-link to="/" class="px-4 py-2 bg-gray">Back</router-link>
+        <button @click="enrollCourse(course.id)" class="px-6 py-1 mr-2 bg-green">Enroll now</button>
+        <router-link :to="{name : 'HC_Page'}" class="px-4 py-2 bg-gray">Back</router-link>
     </div>
   </div>
 </template>
@@ -27,6 +27,7 @@
 import HPNavbar from "@/layouts/public/HPNavbar.vue";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
+import ApiService from "@/services/ApiService";
 export default {
   components: {
     HPNavbar,
@@ -39,20 +40,33 @@ export default {
     };
   },
   methods : {
-    enrollCourse(id) {
-      let user = this.authStore.user;
-      if (user.email) {
-        console.log(id);
-      } else {
-        this.$router.push({name : 'LoginPage'})
-      }
+    async enrollCourse(id) {
+      ApiService.get('/user').then(res => {
+        this.authStore.setAuth(res.data)
+        let isStudent = this.authStore.roles.find((role) => role.name == 'student');
+        if (isStudent) {
+          console.log(isStudent);
+          let obj = {
+            course_id : id,
+            student_id : this.authStore.user.id
+          } 
+          ApiService.post('student/enrollments' , obj).then((res) => {
+            console.log(res);
+          }).catch((res) => {
+            console.log(res);
+          })
+        } else {
+          alert(`You are ${this.authStore.roles[0].name}. You can't enroll this course!`)
+        }
+      }).catch(() => {
+        this.$router.push({name : 'LoginPage'});
+      })
     }
   },
   mounted() {
     axios
       .get(`/courses/${this.id}`).then((res) => {
         this.course = res.data.data;
-        console.log(res.data.data);
       }).catch((res) => {
         alert("Error!");
         console.log(res);
