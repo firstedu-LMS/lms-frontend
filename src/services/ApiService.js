@@ -5,14 +5,14 @@ class ApiService {
     config = {};
     static setConfig(){
         let token = TokenService.getToken();
-        this.config = {
+        return {
             headers : {'Authorization' : `Bearer ${token}`}
         };
     }
 
     static get(url) {
-        this.setConfig()
-        return axios.get(url , this.config)
+        let config =  this.setConfig();
+        return axios.get(url , config)
     }
 
     static post(url , data) {
