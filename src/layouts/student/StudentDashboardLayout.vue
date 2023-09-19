@@ -36,12 +36,14 @@
           </router-link>
         </span>
       </div>
-        <p class="px-1 mt-4 text-lg font-semibold text-center text-red">Log Out</p>
+        <button @click="logout" class="px-1 mt-4 text-lg font-semibold text-center text-red">Log Out</button>
     </div>  
   </div>
 </template>
 
 <script>
+import ApiService from '@/services/ApiService';
+import TokenService from '@/services/TokenService';
 export default {
   data() {
     return {
@@ -76,6 +78,11 @@ export default {
       this.sideBar = true;
       this.btn = false;
     },
+    logout(){
+        ApiService.post('logout').then(()=>{
+            TokenService.destroyToken();
+        }).catch(err=>console.log(err));
+    }
   },
 };
 </script>

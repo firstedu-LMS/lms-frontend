@@ -158,6 +158,7 @@ router.beforeEach(async (to , from , next) => {
     let token = TokenService.getToken();
     if (token) {
         await ApiService.get(`${to.meta.middleware}/user`).then((res) => {
+          console.log(res);
             authStore.setAuth(res.data)
             if (authStore.authenticated) {
               let isAuthenticatedByRole = authStore.roles.find((role) => role.name == to.meta.middleware);
