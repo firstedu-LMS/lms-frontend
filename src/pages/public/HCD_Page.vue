@@ -43,12 +43,12 @@ export default {
     async enrollCourse(id) {
       await this.authStore.getUser();
       let isStudent = this.authStore.roles.find((role) => role.name == 'student');
-      if (isStudent) {
+      if (isStudent && this.authStore.user.student) {
         let obj = {
           course_id : id,
-          student_id : this.authStore.user.id
+          student_id : this.authStore.user.student.id
         } 
-        ApiService.post('student/enrollments' , obj).then((res) => {
+        ApiService.post('enrollments' , obj).then((res) => {
           console.log(res);
         }).catch((res) => {
           console.log(res);
