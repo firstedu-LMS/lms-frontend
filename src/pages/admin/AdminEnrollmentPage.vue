@@ -12,20 +12,20 @@
                 <span class="relative flex justify-around w-full text-center text-white " v-if="props.column.field == 'actions'">
                         <button @click="acceptStudent = !acceptStudent" class="text-sm rounded-sm text-green">
                             Accept
-                            <span class="material-icons-outlined" style="font-size: 15px; padding: 3%; background-color :rgb(54, 253, 54); border-radius: 100%;">
+                            <span class="material-icons-outlined text-white" style="font-size: 15px; padding: 3%; background-color :rgb(54, 253, 54); border-radius: 100%;">
                                 done
                             </span>
                         </button>
                         <button  class="text-sm rounded-sm text-red">
                             remove
-                            <span class="material-icons-outlined" style="font-size: 15px; padding: 3%; background-color :red; border-radius: 100%;">
+                            <span class="material-icons-outlined text-white" style="font-size: 15px; padding: 3%; background-color :red; border-radius: 100%;">
                                 clear
                             </span>
                         </button>
                 </span>
             </template>
         </vue-good-table>
-        <AcceptStudentForm v-if="this.acceptStudent"></AcceptStudentForm>
+        <AcceptStudentEnrollmentForm v-if="this.acceptStudent"></AcceptStudentEnrollmentForm>
     </div>
 
 </template>
@@ -35,11 +35,11 @@ import 'vue-good-table-next/dist/vue-good-table-next.css'
 import { VueGoodTable } from 'vue-good-table-next'
 import ApiService from '@/services/ApiService'
 
-import AcceptStudentForm from '@/components/admin/AcceptStudentForm.vue'
+import AcceptStudentEnrollmentForm from '@/components/admin/enrollments/AcceptStudentEnrollmentForm.vue'
     export default {
         components : {
             VueGoodTable,
-            AcceptStudentForm
+            AcceptStudentEnrollmentForm
         },
         data () {
             return{
