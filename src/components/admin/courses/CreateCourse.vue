@@ -22,11 +22,11 @@
                 </div>
             <div class="w-[30%] flex justify-center my-8">
                 <span class="mr-4 text-center">
-                    <input type="radio" class="" v-model="course.available" value="1" />
+                    <input type="radio" class="" v-model="course.available" :value="Boolean(true)" />
                     <br><label>open now</label>     
                 </span>
                 <span class="ml-4 text-center">
-                    <input disabled type="radio" class="" v-model="course.available" value="0" />
+                    <input disabled type="radio" class="" v-model="course.available" :value="Boolean(false)" />
                     <br><label>temporary closed</label>
                 </span>
             </div>
@@ -63,6 +63,7 @@
                 <button class="px-3 py-1 bg-white shadow-lg text-gray">Submit</button>
             </div>
         </form>
+        <img :src="previewImage" alt="">
     </div>
 </template>
 
@@ -70,6 +71,7 @@
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import ApiService from '@/services/ApiService';
+import filePath from '../../../services/public/filePath';
     export default {
         components : {
             QuillEditor
@@ -77,12 +79,14 @@ import ApiService from '@/services/ApiService';
 
         data() {
             return {
+                filePath : filePath,
+                previewImage : '',
                 created : false,
                 course : {
                     name : '',
                     age : '',
                     fee : null,
-                    available : 1,
+                    available : true,
                     status : '',
                     description : '',
                     image_id : null
@@ -100,6 +104,7 @@ import ApiService from '@/services/ApiService';
                 let form = new FormData();
                 form.set('course_image' , file);
                 ApiService.post('admin/images' , form).then((res) => {
+                    this.previewImage = filePath.imagePath(res.data.data.image)
                     this.course.image_id = res.data.data.id;
                 }).catch((res) => {
                     console.log(res);
@@ -111,11 +116,13 @@ import ApiService from '@/services/ApiService';
                 ApiService.post('admin/courses' , this.course).then(() => {
                     this.created = true;
                 }).catch((res) => {
-                    console.log(res);
-                    // this.errors = res.response.data.errors
-                    // setTimeout(() => {
-                    //     this.errors = {}
-                    // },5000)
+                    this.course.available = 1;
+                    if (res.response && res.response.data.errors) {
+                        this.errors = res.response.data.errors
+                            setTimeout(() => {
+                                this.errors = {}
+                            },5000)
+                    }
                 })
             }
         }

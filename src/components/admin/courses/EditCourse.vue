@@ -30,11 +30,11 @@
             <div class="w-[30%] flex justify-center my-8">
                 <label class="text-[12px] font-semibold">Condition</label>
                 <span class="mx-2 text-center">
-                    <input type="radio" class="" v-model="course.available" value="true" />
+                    <input type="radio" class="" v-model="course.available" :value="Boolean(true)" />
                     <br><label class="text-[9px]">open now</label>     
                 </span>
                 <span class="mx-2 text-center">
-                    <input type="radio" class="" v-model="course.available" value="false" />
+                    <input type="radio" class="" v-model="course.available" :value="Boolean(false)" />
                     <br><label class="text-[9px]">temporary closed</label>
                 </span>
             </div>
@@ -68,11 +68,6 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
         methods : {
             editCourse(){
-                if (this.course.available == 'true') {
-                    this.course.available = true;
-                } else {
-                    this.course.available = false;
-                }
                 ApiService.put(`admin/courses/${this.id}` , this.course).then(() => {
                     this.$emit('reload');
                 }).catch((res) => {

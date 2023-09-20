@@ -60,7 +60,8 @@ import axios from 'axios'
             saveImage(e) {
                 let form = new FormData();
                 form.set('user_image' , e.target.files[0])
-                axios.post('images' , form).then((res) => {
+                axios.post('register/profile' , form).then((res) => {
+                    console.log(res.data.data);
                     this.form.image_id = res.data.data.id;
                 }).catch((res) => {
                     console.log(res);
