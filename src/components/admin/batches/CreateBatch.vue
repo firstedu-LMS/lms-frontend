@@ -14,11 +14,11 @@
             <div class="flex w-1/2 p-4 my-4">
                 <span class="mr-8">Status</span>
                 <span class="mr-4 text-center">
-                    <input type="radio" class="" v-model="batch.status" value="true" />
+                    <input type="radio" class="" v-model="batch.status" :value="Boolean(true)" />
                     <br><label>on going</label>     
                 </span>
                 <span class="ml-4 text-center">
-                    <input type="radio" disabled class="" v-model="batch.status" value="false" />
+                    <input type="radio" disabled class="" v-model="batch.status" :value="Boolean(false)" />
                     <br><label>finished</label>
                 </span>
             </div>
@@ -91,11 +91,6 @@ import ApiService from '@/services/ApiService'
         },
         methods : {
             createBatch(){
-                if (this.batch.status == 'true') {
-                    this.batch.status = true;
-                } else {
-                    this.batch.status = false;
-                }
                 this.batch.course_id = this.$props.course_id;
                 ApiService.post('admin/batches' , this.batch).then(() => {
                     this.$emit('reload')

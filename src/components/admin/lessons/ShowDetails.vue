@@ -6,9 +6,15 @@
                 Your browser does not support the video tag.
             </video>
             <h1 class="my-4 text-lg">{{ lesson.name }}</h1>
-            <p v-html="lesson.description"></p>
 
-            <div>
+            <div class="my-6">
+                <button :class="showDesc? 'bg-blue-2 text-white' : ''" class="w-1/2 py-2 border border-r-0 border-blue-2" @click="() => {showDesc = true;showQues = false}">Descriptions</button>
+                <button :class="showQues? 'bg-blue-2 text-white' : ''" class="w-1/2 py-2 border border-blue-2" @click="() => {showDesc = false;showQues = true}">Questions</button>
+            </div>
+
+            <p v-if="showDesc" v-html="lesson.description"></p>
+
+            <div v-if="showQues">
                 <button v-if="questions.length" @click="showForm" class="px-3 py-1 my-4 text-white rounded bg-blue-2">Add Question +</button>
 
                 <div>
@@ -93,6 +99,8 @@ import filePath from '../../../services/public/filePath';
         },
         data() {
             return {
+                showDesc : true,
+                showQues : false,
                 addQues : true,
                 quesForm : false, 
                 questions : [],

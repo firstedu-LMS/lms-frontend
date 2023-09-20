@@ -48,13 +48,14 @@ import { useAuthStore } from '@/stores/auth';
             }
         },
         methods : {
-            navigate() {
+            async navigate() {
+                await this.authStore.getUser();
                 if (this.authStore.roles.length && this.authStore.roles[0].name == 'admin') {
                     this.$router.push({name : 'AdminDashboardPage'})
                 } else if (this.authStore.roles.length && this.authStore.roles[0].name == 'student') {
                     this.$router.push({name : 'StudentProfilePage'})
                 } else {
-                    alert('please login !')
+                    this.$router.push({name : 'LoginPage'})
                 }
             }
         }
