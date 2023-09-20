@@ -1,8 +1,8 @@
 <template>
-    <div class="p-4">
+    <div class="p-4 ">
         <h1 class="px-4 font-black">NEW</h1>
         <transition name="dialog">
-                <dialog v-if="created" class="fixed z-50 flex flex-col items-center p-6 text-gray" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;" open>
+                <dialog v-if="created" class="fixed z-50 flex  flex-col items-center p-6 text-gray" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;" open>
                     <span style="color: #22c55e; font-size: 6rem;" class="material-icons-sharp">check_circle</span>
                     <p class="my-6 text-xl">Job Has Been Created Successfully.</p>
                     <button class="w-full py-1.5 text-white rounded hover:bg-transparent hover:text-green border border-green bg-green" @click="reload">Okay</button>
