@@ -20,7 +20,7 @@
             </div>
             <div class="w-full flex my-6">
                 <label class="w-1/6 mx-6 my-8" for="address">Address</label>
-                <textarea name="" class=" mx-14 px-3" id="" cols="43" rows="4"></textarea>
+                <textarea name="" class=" px-3 w-[63%]" id="" cols="38" rows="4"></textarea>
             </div>
         </div>
         <div class="flex justify-between">
@@ -44,8 +44,32 @@
 </template>
 
 <script>
+import ApiService from '@/services/ApiService';
     export default {
-        
+        props : ['student'],
+        data(){
+            return {
+                promptBox : false,
+                formData : {
+                    name : '',
+                    email : '',
+                    
+                }
+ 
+            }
+        },
+        methods : {
+            promptToAccept() {
+                this.promptBox = true;
+            },
+            accept(){
+                ApiService.post('admin/enrollments' , this.formData).then(() => {
+                }).catch((res) => {
+                    console.log('error');
+                    console.log(res);
+                })
+            }
+        }
     }
 </script>
 

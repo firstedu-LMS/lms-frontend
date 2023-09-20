@@ -5,27 +5,25 @@
          :columns="columns"
          :rows="enrollments"
          :search-options="{enabled: true}"
-         :select-options="{ enabled: true , selectOnCheckboxOnly: true, }"
-         v-on:selected-rows-change="selectionChanged"
          >
          <template #table-row="props">
-                <span class="relative flex justify-around w-full text-center text-white " v-if="props.column.field == 'actions'">
-                        <button @click="acceptStudent = !acceptStudent" class="text-sm rounded-sm text-green">
+                <span  v-if="props.column.field == 'actions'">
+                        <button @click="showForm(props.row)" class="text-sm rounded-sm text-green">
                             Accept
                             <span class="material-icons-outlined" style="font-size: 15px; padding: 3%; background-color :rgb(54, 253, 54); border-radius: 100%;">
                                 done
                             </span>
                         </button>
-                        <button  class="text-sm rounded-sm text-red">
+                        <button @click="cancelEnrollment(props.row.id)"  class="text-sm rounded-sm text-red">
                             remove
-                            <span class="material-icons-outlined" style="font-size: 15px; padding: 3%; background-color :red; border-radius: 100%;">
+                            <span class="material-icons-outlined" style="font-size: 15px; padding: 3%; background-color :red; border-radius: 100%;text:white">
                                 clear
                             </span>
                         </button>
                 </span>
             </template>
         </vue-good-table>
-        <AcceptStudentForm v-if="this.acceptStudent"></AcceptStudentForm>
+        <AcceptStudentForm @close="acceptForm = false" v-if="acceptForm" :student="acceptStudentProps"></AcceptStudentForm>
     </div>
 
 </template>
@@ -43,7 +41,8 @@ import AcceptStudentForm from '@/components/admin/AcceptStudentForm.vue'
         },
         data () {
             return{
-                acceptStudent : false,
+                acceptForm : false,
+                acceptStudentProps : {},
                 enrollments : [],
                 columns : [
                     {
@@ -79,6 +78,21 @@ import AcceptStudentForm from '@/components/admin/AcceptStudentForm.vue'
                         field : 'actions',
                     },
                 ]
+            }
+        },
+        methods: {
+            showForm(data){
+                this.acceptStudentProps = data
+                this.acceptForm = !this.acceptForm;
+            },
+
+            cancelEnrollment(id) {
+                ApiService.delete(`admin/enrollments/${id}`).then(() => {
+                    window.location.reload()
+                }).catch((res) => {
+                    alert('ERROR !');
+                    console.log(res);
+                })
             }
         },
 
