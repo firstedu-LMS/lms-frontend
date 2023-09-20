@@ -22,11 +22,11 @@
                 </div>
             <div class="w-[30%] flex justify-center my-8">
                 <span class="mr-4 text-center">
-                    <input type="radio" class="" v-model="course.available" value="true" />
+                    <input type="radio" class="" v-model="course.available" value="1" />
                     <br><label>open now</label>     
                 </span>
                 <span class="ml-4 text-center">
-                    <input disabled type="radio" class="" v-model="course.available" value="false" />
+                    <input disabled type="radio" class="" v-model="course.available" value="0" />
                     <br><label>temporary closed</label>
                 </span>
             </div>
@@ -82,7 +82,7 @@ import ApiService from '@/services/ApiService';
                     name : '',
                     age : '',
                     fee : null,
-                    available : true,
+                    available : 1,
                     status : '',
                     description : '',
                     image_id : null
@@ -107,18 +107,15 @@ import ApiService from '@/services/ApiService';
             },
 
             createCourse() {
-                if (this.course.available == 'true') {
-                    this.course.available = true;
-                } else {
-                    this.course.available = false;
-                }
+                this.course.available = true;
                 ApiService.post('admin/courses' , this.course).then(() => {
                     this.created = true;
                 }).catch((res) => {
-                    this.errors = res.response.data.errors
-                    setTimeout(() => {
-                        this.errors = {}
-                    },5000)
+                    console.log(res);
+                    // this.errors = res.response.data.errors
+                    // setTimeout(() => {
+                    //     this.errors = {}
+                    // },5000)
                 })
             }
         }

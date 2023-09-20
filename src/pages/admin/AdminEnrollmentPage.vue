@@ -4,13 +4,10 @@
         <vue-good-table
          :columns="columns"
          :rows="enrollments"
-         :search-options="{enabled: true}"
-         :select-options="{ enabled: true , selectOnCheckboxOnly: true, }"
-         v-on:selected-rows-change="selectionChanged"
          >
          <template #table-row="props">
                 <span class="relative flex justify-around w-full text-center text-white " v-if="props.column.field == 'actions'">
-                        <button @click="acceptStudent = !acceptStudent" class="text-sm rounded-sm text-green">
+                        <button @click="acceptStudent(props.row.course.id,props.row.student.id , props.row.student)"  class="text-sm rounded-sm text-green">
                             Accept
                             <span class="material-icons-outlined text-white" style="font-size: 15px; padding: 3%; background-color :rgb(54, 253, 54); border-radius: 100%;">
                                 done
@@ -25,7 +22,7 @@
                 </span>
             </template>
         </vue-good-table>
-        <AcceptStudentEnrollmentForm v-if="this.acceptStudent"></AcceptStudentEnrollmentForm>
+        <AcceptStudentEnrollmentForm @closeCompo="closeCompo" :student="selectedStudent" @success="reload" :enrollment="enrollment" @selectBatch="batchSelection" v-if="acceptStudentForm"></AcceptStudentEnrollmentForm>
     </div>
 
 </template>
@@ -43,7 +40,13 @@ import AcceptStudentEnrollmentForm from '@/components/admin/enrollments/AcceptSt
         },
         data () {
             return{
-                acceptStudent : false,
+                enrollment : {
+                    student_id : '',
+                    course_id : '',
+                    batch_id : ''
+                },
+                selectedStudent : {},
+                acceptStudentForm : false,
                 enrollments : [],
                 columns : [
                     {
@@ -60,7 +63,7 @@ import AcceptStudentEnrollmentForm from '@/components/admin/enrollments/AcceptSt
                     },
                     {
                         label : 'email',
-                        field : 'student.user.email',
+                        field : 'student.user.email'
                     },
                     {
                         label : 'phone',
@@ -83,12 +86,33 @@ import AcceptStudentEnrollmentForm from '@/components/admin/enrollments/AcceptSt
         },
 
         mounted () {
-            ApiService.get('/admin/enrollments').then(res => {
-                console.log(res.data.data)
-                 this.enrollments = res.data.data;
-            }).catch(res => {
-                console.log(res);
-            })
+            this.getEnrollments();
+        },
+        methods : {
+            getEnrollments() {
+                ApiService.get('/admin/enrollments').then(res => {
+                    console.log(res.data.data)
+                    this.enrollments = res.data.data;
+                }).catch(res => {
+                    console.log(res);
+                })
+            },
+            batchSelection(id) {
+                this.enrollment.batch_id = id;
+            },
+            acceptStudent(course_id,student_id , student){
+                this.acceptStudentForm =! this.acceptStudentForm
+                this.enrollment.course_id = course_id;
+                this.enrollment.student_id = student_id;
+                this.selectedStudent = student;
+            },
+            reload() {
+                this.acceptStudentForm = false;
+                this.getEnrollments();
+            },
+            closeCompo(){
+                this.acceptStudentForm = false;
+            }
         }
     }
 </script>
