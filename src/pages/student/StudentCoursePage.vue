@@ -1,0 +1,69 @@
+<template>
+    <div>
+        <div class="flex w-full">
+            <button @click="showProgress" :class="progress ? 'bg-blue-2 text-white' : 'border border-blue-2'" class="w-[50%] sm:font-bold max-sm:text-sm py-2">IN PROGRESS
+                <span class="p-1.5 mx-3 rounded-sm" :class="progress ? 'bg-white text-blue-2' : 'bg-blue-2 text-white'">{{ profile.id_progess_course_count }}</span>
+            </button>
+            <button @click="showCompleted" :class="completed ? 'bg-blue-2 text-white' : 'border border-blue-2'" class="w-[50%] sm:font-bold max-sm:text-sm  py-2">COMPLETED
+                <span class="p-1.5 mx-3 rounded-sm" :class="completed ? 'bg-white text-blue-2' : 'bg-blue-2 text-white'">{{ profile.course_completion_count }}</span>
+            </button>
+        </div>
+        <div class="p-10">
+            <button class="border border-blue-2 text-blue-2 px-3 py-1.5 font-bold hover:bg-blue-2 hover:text-white">DISCOVER COURSES</button>
+            <div class="sm:flex sm:my-6 my-4"  v-for="course in course_per_student" :key="course">
+                <img class="sm:w-1/4"  :src="filePath.imagePath(course.batch.course.image.image)" alt="">
+                <div class="flex-col sm:mx-3 justify-between sm:px-4 sm:flex sm:w-1/2">
+                    <h1 class="mt-2 text-4xl font-bold text-black max-sm:text-xl sm:mt-0">{{ course.batch.course.name }}</h1>                
+                        <button class="w-full text-xl font-semibold py-2 mt-4 max-sm:py-1 max-sm:text-lg text-white border  hover:bg-transparent bg-green hover:text-green border-green">Continue</button>       
+                </div>
+            </div>
+
+        </div>
+    </div>
+</template>
+
+<script>
+import ApiService from '@/services/ApiService'
+import filePath from '@/services/public/filePath'
+    export default {
+        data() {
+            return {
+                progress : true,
+                completed : false,
+                profile : {},
+                course_per_student : [],
+                filePath : filePath
+            }
+        },
+        methods: {
+            showProgress(){
+                this.progress = true
+                this.completed = false
+            },
+            showCompleted(){
+                this.progress = false
+                this.completed = true
+            }
+        },
+        async mounted(){
+            await ApiService.get('student/user').then((res) => {
+                this.profile = res.data;
+                console.log(res.data);
+            }).catch((res) => {
+                console.log(res);
+            })
+            await ApiService.get(`student/course-per-students/${this.profile.id}`).then((res) => {
+                this.course_per_student  = res.data.data
+                console.log(res.data.data);
+            }).catch((res) => {
+                console.log(res);
+            })
+
+
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>
