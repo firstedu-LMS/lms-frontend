@@ -25,8 +25,8 @@
                 </router-link>
             </li>
             <li>
-                <button class="flex items-center w-full my-1 py-1.5 px-4 text-red">
-                    <span class="material-icons-sharp">logout</span>
+                <button @click="logout" class="flex items-center w-full my-1 py-1.5 px-4 text-red">
+                    <span  class="material-icons-sharp">logout</span>
                     &nbsp;&nbsp;Logout
                 </button>
             </li>
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import ApiService from '@/services/ApiService'
+import TokenService from '@/services/TokenService'
     export default {
         data(){
             return {
@@ -70,6 +72,13 @@
                         icon : 'verified_user'
                     }
                 ],
+            }
+        },
+        methods:{
+            logout(){
+                ApiService.post('logout').then(()=>{
+                    TokenService.destroyToken();
+                }).catch(err=>console.log(err));
             }
         }
     }

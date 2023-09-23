@@ -13,7 +13,7 @@
                                 done
                             </span>
                         </button>
-                        <button  class="text-sm rounded-sm text-red">
+                        <button @click="cancelEnrollment(props.row.id)"  class="text-sm rounded-sm text-red">
                             remove
                             <span class="material-icons-outlined text-white" style="font-size: 15px; padding: 3%; background-color :red; border-radius: 100%;">
                                 clear
@@ -82,6 +82,21 @@ import AcceptStudentEnrollmentForm from '@/components/admin/enrollments/AcceptSt
                         field : 'actions',
                     },
                 ]
+            }
+        },
+        methods: {
+            showForm(data){
+                this.acceptStudentProps = data
+                this.acceptForm = !this.acceptForm;
+            },
+
+            cancelEnrollment(id) {
+                ApiService.delete(`admin/enrollments/${id}`).then(() => {
+                    window.location.reload()
+                }).catch((res) => {
+                    alert('ERROR !');
+                    console.log(res);
+                })
             }
         },
 
