@@ -41,16 +41,12 @@
 import ApiService from '@/services/ApiService';
 import { VueGoodTable } from 'vue-good-table-next';
     export default {
-        props : {
-            course_id : {
-                required : true
-            }
-        },
         components : {
             VueGoodTable
         },
         data() {
             return {
+                course_id : this.$route.params.course_id,
                 batches : [],
                 columns : [
                     {
@@ -90,9 +86,18 @@ import { VueGoodTable } from 'vue-good-table-next';
         },
 
         methods : {
+            getBatches () {
+                ApiService.get(`admin/batches/all/${this.course_id}`).then((res) => {
+                    this.batches = res.data.data
+                    this.$emit('course' , this.batches[0].course)
+                }).catch((res) => {
+                    console.log(res);
+                })
+
+            },
             deleteBatch(id){
                 ApiService.delete(`admin/batches/${id}`).then(() => {
-                    window.location.reload()
+                    this.getBatches();
                 }).catch((res) => {
                     console.log(res);
                 })
@@ -103,12 +108,7 @@ import { VueGoodTable } from 'vue-good-table-next';
         },
 
         mounted(){
-            ApiService.get(`admin/batches/all/${this.course_id}`).then((res) => {
-                this.batches = res.data.data
-                this.$emit('course' , this.batches[0].course)
-            }).catch((res) => {
-                console.log(res);
-            })
+            this.getBatches()
         }
     }
 </script>

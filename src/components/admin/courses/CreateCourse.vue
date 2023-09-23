@@ -10,49 +10,49 @@
         </transition>
         <form :class="created ? 'blur-[1px]' : ''" class="z-30 flex flex-wrap justify-around" @submit.prevent="createCourse" >
                 <div class="w-[30%] my-8">
-                    <label class="text-[12px] font-semibold" for="name">Name</label>
+                    <label class="text-sm font-semibold" for="name">Name</label>
                     <input v-model="course.name" type="text" class="px-2 w-[60%] mx-5 py-1 border-b outline-none">
                     <p v-if="errors.name" class="py-1 mx-12 text-red">{{ errors.name[0] }}</p>
                 </div>
                 <div class="w-[30%] my-8">
-                    <label class="text-[12px] font-semibold" for="fee">Fee</label>
+                    <label class="text-sm font-semibold" for="fee">Fee</label>
                     <input v-model="course.fee" type="number" class=" w-[60%] mx-5 px-2 py-1 border-b outline-none">
                     <p v-if="errors.fee" class="py-1 mx-12 text-red">{{ errors.fee[0] }}</p>
 
                 </div>
             <div class="w-[30%] flex justify-center my-8">
                 <span class="mr-4 text-center">
-                    <input type="radio" class="" v-model="course.available" value="true" />
+                    <input type="radio" class="" v-model="course.available" :value="Boolean(true)" />
                     <br><label>open now</label>     
                 </span>
                 <span class="ml-4 text-center">
-                    <input disabled type="radio" class="" v-model="course.available" value="false" />
+                    <input disabled type="radio" class="" v-model="course.available" :value="Boolean(false)" />
                     <br><label>temporary closed</label>
                 </span>
             </div>
             <div class="w-[30%] my-8">
-                <label for="image">Image</label>
+                <label for="image" class="text-sm font-bold">Image</label>
                 <input @change="saveImage" type="file" class="w-full px-2 py-1 border-b outline-none file:border-0 file:text-sm">
                 <p v-if="errors.image_id" class="py-1 mx-12 text-red">{{ errors.image_id[0] }}</p>
 
             </div>
             <div class="w-[30%] my-8">
-                <label class="text-[12px] font-semibold" for="age">Age</label>
+                <label class="text-sm font-semibold" for="age">Age</label>
                 <input v-model="course.age" type="text" class=" w-[60%] mx-5 px-2 py-1 border-b outline-none">
                 <p v-if="errors.age" class="py-1 mx-12 text-red">{{ errors.age[0] }}</p>
 
             </div>
             <div class="w-[30%] my-8">
-                <label for="status" class="text-[12px] font-semibold">Status</label>
+                <label for="status" class="text-sm font-semibold">Status</label>
                 <select v-model="course.status" class=" w-3/5 mx-5 px-2 py-1.5 bg-transparent border-b outline-none">
-                    <option class="text-[12px]" disabled selected></option>
-                    <option class="text-[10px]" value="online">online</option>
-                    <option class="text-[10px]" value="offline">offline</option>
+                    <option class="text-sm" disabled selected></option>
+                    <option class="text-sm" value="online">online</option>
+                    <option class="text-sm" value="offline">offline</option>
                 </select>
                 <p v-if="errors.status" class="py-1 mx-12 text-red">{{ errors.status[0] }}</p>
 
             </div>
-            <div class="w-[90%] mt-8 mb-32">
+            <div class="w-[95%] mr-[10px] mt-8 mb-32">
                 <label class="font-semibold text-[12px]" for="description">Description</label>
                 <quill-editor class="w-full shadow-md shadow-black" v-model:content="course.description" theme="snow" toolbar="full" contentType="html"></quill-editor>
                 <p v-if="errors.description" class="py-1 mx-12 text-red">{{ errors.description[0] }}</p>
@@ -63,6 +63,7 @@
                 <button class="px-3 py-1 bg-white shadow-lg text-gray">Submit</button>
             </div>
         </form>
+        <img :src="previewImage" alt="">
     </div>
 </template>
 
@@ -70,6 +71,7 @@
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import ApiService from '@/services/ApiService';
+import filePath from '../../../services/public/filePath';
     export default {
         components : {
             QuillEditor
@@ -77,12 +79,14 @@ import ApiService from '@/services/ApiService';
 
         data() {
             return {
+                filePath : filePath,
+                previewImage : '',
                 created : false,
                 course : {
                     name : '',
                     age : '',
                     fee : null,
-                    available : '',
+                    available : true,
                     status : '',
                     description : '',
                     image_id : null
@@ -93,13 +97,14 @@ import ApiService from '@/services/ApiService';
 
         methods : {
             reload() {
-                window.location.reload();
+                this.$emit('reload');
             },
             saveImage(e) {
                 let file = e.target.files[0];
                 let form = new FormData();
                 form.set('course_image' , file);
                 ApiService.post('admin/images' , form).then((res) => {
+                    this.previewImage = filePath.imagePath(res.data.data.image)
                     this.course.image_id = res.data.data.id;
                 }).catch((res) => {
                     console.log(res);
@@ -107,18 +112,17 @@ import ApiService from '@/services/ApiService';
             },
 
             createCourse() {
-                if (this.course.available == 'true') {
-                    this.course.available = true;
-                } else {
-                    this.course.available = false;
-                }
+                this.course.available = true;
                 ApiService.post('admin/courses' , this.course).then(() => {
                     this.created = true;
                 }).catch((res) => {
-                    this.errors = res.response.data.errors
-                    setTimeout(() => {
-                        this.errors = {}
-                    },3000)
+                    this.course.available = 1;
+                    if (res.response && res.response.data.errors) {
+                        this.errors = res.response.data.errors
+                            setTimeout(() => {
+                                this.errors = {}
+                            },5000)
+                    }
                 })
             }
         }

@@ -1,3 +1,4 @@
+import ApiService from "@/services/ApiService";
 import TokenService from "@/services/TokenService";
 import { defineStore } from "pinia";
 
@@ -11,6 +12,13 @@ export const useAuthStore = defineStore('auth' , {
     },
 
     actions : {
+        async getUser() {
+            return ApiService.get('user').then((res) => {
+                this.setAuth(res.data)
+            }).catch((res) => {
+                console.log(res);
+            })
+        },
         setAuth(data)  {
             if (data.user) {
                 this.user = data.user;

@@ -19,7 +19,7 @@
         </div>    
         <div>
             <LessonsView @setHeading="setHeading" @showDetails="showDetails" v-if="lessonsTable"/>
-            <CreateLesson v-if="createForm"/>
+            <CreateLesson @reload="showLessonsTable" v-if="createForm"/>
             <ShowDetails @setLesson="setLesson" v-if="show" :id="idForEditAndDetail" />
             <EditLesson v-if="editForm" :id="idForEditAndDetail"/>
         </div>
@@ -54,9 +54,8 @@ import EditLesson from '@/components/admin/lessons/EditLesson.vue'
                 this.heading.lesson = lesson;
             },
             showDetails(id) {
-                console.log(id);
-               this.lessonsTable = this.createForm = this.editForm = false
-               this.show = true;
+                this.lessonsTable = this.createForm = this.editForm = false
+                this.show = true;
                 this.idForEditAndDetail = id;
             },
             showLessonForm(){

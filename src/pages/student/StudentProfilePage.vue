@@ -149,9 +149,9 @@ import filePath from '@/services/public/filePath'
             }).catch((res) => {
                 console.log(res);
             })
-            await ApiService.get(`student/course-per-students/${this.profile.id}`).then((res) => {
-                this.activities = res.data.data;
-            })
+            // await ApiService.get(`student/course-per-students/${this.profile.id}`).then((res) => {
+            //     this.activities = res.data.data;
+            // })
 
 
         }

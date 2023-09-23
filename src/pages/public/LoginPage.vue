@@ -27,6 +27,7 @@
 <script>
 import HPNavbar from '@/layouts/public/HPNavbar.vue';
 import TokenService from '@/services/TokenService';
+import { useAuthStore } from '@/stores/auth';
 import axios from 'axios';
     export default {
         components : {
@@ -34,6 +35,7 @@ import axios from 'axios';
         },
         data(){
             return {
+                authStore : useAuthStore(),
                 image : './images/layout/auth.jpg',
                 form : {
                     email : '',
@@ -45,8 +47,12 @@ import axios from 'axios';
             login () {
                 axios.post('login' , this.form).then((res) => {
                     TokenService.setToken(res.data.data.token)
-                    console.log(res.data.data);
-                    this.$router.push('/')
+                    this.authStore.setAuth(res.data.data);
+                    if (this.authStore.authenticated && this.authStore.roles[0].name == 'admin') {
+                        this.$router.push({name : 'AdminDashboardPage'});
+                    } else if (this.authStore.authenticated && this.authStore.roles[0].name == 'student') {
+                        this.$router.push({name : 'StudentProfilePage'});
+                    }
                 }).catch((res) => {
                     console.log(res);
                 })
