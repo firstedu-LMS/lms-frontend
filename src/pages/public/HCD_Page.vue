@@ -1,7 +1,21 @@
 <template>
   <div>
     <HPNavbar />
-    <div class="justify-between sm:w-[80%] p-2 mt-6 mx-auto sm:mb-0 sm:flex">
+    <transition name="dialog" class="my-24">
+          <dialog v-if="created" class="fixed z-50 flex flex-col items-center p-6 text-gray" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;" open>
+              <span style="color: #22c55e; font-size: 6rem;" class="material-icons-sharp">check_circle</span>
+              <p class="my-6 text-xl">Course Has Been Created Successfully.</p>
+              <button @click="created = false" class="w-full py-1.5 text-white rounded hover:bg-transparent hover:text-green border border-green bg-green">Okay</button>
+          </dialog>
+      </transition>
+      <transition name="dialog" class="my-24">
+          <dialog v-if="error" class="fixed z-50 flex flex-col items-center p-6 text-gray" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;" open>
+              <span style="color: rgb(228, 32, 32); font-size: 6rem;" class="material-icons-sharp">error</span>
+              <p class="my-6 text-xl">You have already enrolled this course.</p>
+              <button @click="error = false" class="w-full py-1.5 text-white rounded hover:bg-transparent hover:text-red border border-red bg-red">Okay</button>
+          </dialog>
+      </transition>
+    <div :class="created ? 'blur-[1px]' : error ? 'blur-[1px]' : ''"  class="justify-between sm:w-[80%] p-2 mt-6 mx-auto sm:mb-0 sm:flex">
       <div class="sm:w-1/2">
         <h1 class="mb-6 text-3xl font-bold text-blue">{{ course.name }}</h1>
         <p class="my-4" v-html="course.description"></p>
@@ -34,6 +48,8 @@ export default {
   },
   data() {
     return {
+      created : false,
+      error : false,
       course: {},
       id: this.$route.params.id,
       authStore : useAuthStore()
@@ -48,10 +64,10 @@ export default {
           course_id : id,
           student_id : this.authStore.user.student.id
         } 
-        ApiService.post('enrollments' , obj).then((res) => {
-          console.log(res);
-        }).catch((res) => {
-          console.log(res);
+        ApiService.post('enrollments' , obj).then(() => {
+          this.created = true;
+        }).catch(() => {
+          this.error = true;
         })
       } else {
         alert(`You are ${this.authStore.roles[0].name}. You can't enroll this course!`)
@@ -76,5 +92,11 @@ li {
   padding: 0.5rem 1rem;
   text-align: center;
   border: 1px solid gray;
+}
+.dialog-enter-from , .dialog-leave-to {
+  transform: scale(90%)
+}
+.dialog-enter-active , .dialog-leave-active {
+  transition: all 0.2s ease-out;
 }
 </style>
