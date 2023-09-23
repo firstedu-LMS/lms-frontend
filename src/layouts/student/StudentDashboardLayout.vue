@@ -24,7 +24,7 @@
           </router-link>
         </span>
       </div>
-        <span class="py-5 mx-20 my-2 text-lg font-semibold text-center text-red">Log Out</span>
+        <span @click="logout" class="py-5 mx-20 my-2 text-lg font-semibold text-center text-red">Log Out</span>
     </div>
     <div class="fixed top-0 right-0 hidden w-1/6 h-screen sm:block bg-teal">
       <div class="border-b-2 border-b-gray-2">
@@ -36,27 +36,28 @@
           </router-link>
         </span>
       </div>
-        <button @click="logout" class="px-1 mt-4 text-lg font-semibold text-center text-red">Log Out</button>
+        <button @click="logout" class="px-28 mt-4  text-lg font-semibold text-center text-red">Log Out</button>
     </div>  
   </div>
 </template>
 
 <script>
 import ApiService from '@/services/ApiService';
-import TokenService from '@/services/TokenService';
+import { useAuthStore } from '@/stores/auth';
 export default {
   data() {
     return {
       btn: true,
       sideBar: false,
+      authStore : useAuthStore(),
       sideItems: [
         {
           name: "Profile",
           path: "StudentProfilePage",
         },
         {
-          name: "Profile",
-          path: "StudentProfilePage",
+          name: "Course",
+          path: "StudentCoursePage",
         },
         {
           name: "Profile",
@@ -79,8 +80,9 @@ export default {
       this.btn = false;
     },
     logout(){
-        ApiService.post('logout').then(()=>{
-            TokenService.destroyToken();
+        ApiService.post('logout').then(()=>{  
+            this.authStore.destroyAuth()         
+            this.$router.push('/')
         }).catch(err=>console.log(err));
     }
   },

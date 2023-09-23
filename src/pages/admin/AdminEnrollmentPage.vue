@@ -84,22 +84,6 @@ import AcceptStudentEnrollmentForm from '@/components/admin/enrollments/AcceptSt
                 ]
             }
         },
-        methods: {
-            showForm(data){
-                this.acceptStudentProps = data
-                this.acceptForm = !this.acceptForm;
-            },
-
-            cancelEnrollment(id) {
-                ApiService.delete(`admin/enrollments/${id}`).then(() => {
-                    window.location.reload()
-                }).catch((res) => {
-                    alert('ERROR !');
-                    console.log(res);
-                })
-            }
-        },
-
         mounted () {
             this.getEnrollments();
         },

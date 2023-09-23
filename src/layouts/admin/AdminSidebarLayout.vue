@@ -36,10 +36,11 @@
 
 <script>
 import ApiService from '@/services/ApiService'
-import TokenService from '@/services/TokenService'
+import { useAuthStore } from '@/stores/auth'
     export default {
         data(){
             return {
+                authStore : useAuthStore(),
                 items : [
                     {
                         name : 'Courses',
@@ -76,10 +77,11 @@ import TokenService from '@/services/TokenService'
         },
         methods:{
             logout(){
-                ApiService.post('logout').then(()=>{
-                    TokenService.destroyToken();
-                }).catch(err=>console.log(err));
-            }
+            ApiService.post('logout').then(()=>{  
+                this.authStore.destroyAuth()         
+                this.$router.push('/')
+        }).catch(err=>console.log(err));
+    }
         }
     }
 </script>
