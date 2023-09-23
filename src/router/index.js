@@ -26,6 +26,7 @@ import AdminEnrollmentPage from "@/pages/admin/AdminEnrollmentPage.vue"
 
 import StudentDashboardLayout from '@/layouts/student/StudentDashboardLayout.vue'
 import StudentProfilePage from "@/pages/student/StudentProfilePage.vue";
+import StudentCoursePage from "@/pages/student/StudentCoursePage.vue"
 
 import TokenService from "@/services/TokenService";
 
@@ -141,6 +142,11 @@ const routes = [
         path : '',
         name : 'StudentProfilePage',
         component : StudentProfilePage
+      },
+      {
+        path : '/course',
+        name : 'StudentCoursePage',
+        component : StudentCoursePage
       }
     ]
   }
@@ -156,13 +162,7 @@ router.beforeEach(async (to , from , next) => {
   if(to.meta.middleware){
     let token = TokenService.getToken();
     if (token) {
-<<<<<<< HEAD
-        await ApiService.get(`${to.meta.middleware}/user`).then((res) => {
-          console.log(res);
-            authStore.setAuth(res.data)
-=======
           await authStore.getUser();
->>>>>>> e2bffc215a681efa5ebf654e498e449b00b01df8
             if (authStore.authenticated) {
               let isAuthenticatedByRole = authStore.roles.find((role) => role.name == to.meta.middleware);
               isAuthenticatedByRole ? next() : next('/login');
