@@ -9,13 +9,19 @@
             </button>
         </div>
         <div class="p-10">
-            <button class="border border-blue-2 text-blue-2 px-3 py-1.5 font-bold hover:bg-blue-2 hover:text-white">DISCOVER COURSES</button>
-            <div class="sm:flex sm:my-6 my-4"  v-for="course in course_per_student" :key="course">
-                <img class="sm:w-1/4"  :src="filePath.imagePath(course.batch.course.image.image)" alt="">
-                <div class="flex-col sm:mx-3 justify-between sm:px-4 sm:flex sm:w-1/2">
-                    <h1 class="mt-2 text-4xl font-bold text-black max-sm:text-xl sm:mt-0">{{ course.batch.course.name }}</h1>                
-                        <button class="w-full text-xl font-semibold py-2 mt-4 max-sm:py-1 max-sm:text-lg text-white border  hover:bg-transparent bg-green hover:text-green border-green">Continue</button>       
+            <router-link :to="{name : 'HC_Page'}" class="border border-blue-2 text-blue-2 px-3 py-1.5 font-bold hover:bg-blue-2 hover:text-white">DISCOVER COURSES</router-link>
+            <div v-if="progress">
+                <div class="my-4 sm:flex sm:my-8"  v-for="course in course_per_student" :key="course">
+                    <img v-if="course.batch" class="sm:w-1/4"  :src="filePath.imagePath(course.batch.course.image.image)" alt="">
+                    <div class="flex-col justify-between sm:mx-3 sm:px-4 sm:flex sm:w-1/2">
+                        <h1 class="mt-2 text-xl font-bold text-black max-sm:text-xl sm:mt-0">{{ course.batch.course.name }}</h1>                
+                            <button class="w-full py-2 mt-4 text-xl font-semibold text-white border max-sm:py-1 max-sm:text-lg hover:bg-transparent bg-green hover:text-green border-green">Continue</button>       
+                    </div>
                 </div>
+            </div>
+
+            <div v-else>
+                completed
             </div>
 
         </div>

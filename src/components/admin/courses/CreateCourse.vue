@@ -22,11 +22,11 @@
                 </div>
             <div class="w-[30%] flex justify-center my-8">
                 <span class="mr-4 text-center">
-                    <input type="radio" class="" v-model="course.available" :value="Boolean(true)" />
+                    <input type="radio" checked v-model="course.available" :value="Boolean(true)" />
                     <br><label>open now</label>     
                 </span>
                 <span class="ml-4 text-center">
-                    <input disabled type="radio" class="" v-model="course.available" :value="Boolean(false)" />
+                    <input disabled type="radio" v-model="course.available" :value="Boolean(false)" />
                     <br><label>temporary closed</label>
                 </span>
             </div>
