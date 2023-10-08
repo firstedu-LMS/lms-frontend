@@ -27,6 +27,9 @@
                     <option class="text-[10px]" value="offline">offline</option>
                 </select>
             </div>
+            <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
+            </div>
             <div class="w-[30%] flex justify-center my-8">
                 <label class="text-[12px] font-semibold">Condition</label>
                 <span class="mx-2 text-center">
@@ -45,7 +48,7 @@
             </div>
 
             <div class="flex w-full my-2">
-                <button class="px-3 py-1 text-black bg-white shadow-sm">Submit</button>
+                <button :disabled="loading" class="px-3 py-1 text-black bg-white shadow-sm">Submit</button>
             </div>
         </form>
     </div>
@@ -62,15 +65,19 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
         },
         data(){
             return {
+                loading : false,
                 course : {}
             }
         },
 
         methods : {
             editCourse(){
+                this.loading = true
                 ApiService.patch(`admin/courses/${this.id}` , this.course).then(() => {
+                    this.loading = false
                     this.$emit('reload');
                 }).catch((res) => {
+                    this.loading = false
                     alert('Error!')
                     console.log(res);
                 })
@@ -79,9 +86,12 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
                 let file = e.target.files[0];
                 let form = new FormData();
                 form.set('course_image' , file);
+                this.loading = true
                 ApiService.post('admin/images' , form).then((res) => {
+                    this.loading = false
                     this.course.image_id = res.data.data.id;
                 }).catch((res) => {
+                    this.loading = false
                     console.log(res);
                 })
             },
@@ -89,9 +99,12 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
         },
 
         mounted(){
+            this.loading = true
             ApiService.get(`admin/courses/${this.id}`).then((res) => {
                 this.course = res.data.data;
+                this.loading = false
             }).catch((res) => {
+                this.loading = false
                 console.log(res);
             })
         }
