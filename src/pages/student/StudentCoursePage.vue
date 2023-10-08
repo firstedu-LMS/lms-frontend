@@ -11,7 +11,7 @@
         <div class="p-10">
             <router-link :to="{name : 'HC_Page'}" class="border border-blue-2 text-blue-2 px-3 py-1.5 font-bold hover:bg-blue-2 hover:text-white">DISCOVER COURSES</router-link>
             <div v-if="progress">
-                <div class="my-4 sm:flex sm:my-8"  v-for="course in course_per_student" :key="course">
+                <div class="my-6 sm:flex sm:my-12"  v-for="course in course_per_student" :key="course">
                     <img v-if="course.batch" class="sm:w-1/4"  :src="filePath.imagePath(course.batch.course.image.image)" alt="">
                     <div class="flex-col justify-between sm:mx-3 sm:px-4 sm:flex sm:w-1/2">
                         <h1 class="mt-2 text-xl font-bold text-black max-sm:text-xl sm:mt-0">{{ course.batch.course.name }}</h1>                

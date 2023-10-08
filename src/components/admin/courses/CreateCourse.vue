@@ -8,7 +8,10 @@
                     <button class="w-full py-1.5 text-white rounded hover:bg-transparent hover:text-green border border-green bg-green" @click="reload">Okay</button>
                 </dialog>
         </transition>
-        <form :class="created ? 'blur-[1px]' : ''" class="z-30 flex flex-wrap justify-around" @submit.prevent="createCourse" >
+        <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
+        </div>
+        <form :class="created || loading ? 'blur-[1px]' : ''" class="z-30 flex flex-wrap justify-around" @submit.prevent="createCourse" >
                 <div class="w-[30%] my-8">
                     <label class="text-sm font-semibold" for="name">Name</label>
                     <input v-model="course.name" type="text" class="px-2 w-[60%] mx-5 py-1 border-b outline-none">
@@ -60,7 +63,7 @@
             </div>
 
             <div class="flex w-full my-2">
-                <button class="px-3 py-1 bg-white shadow-lg text-gray">Submit</button>
+                <button :disabled="loading" class="px-3 py-1 bg-white shadow-lg text-gray">Submit</button>
             </div>
         </form>
         <img :src="previewImage" alt="">
@@ -79,6 +82,7 @@ import filePath from '../../../services/public/filePath';
 
         data() {
             return {
+                loading : false,
                 filePath : filePath,
                 previewImage : '',
                 created : false,
@@ -113,10 +117,13 @@ import filePath from '../../../services/public/filePath';
 
             createCourse() {
                 this.course.available = true;
+                this.loading = true;
                 ApiService.post('admin/courses' , this.course).then(() => {
                     this.created = true;
+                    this.loading = false;
                 }).catch((res) => {
-                    this.course.available = 1;
+                    this.course.available = true;
+                    this.loading = false;
                     if (res.response && res.response.data.errors) {
                         this.errors = res.response.data.errors
                             setTimeout(() => {
