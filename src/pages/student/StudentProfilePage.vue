@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="profile" class="my-4 sm:flex">
+        <div v-if="profile" class="sm:flex">
             <img v-if="profile && profile.image" :src="filePath.imagePath(profile.image)" style="height : 220px;width : 220px;" class="mx-16 border-8 rounded-full border-teal sm:my-8" alt="">
             <img v-else src="" style="height : 220px;width : 220px;" class="mx-16 border-8 rounded-full border-teal sm:my-8 sm:mx-16 sm:px-6 " alt="">
             <div class="sm:w-[70%]">
@@ -10,11 +10,11 @@
             </div>
         </div>
 <!-- for responsive that I can do as much as I can hee" -->
-       <div class="w-full pb-12 sm:hidden bg-gray-2">
+       <div class="w-full py-12 sm:hidden">
             <button @click="showInfo" class="w-1/2 py-1 " :class="info ? 'bg-blue-2 text-white': 'bg-white text-gray'">Personal Information</button>
             <button @click="showActivity" class="w-1/2 py-1" :class="show_activities ? 'bg-blue-2 text-white': 'bg-white text-gray'">Activities</button>
         <form v-if="info && profile" class="mx-1 my-6" @submit.prevent="editProfile">
-              <div class="flex justify-end bg-gray-2">
+              <div class="flex justify-end">
                 <p @click="editing" v-if="saving" class="px-4 mt-2 underline text-end text-blue-2">Edit</p>
                 <button  v-if="isEditing" class="px-4 mt-2 underline text-end text-blue-2">Save</button>
               </div>            
@@ -45,11 +45,11 @@
                 <div class="mx-1 my-16 bg-white">
                 <div class="flex border border-b-0 border-gray-2">
                         <p class="py-5 text-xs px-3 font-semibold text-center border-r border-gray-2 w-[40%]">IN-PROGRESS COURSES</p>
-                        <p class="py-5 text-center text-xs font-semibold px-4 w-[60%]">{{ activities.length }}</p>
+                        <p class="py-5 text-center text-xs font-semibold px-4 w-[60%]">{{ profile.id_progess_course_count }}</p>
                 </div>     
                 <div class="flex border border-b-0 border-gray-2">
                         <p class="py-6 px-3 text-xs font-semibold text-center border-r border-gray-2 w-[40%]">COMPLETED COURSES</p>
-                        <p class="py-6 text-xs font-semibold px-4 w-[60%]"></p>
+                        <p class="py-6 text-xs font-semibold text-center px-4 w-[60%]">{{ profile.course_completion_count }}</p>
                 </div>
                 <div class="flex border border-b border-gray-2">
                         <p class="py-6 text-xs font-semibold text-center border-r border-gray-2 w-[40%]">ACHIEVEMENTS</p>
@@ -59,11 +59,11 @@
         </div>
         </div>
 <!--  -->
-        <div class="flex justify-around pb-16 max-sm:hidden bg-gray-2">
+        <div class="flex justify-around pb-16 max-sm:hidden">
             <div class="sm:w-[45%] sm:mt-6">
                 <p class="font-semibold underline text-blue-2">Personal information</p>
                 <form v-if="info && profile " class="bg-white " @submit.prevent="editProfile">
-                <div class="flex justify-end bg-gray-2">
+                <div class="flex justify-end">
                     <p @click="editing" v-if="saving" class="px-4 underline text-end text-blue-2">Edit</p>
                     <button v-if="isEditing" class="px-4 underline text-end text-blue-2">Save</button>
                 </div>
@@ -94,11 +94,11 @@
                 <div class="mt-6 bg-white">
                 <div class="flex border border-b-0 border-gray-2">
                         <p class="py-5 text-xs font-semibold text-center border-r border-gray-2 w-[40%]">IN-PROGRESS COURSES</p>
-                        <p class="py-5 text-center text-xs font-semibold px-4 w-[60%]">{{ activities.length }}</p>
+                        <p class="py-5 text-center text-xs font-semibold px-4 w-[60%]">{{ profile.id_progess_course_count }}</p>
                 </div>     
                 <div class="flex border border-b-0 border-gray-2">
                         <p class="py-6 text-xs font-semibold text-center border-r border-gray-2 w-[40%]">COMPLETED COURSES</p>
-                        <p class="py-6 text-xs font-semibold px-4 w-[60%]"></p>
+                        <p class="py-6 text-xs font-semibold text-center px-4 w-[60%]">{{ profile.course_completion_count }}</p>
                 </div>
                 <div class="flex border border-b border-gray-2">
                         <p class="py-6 text-xs font-semibold text-center border-r border-gray-2 w-[40%]">ACHIEVEMENTS</p>

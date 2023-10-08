@@ -1,9 +1,9 @@
 <template>
-  <div class="flex">
-    <aside class="sticky top-0 hidden w-1/6 h-screen border-r sm:block border-gray-3">
-      <router-link to="/" class="block">
-        <img class="w-24 mx-auto my-2" src="../../../public/images/layout/logo.png" alt="">
-      </router-link>
+  <div class="flex bg-gray-3">
+    <aside class="sticky top-0 hidden w-1/6 h-screen sm:block">
+      <router-link class="block" to="/">
+          <img class="w-24 mx-auto my-2" src="../../../public/images/layout/logo.png" alt="">
+        </router-link>
       <ul class="mt-8">
         <li class="p-2 m-4" v-for="item in sideItems" :key="item.name">
           <router-link :to="{name : item.path}" class="flex items-center hover:text-blue-2">
@@ -17,10 +17,13 @@
       </ul>
     </aside>
     <div class="w-full sm:w-5/6">
-      <nav class="sticky top-0 z-50 flex justify-end p-4 bg-white shadow-lg">
-        <span class="material-icons-sharp">notifications</span>
+      <nav class="sticky top-0 z-50 flex justify-between px-4 py-1 sm:justify-end">
+        <button class="sm:hidden">
+          <span style="margin: auto 0px;" class="material-icons-sharp">notifications</span>
+        </button>
+        <span style="margin: auto 0px;" class="material-icons-sharp">notifications</span>
       </nav>
-      <main class="z-10">
+      <main class="z-10 mx-4 mt-4 bg-white rounded-2xl">
         <router-view></router-view>
       </main>
     </div>

@@ -1,21 +1,22 @@
 <template>
     <div>
-        <div class="flex w-full">
-            <button @click="showProgress" :class="progress ? 'bg-blue-2 text-white' : 'border border-blue-2'" class="w-[50%] sm:font-bold max-sm:text-sm py-2">IN PROGRESS
-                <span class="p-1.5 mx-3 rounded-sm" :class="progress ? 'bg-white text-blue-2' : 'bg-blue-2 text-white'">{{ profile.id_progess_course_count }}</span>
+        <div class="flex p-4">
+            <button :class="progress ? 'bg-[#89CFF0]' : ''" @click="showProgress" class="p-2 sm:font-bold max-sm:text-sm">IN PROGRESS
+                <span class="p-1.5 mx-1 rounded-sm" >{{ profile.id_progess_course_count }}</span>
             </button>
-            <button @click="showCompleted" :class="completed ? 'bg-blue-2 text-white' : 'border border-blue-2'" class="w-[50%] sm:font-bold max-sm:text-sm  py-2">COMPLETED
-                <span class="p-1.5 mx-3 rounded-sm" :class="completed ? 'bg-white text-blue-2' : 'bg-blue-2 text-white'">{{ profile.course_completion_count }}</span>
+            <button :class="completed ? 'bg-[#89CFF0]' : ''" @click="showCompleted" class="p-2 sm:font-bold max-sm:text-sm">COMPLETED
+                <span class="p-1.5 mx-1 rounded-sm">{{ profile.course_completion_count }}</span>
             </button>
         </div>
         <div class="p-10">
             <router-link :to="{name : 'HC_Page'}" class="border border-blue-2 text-blue-2 px-3 py-1.5 font-bold hover:bg-blue-2 hover:text-white">DISCOVER COURSES</router-link>
             <div v-if="progress">
-                <div class="my-6 sm:flex sm:my-12"  v-for="course in course_per_student" :key="course">
+                <div class="my-12 sm:flex"  v-for="course in course_per_student" :key="course">
                     <img v-if="course.batch" class="sm:w-1/4"  :src="filePath.imagePath(course.batch.course.image.image)" alt="">
                     <div class="flex-col justify-between sm:mx-3 sm:px-4 sm:flex sm:w-1/2">
-                        <h1 class="mt-2 text-xl font-bold text-black max-sm:text-xl sm:mt-0">{{ course.batch.course.name }}</h1>                
-                            <button class="w-full py-2 mt-4 text-xl font-semibold text-white border max-sm:py-1 max-sm:text-lg hover:bg-transparent bg-green hover:text-green border-green">Continue</button>       
+                        <h1 class="mt-2 text-xl font-bold text-black max-sm:text-xl sm:mt-0">{{ course.batch.course.name }}</h1>    
+                        <h3>{{ course.batch.name }}</h3>            
+                        <button class="w-full py-2 mt-4 text-xl font-semibold text-white border max-sm:py-1 max-sm:text-lg hover:bg-transparent bg-green hover:text-green border-green">Continue</button>       
                     </div>
                 </div>
             </div>
