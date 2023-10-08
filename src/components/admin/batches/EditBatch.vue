@@ -81,9 +81,8 @@ import ApiService from '@/services/ApiService';
 
         methods : {
             editBatch(){
-                this.batch.course_id = this.$props.course_id;
                 ApiService.patch(`admin/batches/${this.batch_id}` , this.batch).then(() => {
-                    window.location.reload();
+                    this.$emit('reload');
                 }).catch((res) => {
                     console.log(res);
                 })

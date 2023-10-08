@@ -1,19 +1,20 @@
 <template>
     <div>
-        <div v-if="profile" class="my-8 sm:flex">
-            <img v-if="profile && profile.image" :src="filePath.imagePath(profile.image)" style="height : 220px;width : 220px;" class="mx-16 border-8 rounded-full border-teal sm:my-8 sm:mx-16 sm:px-6 " alt="">
+        <div v-if="profile" class="my-4 sm:flex">
+            <img v-if="profile && profile.image" :src="filePath.imagePath(profile.image)" style="height : 220px;width : 220px;" class="mx-16 border-8 rounded-full border-teal sm:my-8" alt="">
+            <img v-else src="" style="height : 220px;width : 220px;" class="mx-16 border-8 rounded-full border-teal sm:my-8 sm:mx-16 sm:px-6 " alt="">
             <div class="sm:w-[70%]">
                 <h1 class="px-8 py-4 text-3xl font-bold sm:px-12 sm:py-8 sm:mt-4 sm:mx-1">{{ profile.name }}</h1>
-                <p class="font-semibold px-8 py-1 text-lg sm:px-1.5 sm:mx-12">Student ID - [{{ profile.student_id }}]</p>
-                <p class="font-semibold text-lg px-8 py-1 sm:my-6 sm:px-1.5 sm:mx-12">Joined at -[ {{ profile.created_at }} ]</p>
+                <p class="font-semibold px-8 py-1 text-lg sm:px-1.5 sm:mx-12">Student ID - [ <span class="text-green">{{ profile.student_id }}</span> ]</p>
+                <p class="font-semibold text-lg px-8 py-1 sm:my-6 sm:px-1.5 sm:mx-12">Joined at -[ <span class="text-green">{{ profile.created_at }}</span> ]</p>
             </div>
         </div>
 <!-- for responsive that I can do as much as I can hee" -->
-       <div class="w-full sm:hidden bg-gray-2">
+       <div class="w-full pb-12 sm:hidden bg-gray-2">
             <button @click="showInfo" class="w-1/2 py-1 " :class="info ? 'bg-blue-2 text-white': 'bg-white text-gray'">Personal Information</button>
             <button @click="showActivity" class="w-1/2 py-1" :class="show_activities ? 'bg-blue-2 text-white': 'bg-white text-gray'">Activities</button>
         <form v-if="info && profile" class="mx-1 my-6" @submit.prevent="editProfile">
-              <div class="bg-gray-2 flex justify-end">
+              <div class="flex justify-end bg-gray-2">
                 <p @click="editing" v-if="saving" class="px-4 mt-2 underline text-end text-blue-2">Edit</p>
                 <button  v-if="isEditing" class="px-4 mt-2 underline text-end text-blue-2">Save</button>
               </div>            
@@ -41,7 +42,7 @@
             </div>
         </form>
         <div v-if="show_activities" class="w-full">
-                <div class="mx-1 my-6 bg-white">
+                <div class="mx-1 my-16 bg-white">
                 <div class="flex border border-b-0 border-gray-2">
                         <p class="py-5 text-xs px-3 font-semibold text-center border-r border-gray-2 w-[40%]">IN-PROGRESS COURSES</p>
                         <p class="py-5 text-center text-xs font-semibold px-4 w-[60%]">{{ activities.length }}</p>
@@ -58,7 +59,7 @@
         </div>
         </div>
 <!--  -->
-        <div class="flex justify-around pb-36 max-sm:hidden bg-gray-2">
+        <div class="flex justify-around pb-16 max-sm:hidden bg-gray-2">
             <div class="sm:w-[45%] sm:mt-6">
                 <p class="font-semibold underline text-blue-2">Personal information</p>
                 <form v-if="info && profile " class="bg-white " @submit.prevent="editProfile">

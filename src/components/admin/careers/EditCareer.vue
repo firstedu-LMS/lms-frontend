@@ -76,7 +76,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
         methods : {
             editCareer(){
                 ApiService.put(`admin/careers/${this.id}` , this.career).then(() => {
-                    window.location.reload()
+                    this.$emit('reload')
                 }).catch((res) => {
                     alert('Error!')
                     console.log(res);

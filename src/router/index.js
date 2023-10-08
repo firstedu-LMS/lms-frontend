@@ -144,7 +144,7 @@ const routes = [
         component : StudentProfilePage
       },
       {
-        path : '/course',
+        path : 'courses',
         name : 'StudentCoursePage',
         component : StudentCoursePage
       }

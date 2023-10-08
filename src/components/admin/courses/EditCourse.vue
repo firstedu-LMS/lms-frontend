@@ -68,7 +68,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
         methods : {
             editCourse(){
-                ApiService.put(`admin/courses/${this.id}` , this.course).then(() => {
+                ApiService.patch(`admin/courses/${this.id}` , this.course).then(() => {
                     this.$emit('reload');
                 }).catch((res) => {
                     alert('Error!')

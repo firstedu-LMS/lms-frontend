@@ -10,7 +10,7 @@
         <div>
             <CareersView @edit="showEditForm" v-if="careersTable" />
             <CreateCareer @reload="showCareersTable" v-if="createForm" />
-            <EditCareer v-if="editForm" :id="idForEdit" />
+            <EditCareer @reload="showCareersTable" v-if="editForm" :id="idForEdit" />
         </div>
     </div>
 </template>

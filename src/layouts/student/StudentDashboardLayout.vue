@@ -1,43 +1,30 @@
 <template>
-  <div>
-    <div class="w-full sm:w-5/6 h-fit">
-      <nav class="sticky top-0 flex justify-between px-2 bg-white items-between">
-        <div>
-          <img src="/images/layout/logo.png" class="w-24 p-2" alt="" />
-        </div>
-        <div class="flex items-center justify-end">
-          <span class=""><i class="material-icons-sharp">notifications</i></span>
-          <span @click="showSidebar" class="ml-3 sm:hidden"><i class="material-icons-sharp">menu</i></span>
-        </div>
+  <div class="flex">
+    <aside class="sticky top-0 hidden w-1/6 h-screen border-r sm:block border-gray-3">
+      <router-link to="/" class="block">
+        <img class="w-24 mx-auto my-2" src="../../../public/images/layout/logo.png" alt="">
+      </router-link>
+      <ul class="mt-8">
+        <li class="p-2 m-4" v-for="item in sideItems" :key="item.name">
+          <router-link :to="{name : item.path}" class="flex items-center hover:text-blue-2">
+            <span style="margin-right: 7px;margin-top: -4px;" class="material-icons-outlined">{{ item.icon }}</span>
+            {{ item.name }}
+          </router-link>
+        </li>
+        <li class="p-2 font-bold text-center border-t border-gray-2 text-red">
+          <button>Logout</button>
+        </li>
+      </ul>
+    </aside>
+    <div class="w-full sm:w-5/6">
+      <nav class="sticky top-0 z-50 flex justify-end p-4 bg-white shadow-lg">
+        <span class="material-icons-sharp">notifications</span>
       </nav>
-      <main>
+      <main class="z-10">
         <router-view></router-view>
       </main>
     </div>
-    <div v-if="sideBar" class="fixed top-0 right-0 h-screen bg-teal">
-      <div class="border-b-4 border-b-gray">
-        <span v-for="item in sideItems" :key="item">
-          <router-link :to="{ name: item.path }">
-            <p class="py-2 my-8 text-lg font-semibold text-center text-white hover:text-gray">
-              {{ item.name }}
-            </p>
-          </router-link>
-        </span>
-      </div>
-        <span @click="logout" class="py-5 mx-20 my-2 text-lg font-semibold text-center text-red">Log Out</span>
-    </div>
-    <div class="fixed top-0 right-0 hidden w-1/6 h-screen sm:block bg-teal">
-      <div class="border-b-2 border-b-gray-2">
-        <span v-for="item in sideItems" :key="item">
-          <router-link :to="{ name: item.path }">
-            <p class="py-2 my-4 text-lg font-semibold text-center text-white hover:text-gray">
-              {{ item.name }}
-            </p>
-          </router-link>
-        </span>
-      </div>
-        <button @click="logout" class="px-28 mt-4  text-lg font-semibold text-center text-red">Log Out</button>
-    </div>  
+
   </div>
 </template>
 
@@ -54,22 +41,27 @@ export default {
         {
           name: "Profile",
           path: "StudentProfilePage",
+          icon : 'person_outline'
         },
         {
-          name: "Course",
+          name: "Courses",
           path: "StudentCoursePage",
+          icon : 'personal_video'
         },
         {
-          name: "Profile",
+          name: "Achievements",
           path: "StudentProfilePage",
+          icon : 'check_circle'
         },
         {
-          name: "Profile",
+          name: "Grades",
           path: "StudentProfilePage",
+          icon : 'grade'
         },
         {
-          name: "Profile",
+          name: "Settings",
           path: "StudentProfilePage",
+          icon : 'settings'
         },
       ],
     };

@@ -66,7 +66,8 @@ export default {
         } 
         ApiService.post('enrollments' , obj).then(() => {
           this.created = true;
-        }).catch(() => {
+        }).catch((res) => {
+          console.log(res);
           this.error = true;
         })
       } else {
