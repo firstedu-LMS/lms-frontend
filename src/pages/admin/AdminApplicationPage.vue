@@ -1,6 +1,5 @@
 <template>
 <div class="relative">
-
     <h1 class="p-2 text-xl font-bold">Application Forms</h1>
     <vue-good-table
      :columns="columns"
@@ -65,9 +64,11 @@ import filePath from '../../services/public/filePath';
         methods : {
             showCv(cv) {
                 let path = this.filePath.cvPath(cv)
+                console.log(cv);
                 window.open(path , '_blank')
             },
             toggleForm(data){
+                console.log(data);
                 this.acceptInstructorProps = data
                 this.acceptForm = !this.acceptForm;
             },

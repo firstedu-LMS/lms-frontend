@@ -18,8 +18,8 @@
                     </button>
                     <button @click="changePage" class="absolute z-50 w-32 px-4 py-1 bg-white rounded top-8" v-if="onSelect">Weeks</button>
                 </div>
-                <button @click="showTable" class="px-6 py-1 my-auto font-semibold h-fit rounded-l-md"  :class="table ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'">table</button>
-                <button @click="showCreate" class="px-6 py-1 my-auto font-semibold h-fit rounded-r-md" :class="createForm ? 'bg-cyan shadow-inner': 'bg-white text-black  shadow-lg' ">+ new</button>
+                <button @click="showTable" class="px-6 py-1 my-auto font-semibold h-fit rounded-l-md"  :class="table ? 'bg-cyan shadow-inner text-white' : 'bg-white text-black  shadow-lg'">table</button>
+                <button @click="showCreate" class="px-6 py-1 my-auto font-semibold h-fit rounded-r-md" :class="createForm ? 'bg-cyan shadow-inner text-white': 'bg-white text-black  shadow-lg' ">+ new</button>
             </div>
         </div>
 
