@@ -12,7 +12,7 @@
           </router-link>
         </li>
         <li class="p-2 font-bold text-center border-t border-gray-2 text-red">
-          <button>Logout</button>
+          <button @click="logout">Logout</button>
         </li>
       </ul>
     </aside>
