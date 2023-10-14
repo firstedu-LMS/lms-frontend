@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form @submit.prevent="createBatch" class="flex flex-wrap justify-around w-2/3 text-sm font-semibold">
+        <form  @submit.prevent="createBatch" class="flex flex-wrap justify-around w-2/3 text-sm font-semibold">
             
             <div class="w-1/2 p-4 my-4">
                 <label for="instructor">Instructor</label>
@@ -22,7 +22,9 @@
                     <br><label>finished</label>
                 </span>
             </div>
-
+            <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
+        </div>
             <div class="w-1/2 p-4 my-4">
                 <label for="start_date">Start Date</label>
                 <input type="date" class="w-[60%] px-2 ml-2 bg-transparent border-b outline-none" v-model="batch.start_date">
@@ -52,7 +54,7 @@
             </div>
 
             <div class="w-full px-4">
-                <button class="px-4 py-1.5 shadow-lg bg-white">Submit</button>
+                <button :disabled="loading" class="px-4 py-1.5 shadow-lg bg-white">Submit</button>
             </div>
 
         </form>
@@ -69,6 +71,7 @@ import ApiService from '@/services/ApiService'
         },
         data(){
             return {
+                loading : false,
                 instructors : [],
                 batch : {
                     instructor_id : null,
@@ -92,9 +95,12 @@ import ApiService from '@/services/ApiService'
         methods : {
             createBatch(){
                 this.batch.course_id = this.$props.course_id;
+                this.loading = true
                 ApiService.post('admin/batches' , this.batch).then(() => {
                     this.$emit('reload')
+                    this.loading = false
                 }).catch((res) => {
+                    this.loading = false
                     this.errors = res.response.data.errors
                     setTimeout(() => {
                         this.errors = {}

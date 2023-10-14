@@ -27,6 +27,9 @@
                 <p v-if="errors.age" class="py-1 mx-4 text-red">{{ errors.age[0] }}</p>
 
             </div>
+            <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
+            </div>
             <div class="w-[27%] my-8">
                 <label class="text-[12px] font-semibold" for="status">Employment Status</label>
                 <select v-model="career.employment_status" class="w-full px-2 py-1.5 text-[12px] font-semibold bg-transparent border-b outline-none">
@@ -79,7 +82,7 @@
 
             </div>
             <div class="w-full my-4">
-                <button class="px-3 py-1 text-white bg-blue-2">Submit</button>
+                <button :disabled="loading" class="px-3 py-1 text-white bg-blue-2">Submit</button>
             </div>
         </form>
     </div>
@@ -96,6 +99,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
         data(){
             return {
                 created : false,
+                loading : false,
                 career : {
                     name : '',
                     vacancy : null,
@@ -117,9 +121,12 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
                 this.$emit('reload')
             },
             createCareer(){
+                this.loading = true
                 ApiService.post('admin/careers' , this.career).then(() => {
                     this.created = true;
+                    this.loading = false
                 }).catch((res) => {
+                    this.loading = false
                     this.errors = res.response.data.errors
                     setTimeout(() => {
                         this.errors = {}
