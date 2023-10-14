@@ -27,6 +27,8 @@ import AdminEnrollmentPage from "@/pages/admin/AdminEnrollmentPage.vue"
 import StudentDashboardLayout from '@/layouts/student/StudentDashboardLayout.vue'
 import StudentProfilePage from "@/pages/student/StudentProfilePage.vue";
 import StudentCoursePage from "@/pages/student/StudentCoursePage.vue"
+import StudentCourseDetailPage from "@/pages/student/StudentCourseDetailPage.vue"
+import StudentLessonDetailPage from "@/pages/student/StudentLessonDetailPage.vue"
 
 import TokenService from "@/services/TokenService";
 
@@ -147,7 +149,17 @@ const routes = [
         path : 'courses',
         name : 'StudentCoursePage',
         component : StudentCoursePage
-      }
+      },
+      {
+        path : 'courses/:student_id/:course_id/:batch_id',
+        name : 'StudentCourseDetailPage',
+        component : StudentCourseDetailPage
+      },
+      {
+        path : 'courses/:student_id/:course_id/:batch_id/:week_id',
+        name : 'StudentLessonDetailPage',
+        component : StudentLessonDetailPage
+      },
     ]
   }
 ];
