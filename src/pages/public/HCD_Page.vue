@@ -32,7 +32,7 @@
     </div>
     <div class="p-4 text-lg text-white sm:w-[80%] mx-auto">
         <button @click="enrollCourse(course.id)" class="px-6 py-1 mr-2 bg-green">Enroll now</button>
-        <router-link :to="{name : 'HC_Page'}" class="px-4 py-2 bg-gray">Back</router-link>
+        <button @click="$router.go(-1)" class="px-4 py-1 bg-gray">Back</button>
     </div>
   </div>
 </template>

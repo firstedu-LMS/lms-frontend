@@ -1,5 +1,5 @@
 <template>
-  <div class="flex bg-gray-3">
+  <div class="flex bg-[#eae8e8]">
     <aside class="sticky top-0 hidden w-1/6 h-screen sm:block">
       <router-link class="block" to="/">
           <img class="w-24 mx-auto my-2" src="../../../public/images/layout/logo.png" alt="">
@@ -11,8 +11,11 @@
             {{ item.name }}
           </router-link>
         </li>
-        <li class="p-2 font-bold text-center border-t border-gray-2 text-red">
-          <button>Logout</button>
+        <li class="p-2 font-bold m-4 border-t border-gray-2 text-red">
+          <button @click="logout" class="flex items-center">
+            <span style="margin-right: 7px;margin-top: -4px;" class="material-icons-outlined">logout</span>
+            Logout
+          </button>
         </li>
       </ul>
     </aside>
@@ -23,7 +26,7 @@
         </button>
         <span style="margin: auto 0px;" class="material-icons-sharp">notifications</span>
       </nav>
-      <main class="z-10 mx-4 mt-4 bg-white rounded-2xl">
+      <main style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;" class="z-10 mx-4 mt-4 bg-white rounded-2xl">
         <router-view></router-view>
       </main>
     </div>
