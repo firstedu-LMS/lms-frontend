@@ -24,7 +24,7 @@
             </div>
             <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
             loading . . .
-        </div>
+            </div>
             <div class="w-1/2 p-4 my-4">
                 <label for="start_date">Start Date</label>
                 <input type="date" class="w-[60%] px-2 ml-2 bg-transparent border-b outline-none" v-model="batch.start_date">
