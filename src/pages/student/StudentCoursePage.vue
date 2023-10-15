@@ -16,7 +16,7 @@
                     <div class="flex-col justify-between sm:mx-3 sm:px-4 sm:flex sm:w-1/2">
                         <h1 class="mt-2 text-xl font-bold text-black max-sm:text-xl sm:mt-0">{{ course.batch.course.name }}</h1>    
                         <h3>{{ course.batch.name }}</h3>            
-                        <router-link :to="{name :'StudentCourseDetailPage' , params : {student_id : profile.id , course_id : course.course_id , batch_id : course.batch.id}}" class="w-full py-2 mt-4 text-xl font-semibold text-white border max-sm:py-1 max-sm:text-lg hover:bg-transparent bg-green hover:text-green border-green">Continue</router-link>       
+                        <router-link :to="{name :'StudentCourseDetailPage' , params : {student_id : profile.id , course_id : course.course_id , batch_id : course.batch.id}}" class="w-full py-2 mt-4 min-w-full text-xl font-semibold text-white border hover:bg-transparent bg-green hover:text-green border-green">Continue</router-link>       
                     </div>
                 </div>
             </div>

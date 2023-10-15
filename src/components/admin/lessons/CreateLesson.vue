@@ -21,6 +21,7 @@
                 <label for="image">Video</label>
                 <input @change="saveVideo"  type="file" class="w-full px-4 py-1 border-b outline-none file:border-0 file:text-sm">
                 <p v-if="errors.video_id" class="py-1 text-red ">{{ errors.video_id[0] }}</p>
+                <p v-if="errors.video" class="py-1 text-red ">{{ errors.video[0] }}</p>
 
             </div>
 
@@ -47,7 +48,8 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
                     description : '',
                     video_id : null
                 },
-                errors : {}
+                errors : {},
+
             }
         },
         methods : {
@@ -60,8 +62,12 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
                         this.loading = false
                         this.lesson.video_id = res.data.data.id
                     }).catch((res) => {
-                        this.loading = false
                         console.log(res);
+                        this.loading = false
+                        this.errors = res.response.data.errors
+                    setTimeout(() => {
+                        this.errors = {}
+                    },3000)
                     })
                 }
             },
@@ -74,6 +80,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
                     this.$emit('reload');
                     this.loading = false
                 }).catch((res) => {
+                    console.log(res);
                     this.loading = false
                     this.errors = res.response.data.errors
                     setTimeout(() => {
