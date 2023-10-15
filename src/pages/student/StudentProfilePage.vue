@@ -9,7 +9,6 @@
                 <p class="font-semibold text-lg px-8 py-1 sm:my-6 sm:px-1.5 sm:mx-12">Joined at -[ <span class="text-green">{{ profile.created_at }}</span> ]</p>
             </div>
         </div>
-<!-- for responsive that I can do as much as I can hee" -->
        <div class="w-full py-12 sm:hidden">
             <button @click="showInfo" class="w-1/2 py-1 " :class="info ? 'bg-blue-2 text-white': 'bg-white text-gray'">Personal Information</button>
             <button @click="showActivity" class="w-1/2 py-1" :class="show_activities ? 'bg-blue-2 text-white': 'bg-white text-gray'">Activities</button>
@@ -58,7 +57,6 @@
             </div>
         </div>
         </div>
-<!--  -->
         <div class="flex justify-around pb-16 max-sm:hidden">
             <div class="sm:w-[45%] sm:mt-6">
                 <p class="font-semibold underline text-blue-2">Personal information</p>

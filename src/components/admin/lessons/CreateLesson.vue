@@ -19,7 +19,7 @@
             </div>
             <div class="w-[30%] my-6">
                 <label for="image">Video</label>
-                <input @change="saveVideo" type="file" class="w-full px-4 py-1 border-b outline-none file:border-0 file:text-sm">
+                <input @change="saveVideo"  type="file" class="w-full px-4 py-1 border-b outline-none file:border-0 file:text-sm">
                 <p v-if="errors.video_id" class="py-1 text-red ">{{ errors.video_id[0] }}</p>
 
             </div>
