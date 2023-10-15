@@ -84,7 +84,6 @@ import { QuillEditor } from '@vueup/vue-quill'
                 ApiService.post('admin/assignments' , this.assignment).then(() => {
                     this.loading = false
                     window.location.reload()
-                    console.log(this.assignment);
                 }).catch((res) => {
                     this.errors = res.response.data.errors
                     this.loading = false

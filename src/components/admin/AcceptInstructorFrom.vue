@@ -19,12 +19,15 @@
                 <label for="name" class="mr-4">Name</label>
                 <input v-model="formData.name" class="outline-none w-full text-gray px-2 py-0.5 rounded-sm" type="text">
             </div>
+            <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
+            </div>
             <div class="mt-4">
                 <label for="password" class="mr-4">Password</label>
                 <input v-model="formData.password" class="outline-none w-full text-gray px-2 py-0.5 rounded-sm" type="text">
             </div>
             <div class="flex justify-end mt-4">
-                <button class="px-2 py-1 rounded-sm bg-blue-2">Submit</button>
+                <button :disabled="loading" class="px-2 py-1 rounded-sm bg-blue-2">Submit</button>
             </div>
         </form>
     </div>
@@ -42,7 +45,8 @@ import ApiService from '@/services/ApiService';
                     cv_id : '',
                     name : '',
                     password : ''
-                }
+                },
+                loading : false
             }
         },
         mounted () {
@@ -54,12 +58,16 @@ import ApiService from '@/services/ApiService';
                 this.promptBox = true;
             },
             accept(){
+                this.loading = true
                 ApiService.post('admin/applications/add-instructor' , this.formData).then(() => {
                     console.log('hello');
                     this.$router.push({name : 'AdminInstructorPage'})
+                    this.loading = false
                 }).catch((res) => {
                     console.log('error');
                     console.log(res);
+                    this.loading = false
+
                 })
             }
         }

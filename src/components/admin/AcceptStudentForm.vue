@@ -6,6 +6,9 @@
                 <label class="w-2/6" for="name">Name</label>
                 <input class="w-4/6 ml-36 my-3 py-1.5 px-2" name="name" type="text" placeholder="Name">
             </div>
+            <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
+            </div>
             <div class="w-full px-8">
                 <label class="w-2/6 mx-0.5" for="email">Email</label>
                 <input class="w-4/6 ml-36 my-3 py-1.5 px-2" name="email" type="email" placeholder="Email">
@@ -36,7 +39,7 @@
             </div>
         </div>
         <div class="flex justify-end my-4">
-            <button class="bg-green text-white py-1.5 px-8 rounded-md">Accept</button>
+            <button :disabled="loading" class="bg-green text-white py-1.5 px-8 rounded-md">Accept</button>
         </div>
         </form>
        
@@ -54,7 +57,8 @@ import ApiService from '@/services/ApiService';
                     name : '',
                     email : '',
                     
-                }
+                },
+                loading : false
  
             }
         },
@@ -63,10 +67,14 @@ import ApiService from '@/services/ApiService';
                 this.promptBox = true;
             },
             accept(){
+                this.loading = true
                 ApiService.post('admin/enrollments' , this.formData).then(() => {
+                    this.loading = false
                 }).catch((res) => {
                     console.log('error');
                     console.log(res);
+                    this.loading = false
+
                 })
             }
         }
