@@ -62,8 +62,8 @@ import { QuillEditor } from '@vueup/vue-quill'
             saveFile(e){
                 if (e.target.files[0]) {
                     let form = new FormData();
-                    form.set('video' , e.target.files[0])
-                    ApiService.post('admin/videos' , form).then((res) => {
+                    form.set('assignment' , e.target.files[0])
+                    ApiService.post('admin/files' , form).then((res) => {
                         this.assignment.file_id = res.data.data.id
                     }).catch((res) => {
                         console.log(res);
@@ -75,6 +75,7 @@ import { QuillEditor } from '@vueup/vue-quill'
                 ApiService.post('admin/assignments' , this.assignment).then(() => {
                     window.location.reload()
                 }).catch((res) => {
+                    console.log(res);
                     this.errors = res.response.data.errors
                     setTimeout(() => {
                         this.errors = {}
