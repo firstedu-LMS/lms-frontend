@@ -37,6 +37,7 @@ import axios from 'axios';
         },
         data(){
             return {
+                errors : {},
                 authStore : useAuthStore(),
                 image : './images/layout/auth.jpg',
                 errors : {},

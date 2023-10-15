@@ -62,7 +62,6 @@
             </div>
         </div>
         </div>
-<!--  -->
         <div class="flex justify-around pb-16 max-sm:hidden"  :class="showImage ? 'blur-[3px]' : ''">
             <div class="sm:w-[45%] sm:mt-6">
                 <p class="font-semibold underline text-blue-2">Personal information</p>

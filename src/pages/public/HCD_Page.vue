@@ -15,7 +15,10 @@
               <button @click="error = false" class="w-full py-1.5 text-white rounded hover:bg-transparent hover:text-red border border-red bg-red">Okay</button>
           </dialog>
       </transition>
-    <div :class="created ? 'blur-[1px]' : error ? 'blur-[1px]' : ''"  class="justify-between sm:w-[80%] p-2 mt-6 mx-auto sm:mb-0 sm:flex">
+      <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
+        </div>
+    <div :class="created || loading ? 'blur-[1px]' : error ? 'blur-[1px]' : ''"  class="justify-between sm:w-[80%] p-2 mt-6 mx-auto sm:mb-0 sm:flex">
       <div class="sm:w-1/2">
         <h1 class="mb-6 text-3xl font-bold text-blue">{{ course.name }}</h1>
         <p class="my-4" v-html="course.description"></p>
@@ -48,6 +51,7 @@ export default {
   },
   data() {
     return {
+      loading : false,
       created : false,
       error : false,
       course: {},
@@ -66,9 +70,12 @@ export default {
           course_id : id,
           student_id : this.authStore.user.student.id
         } 
-        ApiService.post('enrollments' , obj).then(() => {
+        this.loading = true;
+        ApiService.post('enrollments' , obj).then(() => {        
           this.created = true;
+          this.loading = false
         }).catch((res) => {
+          this.loading = false
           console.log(res);
           this.error = true;
         })
