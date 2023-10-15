@@ -1,7 +1,11 @@
 <template>
     <div>
-        <div v-if="profile" class="sm:flex">
-            <img v-if="profile && profile.image" :src="filePath.imagePath(profile.image)" style="height : 220px;width : 220px;" class="mx-16 border-8 rounded-full border-teal sm:my-8" alt="">
+        <div  v-if="showImage" class="fixed w-5/6 sm:w-[450px] sm:h-[450px] shadow-xl z-50 top-1/2 left-1/2" style="transform: translate(-50% , -50%);" >
+            <span @click="showImage = false" class="absolute px-2 font-bold text-white rounded-full cursor-pointer right-2 top-2 bg-green">x</span>
+            <img  v-if="profile && profile.image" :src="filePath.imagePath(profile.image)" class=" sm:w-[450px] sm:h-[450px] rounded"  alt="">
+        </div>
+        <div v-if="profile" class="py-6 sm:flex" :class="showImage ? 'blur-[2px]' : ''">
+            <img @click="showImage = true" v-if="profile && profile.image" :src="filePath.imagePath(profile.image)" style="height : 220px;width : 220px;" class="mx-16 border-8 rounded-full cursor-pointer sm:my-8 border-teal" alt="">
             <img v-else src="" style="height : 220px;width : 220px;" class="mx-16 border-8 rounded-full border-teal sm:my-8 sm:mx-16 sm:px-6 " alt="">
             <div class="sm:w-[70%]">
                 <h1 class="px-8 py-4 text-3xl font-bold sm:px-12 sm:py-8 sm:mt-4 sm:mx-1">{{ profile.name }}</h1>
@@ -9,7 +13,8 @@
                 <p class="font-semibold text-lg px-8 py-1 sm:my-6 sm:px-1.5 sm:mx-12">Joined at -[ <span class="text-green">{{ profile.created_at }}</span> ]</p>
             </div>
         </div>
-       <div class="w-full py-12 sm:hidden">
+<!-- for responsive that I can do as much as I can hee" -->
+       <div class="w-full py-12 sm:hidden"  :class="showImage ? 'blur-[3px]' : ''">
             <button @click="showInfo" class="w-1/2 py-1 " :class="info ? 'bg-blue-2 text-white': 'bg-white text-gray'">Personal Information</button>
             <button @click="showActivity" class="w-1/2 py-1" :class="show_activities ? 'bg-blue-2 text-white': 'bg-white text-gray'">Activities</button>
         <form v-if="info && profile" class="mx-1 my-6" @submit.prevent="editProfile">
@@ -57,7 +62,7 @@
             </div>
         </div>
         </div>
-        <div class="flex justify-around pb-16 max-sm:hidden">
+        <div class="flex justify-around pb-16 max-sm:hidden"  :class="showImage ? 'blur-[3px]' : ''">
             <div class="sm:w-[45%] sm:mt-6">
                 <p class="font-semibold underline text-blue-2">Personal information</p>
                 <form v-if="info && profile " class="bg-white " @submit.prevent="editProfile">
@@ -116,6 +121,7 @@ import filePath from '@/services/public/filePath'
             return {
                 info: true,
                 profile : {},
+                showImage : false,
                 filePath : filePath,
                 show_activities : false,
                 activities : [],
