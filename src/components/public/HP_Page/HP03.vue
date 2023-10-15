@@ -8,11 +8,9 @@
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos voluptatum fuga vero et perspiciatis atque enim inventore consectetur sint culpa. Deserunt, molestias fugit laboriosam fugiat sequi magnam animi quod doloribus! Deserunt, molestias fugit laboriosam fugiat sequi magnam animi quod doloribus!
             </p>
             <ul class="flex-wrap text-lg sm:flex">
-                <li class="sm:w-1/2" v-for="program in programs" :key="program.name">
-                    <div class="flex p-4">
+                <li class="flex p-4 sm:w-1/2" v-for="program in programs" :key="program.name">
                         <img :src="program.image" class="w-16" alt="">
                         <p class="my-auto ml-4">{{ program.name }}</p>
-                    </div>
                 </li>
             </ul>
         </div>

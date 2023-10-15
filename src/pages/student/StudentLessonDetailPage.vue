@@ -5,12 +5,13 @@
             <ul class="sm:w-[25%] h-fit rounded bg-gray-2 mb-12" v-if="lessons.length">
                 <h1 v-if="lessons[0].week" class="my-3 text-lg font-bold text-center">{{ lessons[0].week.week_number }}</h1>
                 <li class="p-2 text-sm border border-gray-3" v-for="lesson,index in lessons" :key="lesson.id">
-                    <div class="flex justify-between">
-                        <button @click="changeActiveLesson(lesson)" :class="lesson.id == active_lesson.id ? 'text-blue-2' : ''">
+                    <div  class="flex justify-between">
+                        <button :disabled="!lesson.locked" @click="changeActiveLesson(lesson)" :class="lesson.id == active_lesson.id ? 'text-blue-2' : ''">
                             <p class="w-fit">Lesson - {{ index + 1 }}</p>
                             <p class="w-fit">{{ lesson.name }}</p>
                         </button>
-                        <span style="color: rgb(16, 197, 16); font-size: 18px;margin-left: 7px; margin-top: 3px;" class="material-icons-sharp">lock</span>
+                        <span v-if="lesson.locked" style="color: rgb(16, 197, 16); font-size: 18px;margin-left: 7px; margin-top: 3px;" class="material-icons-sharp">lock</span>
+                        <span v-else style="color: red; font-size: 18px;margin-left: 7px; margin-top: 3px;" class="material-icons-sharp">lock</span>
                     </div>
                     <button class="w-full mt-3 text-left">Questions</button>
                 </li>
@@ -59,7 +60,7 @@ import filePath from '@/services/public/filePath';
                 })
             },
             changeActiveLesson (lesson) {
-                if (!lesson.locked) {
+                if (lesson.locked) {
                     this.active_lesson = lesson
                 } else {
                     alert('complete previous lessons')
