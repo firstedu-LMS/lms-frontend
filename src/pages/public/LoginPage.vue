@@ -8,10 +8,14 @@
                 <div  class="px-4 py-2">
                     <label for="" class="text-sm font-semibold ">Email</label>
                     <input v-model="form.email" required type="email"  class="w-full mt-1 outline-none bg-transparent border px-2 py-0.5">
+                    <p v-if="errors.email" class="mx-2 text-red">{{ errors.email }}</p>
+
                 </div>
                 <div  class="px-4 py-2">
                     <label for="" class="text-sm font-semibold ">Password</label>
                     <input v-model="form.password" required type="password"  class="w-full mt-1 outline-none bg-transparent px-2 py-0.5 border">
+                    <p v-if="errors.password" class="py-1 mx-8 text-red">{{ errors.password }}</p>
+
                 </div>
                 <div  class="px-4 py-2 mt-4">
                     <button class="w-full py-1 text-lg text-white bg-blue-2">Login</button>
@@ -35,6 +39,7 @@ import axios from 'axios';
         },
         data(){
             return {
+                errors : {},
                 authStore : useAuthStore(),
                 image : './images/layout/auth.jpg',
                 form : {
@@ -54,7 +59,12 @@ import axios from 'axios';
                         this.$router.push({name : 'StudentProfilePage'});
                     }
                 }).catch((res) => {
-                    console.log(res);
+                    if (res.response && res.response.data.error) {
+                        this.errors = res.response.data.error
+                            setTimeout(() => {
+                                this.errors = {}
+                            },5000)
+                    }
                 })
             }
         }

@@ -5,6 +5,9 @@
                 <span @click="closeCompo" class="material-icons-sharp" style="cursor: pointer; float: right; margin-bottom: 15px;">
                     cancel
                 </span>
+                <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+                    loading . . .
+                </div>
                 <div class="w-full flex justify-between mt-6">
                     <label class="w-2/6 mx-0.5 text-center py-2 px-2" for="name">Name</label>
                     <p class="w-4/6 bg-white py-2 px-2">{{ selectedStudent.user.name }}</p>
@@ -38,7 +41,7 @@
                 </div>
             </div>
             <div class="flex justify-end my-4">
-                <button @click="enroll" class="bg-green text-white py-1.5 px-8 rounded-md">Accept</button>
+                <button @click="enroll" :disabled="loading" class="bg-green text-white py-1.5 px-8 rounded-md">Accept</button>
             </div>
         </div>
        
@@ -61,6 +64,7 @@ import ApiService from '@/services/ApiService';
             return {
                 batches : [],
                 selectedStudent : {},
+                loading : false
             }
         },
         mounted() {
@@ -81,8 +85,11 @@ import ApiService from '@/services/ApiService';
             },
             enroll() {
                 if (this.enrollment.course_id && this.enrollment.batch_id && this.enrollment.student_id) {
+                    this.loading = true
                     ApiService.post('admin/enrollments' , this.enrollment).then(() => {
                         this.$emit('success');
+                        this.loading = false
+
                     }).catch((res) => {
                         console.log(res);
                     })
