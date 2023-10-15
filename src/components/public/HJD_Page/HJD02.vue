@@ -21,7 +21,7 @@
                 <input @change="insertCV" required type="file" class="w-full mt-1 border cursor-pointer file:cursor-pointer border-gray file:bg-transparent file:border-0 file:py-1 file:px-2">
             </div>
             <div>
-                <button class="w-full py-1.5 text-center text-white bg-green text-lg">Submit</button>
+                <button :disabled="submitting" class="w-full py-1.5 text-center text-white bg-green text-lg">Submit</button>
             </div>
         </form>
 
@@ -35,6 +35,7 @@ import axios from 'axios';
         data(){
             return {
                 submitted : false,
+                submitting : false,
                 formData :{
                     email : '',
                     cv : '',
@@ -47,17 +48,20 @@ import axios from 'axios';
                 this.$emit('hideForm')
             },
             insertCV(e){
+                this.submitting = true;
                 let file = e.target.files[0];
                 let form = new FormData();
                 form.set('cv' , file)
                 axios.post('admin/cv-forms' , form).then((res) => {
                     this.formData.cv_id = res.data.data.id
+                    this.submitting = false;
                 }).catch((res) => {
                     alert('ERROR !')
                     console.log(res);
                 })
             },
             apply(){
+                this.submitting = true;
                 axios.post('admin/applications' , this.formData).then(() => {
                     this.submitted = true;
                 }).catch(res => {

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav class="flex justify-between px-4 py-2 bg-white">
+        <nav id="nav" class="flex justify-between px-4 py-2 bg-white">
             <p class="flex items-center">
                 <span class="material-icons-sharp">dns</span>
                 <span class="text-lg font-semibold">&nbsp;Dashboard</span>

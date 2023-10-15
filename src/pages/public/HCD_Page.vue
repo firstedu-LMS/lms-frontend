@@ -31,7 +31,7 @@
       </ul>
     </div>
     <div class="p-4 text-lg text-white sm:w-[80%] mx-auto">
-        <button @click="enrollCourse(course.id)" class="px-6 py-1 mr-2 bg-green">Enroll now</button>
+        <button :disabled="enrolling" @click="enrollCourse(course.id)" class="px-6 py-1 mr-2 bg-green">Enroll now</button>
         <button @click="$router.go(-1)" class="px-4 py-1 bg-gray">Back</button>
     </div>
   </div>
@@ -51,12 +51,14 @@ export default {
       created : false,
       error : false,
       course: {},
+      enrolling : false,
       id: this.$route.params.id,
       authStore : useAuthStore()
     };
   },
   methods : {
     async enrollCourse(id) {
+      this.enrolling = true;
       await this.authStore.getUser();
       let isStudent = this.authStore.roles.find((role) => role.name == 'student');
       if (isStudent && this.authStore.user.student) {
@@ -71,7 +73,8 @@ export default {
           this.error = true;
         })
       } else {
-        alert(`You are ${this.authStore.roles[0].name}. You can't enroll this course!`)
+        // alert(`You are ${this.authStore.roles[0].name}. You can't enroll this course!`)
+        this.$router.push({name : 'LoginPage'})
       }
     }
   },

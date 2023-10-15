@@ -11,7 +11,7 @@
         <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
             loading . . .
         </div>
-        <form :class="created || loading ? 'blur-[1px]' : ''" class="z-30 flex flex-wrap justify-around" @submit.prevent="createCourse" >
+        <form id="form" class="z-30 flex flex-wrap justify-around" @submit.prevent="createCourse" >
                 <div class="w-[30%] my-8">
                     <label class="text-sm font-semibold" for="name">Name</label>
                     <input v-model="course.name" type="text" class="px-2 w-[60%] mx-5 py-1 border-b outline-none">
@@ -98,9 +98,22 @@ import filePath from '../../../services/public/filePath';
                 errors : {}
             }
         },
+        watch: {
+            // whenever question changes, this function will run
+            created(newCreated) {
+                if (newCreated) {
+                    document.getElementById('nav').classList.add('blur-[3px]')
+                    document.getElementById('side').classList.add('blur-[3px]')
+                    document.getElementById('form').classList.add('blur-[3px]')
+                }
+            }
+        },
 
         methods : {
             reload() {
+                document.getElementById('nav').classList.remove('blur-[3px]')
+                document.getElementById('side').classList.remove('blur-[3px]')
+                document.getElementById('form').classList.remove('blur-[3px]')
                 this.$emit('reload');
             },
             saveImage(e) {
