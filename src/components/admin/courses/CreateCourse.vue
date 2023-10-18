@@ -12,7 +12,7 @@
             loading . . .
         </div>
         <form id="form" class="z-30 flex flex-wrap justify-around" @submit.prevent="createCourse" >
-                <div class="w-[30%] my-8">
+                <div class="w-[40%] my-8">
                     <label class="text-sm font-semibold" for="name">Name</label>
                     <input v-model="course.name" type="text" class="px-2 w-[60%] mx-5 py-1 border-b outline-none">
                     <p v-if="errors.name" class="py-1 mx-12 text-red">{{ errors.name[0] }}</p>
@@ -47,7 +47,7 @@
             </div>
             <div class="w-[40%] flex my-10">
                 <label for="image" class="text-sm font-bold">Image</label>
-                <input @change="saveImage" type="file" class="w-full px-2 py-1 border-b outline-none file:border-0 file:text-sm">
+                <input @change="saveImage" type="file" class="w-[80%] px-2 py-1 border-b outline-none file:border-0 file:text-sm">
                 <p v-if="errors.image_id" class="py-1 mx-12 text-red">{{ errors.image_id[0] }}</p>
 
             </div>
