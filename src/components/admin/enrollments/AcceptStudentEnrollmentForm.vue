@@ -31,7 +31,7 @@
             </div>
             <div class="flex justify-between">
                 <div class="bg-gray-3 py-1 text-center w-4/6">
-                    <p>Computer Basic</p>
+                    <p>{{ selectedStudent.course_name }}</p>
                 </div>
                 <div class="w-[25%]">
                     <select @change="selectBatch" class="w-full bg-gray-3 py-2 px-2 outline-none">
