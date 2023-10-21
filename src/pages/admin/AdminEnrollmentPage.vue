@@ -7,7 +7,7 @@
          >
          <template #table-row="props">
                 <span class="relative flex justify-around w-full text-center text-white " v-if="props.column.field == 'actions'">
-                        <button @click="acceptStudent(props.row.course.id,props.row.student.id , props.row.student)"  class="text-sm rounded-sm text-green">
+                        <button @click="acceptStudent(props.row.course.id,props.row.student.id , props.row.student,props.row.course.name)"  class="text-sm rounded-sm text-green">
                             Accept
                             <span class="material-icons-outlined text-white" style="font-size: 15px; padding: 3%; background-color :rgb(54, 253, 54); border-radius: 100%;">
                                 done
@@ -90,7 +90,6 @@ import AcceptStudentEnrollmentForm from '@/components/admin/enrollments/AcceptSt
         methods : {
             getEnrollments() {
                 ApiService.get('/admin/enrollments').then(res => {
-                    console.log(res.data.data)
                     this.enrollments = res.data.data;
                 }).catch(res => {
                     console.log(res);
@@ -99,11 +98,12 @@ import AcceptStudentEnrollmentForm from '@/components/admin/enrollments/AcceptSt
             batchSelection(id) {
                 this.enrollment.batch_id = id;
             },
-            acceptStudent(course_id,student_id , student){
+            acceptStudent(course_id,student_id , student,course_name){
                 this.acceptStudentForm =! this.acceptStudentForm
                 this.enrollment.course_id = course_id;
                 this.enrollment.student_id = student_id;
                 this.selectedStudent = student;
+                this.selectedStudent.course_name = course_name 
             },
             reload() {
                 this.acceptStudentForm = false;
