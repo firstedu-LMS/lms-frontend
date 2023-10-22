@@ -1,6 +1,9 @@
 <template>
     <div class="p-4">
-        <button @click="$router.go(-1)" class="px-2 py-0.5 mb-6 text-white rounded bg-gray">Back</button>
+        <div class="flex justify-between">
+            <button @click="$router.go(-1)" class="px-2 py-0.5 mx-8 mb-6 text-white rounded bg-gray">Back</button>
+            <button class="px-2 py-0.5 mb-6 mx-8 text-white rounded bg-gray">Assignment</button>
+        </div>
         <div class="justify-around sm:flex">
             <ul class="sm:w-[25%] h-fit rounded bg-gray-2 mb-12" v-if="lessons.length">
                 <h1 v-if="lessons[0].week" class="my-3 text-lg font-bold text-center">{{ lessons[0].week.week_number }}</h1>
