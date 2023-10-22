@@ -3,7 +3,7 @@
         <vue-good-table
          :columns="columns"
          :rows="assignments"
-         :search-options="{enabled: true}" >
+         :search-options="{enabled: false}" >
 
             <template #table-column="props">
                 <span class="text-sm">{{ props.column.label }}</span>

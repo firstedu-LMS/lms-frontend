@@ -29,7 +29,6 @@
         <vue-good-table
          :columns="columns"
          :rows="weeks"
-         :search-options="{enabled: true}"
         >
         <template #table-column="props">
             <span class="text-sm">{{ props.column.label }}</span>

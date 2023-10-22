@@ -4,8 +4,8 @@
         <vue-good-table
          :columns="columns"
          :rows="instructors"
-         :search-options="{enabled: true}"
-         :select-options="{ enabled: true , selectOnCheckboxOnly: true, }"
+         :search-options="{enabled: false}"
+         :select-options="{ enabled: false , selectOnCheckboxOnly: false, }"
          v-on:selected-rows-change="selectionChanged"
          >
 
@@ -41,9 +41,9 @@
             <span class="text-[12px] block mx-5" v-else>{{props.formattedRow[props.column.field]}}</span>
             </template>
 
-            <template #table-actions-bottom>
+            <!-- <template #table-actions-bottom>
                 <pagination-vue  v-if="paginationData.current_page"  :paginationProp="paginationData" @next="paginate" @previous="paginate" @random="paginate"></pagination-vue>
-            </template>
+            </template> -->
 
         </vue-good-table>
     </div>
@@ -52,11 +52,11 @@
 <script>
 import 'vue-good-table-next/dist/vue-good-table-next.css'
 import { VueGoodTable } from 'vue-good-table-next'
-import PaginationVue from '@/components/admin/PaginationVue.vue'
+// import PaginationVue from '@/components/admin/PaginationVue.vue'
 import ApiService from '@/services/ApiService'
     export default {
         components : {
-            VueGoodTable , PaginationVue
+            VueGoodTable 
         },
         data() {
             return {
@@ -68,42 +68,27 @@ import ApiService from '@/services/ApiService'
                     {
                         label : 'Id',
                         field : 'instructor_id',
-                        filterOptions : {
-                            enabled : true,
-                            placeholder: 'Filter by ID',
-                        }
+                       
                     },
                     {
                         label : 'Name',
                         field : 'user.name',
-                        filterOptions : {
-                            enabled : true,
-                            placeholder: 'Filter by Name',
-                        }
+                       
                     },
                     {
                         label : 'Email',
                         field : 'user.email',
-                        filterOptions : {
-                            enabled : true,
-                            placeholder: 'Filter by Email',
-                        }
+                     
                     },
                     {
                         label : 'Phone',
                         field : 'phone',
-                        filterOptions : {
-                            enabled : true,
-                            placeholder: 'Filter by Phone No.',
-                        }
+                     
                     },
                     {
                         label : 'Address',
                         field : 'address',
-                        filterOptions : {
-                            enabled : true,
-                            placeholder: 'Filter by Address',
-                        }
+                       
                     },
                     {
                         label : '',
