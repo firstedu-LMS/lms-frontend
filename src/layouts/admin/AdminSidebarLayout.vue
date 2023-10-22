@@ -68,7 +68,7 @@ import { useAuthStore } from '@/stores/auth'
                         icon : 'contacts'
                     },
                     {
-                        name : 'Certificates',
+                        name : 'Achievements',
                         path : 'HC_Page',
                         icon : 'verified_user'
                     }
