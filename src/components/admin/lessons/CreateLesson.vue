@@ -14,15 +14,19 @@
                 <p v-if="errors.description" class="py-1 mx-12 text-red">{{ errors.description[0] }}</p>
 
             </div>
+            <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+                loading . . .
+            </div>
             <div class="w-[30%] my-6">
                 <label for="image">Video</label>
-                <input @change="saveVideo" type="file" class="w-full px-4 py-1 border-b outline-none file:border-0 file:text-sm">
+                <input @change="saveVideo"  type="file" class="w-full px-4 py-1 border-b outline-none file:border-0 file:text-sm">
                 <p v-if="errors.video_id" class="py-1 text-red ">{{ errors.video_id[0] }}</p>
+                <p v-if="errors.video" class="py-1 text-red ">{{ errors.video[0] }}</p>
 
             </div>
 
             <div class="flex w-full my-2">
-                <button class="px-3 py-1 text-black bg-white shadow-sm">Submit</button>
+                <button :disabled="loading" class="px-3 py-1 text-black bg-white shadow-sm">Submit</button>
             </div>
         </form>
     </div>
@@ -38,13 +42,14 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
         } ,
         data() {
             return {
-                
+                loading : false,
                 lesson : {
                     name : '',
                     description : '',
                     video_id : null
                 },
-                errors : {}
+                errors : {},
+
             }
         },
         methods : {
@@ -52,10 +57,17 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
                 if (e.target.files) {
                     let form = new FormData();
                     form.set('video' , e.target.files[0])
+                    this.loading = true
                     ApiService.post('admin/videos' , form).then((res) => {
+                        this.loading = false
                         this.lesson.video_id = res.data.data.id
                     }).catch((res) => {
                         console.log(res);
+                        this.loading = false
+                        this.errors = res.response.data.errors
+                    setTimeout(() => {
+                        this.errors = {}
+                    },3000)
                     })
                 }
             },
@@ -63,9 +75,13 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
                 this.lesson.course_id = this.$route.params.course_id;
                 this.lesson.batch_id = this.$route.params.batch_id;
                 this.lesson.week_id = this.$route.params.week_id;
+                this.loading = true
                 ApiService.post('admin/lessons' , this.lesson).then(() => {
                     this.$emit('reload');
+                    this.loading = false
                 }).catch((res) => {
+                    console.log(res);
+                    this.loading = false
                     this.errors = res.response.data.errors
                     setTimeout(() => {
                         this.errors = {}

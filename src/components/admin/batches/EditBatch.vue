@@ -21,6 +21,9 @@
                     <br><label>finished</label>
                 </span>
             </div>
+            <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
+            </div>
 
             <div class="w-1/2 p-4 my-4">
                 <label for="start_date">Start Date</label>
@@ -43,7 +46,7 @@
             </div>
 
             <div class="w-full px-4">
-                <button class="px-4 py-1.5 shadow-lg bg-white">Submit</button>
+                <button :disabled="loading" class="px-4 py-1.5 shadow-lg bg-white">Submit</button>
             </div>
 
         </form>
@@ -61,30 +64,39 @@ import ApiService from '@/services/ApiService';
         },
         data () {
             return {
+                loading : false,
                 instructors : [],
                 batch : {}
             }
         },
 
         mounted () {
+            this.loading = true
             ApiService.get(`admin/batches/${this.batch_id}`).then((res) => {
                 this.batch = res.data.data;
+                this.loading = false
             }).catch((res) => {
                 console.log(res);
+                this.loading = false
             });
+
             ApiService.get('admin/instructors').then((res) => {
                 this.instructors = res.data.data.instructors;
+                this.loading = false
             }).catch((res) => {
                 console.log(res);
+                this.loading = false
             });
         },
 
         methods : {
             editBatch(){
-                this.batch.course_id = this.$props.course_id;
+                this.loading = true
                 ApiService.patch(`admin/batches/${this.batch_id}` , this.batch).then(() => {
-                    window.location.reload();
+                    this.$emit('reload');
+                    this.loading = false
                 }).catch((res) => {
+                    this.loading = false
                     console.log(res);
                 })
             }

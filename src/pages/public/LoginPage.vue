@@ -8,10 +8,12 @@
                 <div  class="px-4 py-2">
                     <label for="" class="text-sm font-semibold ">Email</label>
                     <input v-model="form.email" required type="email"  class="w-full mt-1 outline-none bg-transparent border px-2 py-0.5">
+                    <p v-if="error.email" class="text-red">{{ error.email[0] }}</p>
                 </div>
                 <div  class="px-4 py-2">
                     <label for="" class="text-sm font-semibold ">Password</label>
                     <input v-model="form.password" required type="password"  class="w-full mt-1 outline-none bg-transparent px-2 py-0.5 border">
+                    <p v-if="error.password" class="text-red">{{ error.password[0] }}</p>
                 </div>
                 <div  class="px-4 py-2 mt-4">
                     <button  :disabled="loading" class="w-full py-1 text-lg text-white bg-blue-2">Login</button>
@@ -39,8 +41,11 @@ import axios from 'axios';
         data(){
             return {
                 loading : false,
+
+                errors : {},
                 authStore : useAuthStore(),
                 image : './images/layout/auth.jpg',
+                error : {},
                 form : {
                     email : '',
                     password : '',
@@ -63,6 +68,7 @@ import axios from 'axios';
                         this.$router.push({name : 'StudentProfilePage'});
                     }
                 }).catch((res) => {
+
                     this.form.available = 1
                     if (res.response && res.response.data.errors) {
                         this.errors = res.response.data.errors;
@@ -71,6 +77,14 @@ import axios from 'axios';
                         setTimeout(() => {
                                 this.errors = {}
                         },5000)
+
+                    console.log(res);
+                    if(res.response && res.response.data.errors) {
+                        this.error = res.response.data.errors;
+                        setTimeout(() => {
+                            this.errors = {};
+                        } , 3000)
+
                     }
                 })
             }

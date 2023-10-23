@@ -3,8 +3,8 @@
         <vue-good-table
          :columns="columns"
          :rows="careers"
-         :search-options="{enabled: true}"
-         :select-options="{ enabled: true , selectOnCheckboxOnly: true, }">
+         :search-options="{enabled: false}"
+         :select-options="{ enabled: false , selectOnCheckboxOnly: false, }">
 
             <template #table-column="props">
                 <span class="text-sm">{{ props.column.field }}</span>
@@ -83,6 +83,13 @@ import { VueGoodTable } from 'vue-good-table-next';
             }
         },
         methods : {
+            getData() {
+                ApiService.get('admin/careers').then((res) => {
+                    this.careers = res.data.data
+                }).catch((res) => {
+                    console.log(res);
+                })
+            },
             showCareerDialog(career){
                 if (this.careerDialog.id == career.id) {
                     this.careerDialog = {}
@@ -95,7 +102,7 @@ import { VueGoodTable } from 'vue-good-table-next';
             },
             deleteCareer(id){
                 ApiService.delete(`admin/careers/${id}`).then(() => {
-                    window.location.reload()
+                    this.getData();
                 }).catch((res) => {
                     alert('Error!')
                     console.log(res);
@@ -103,11 +110,7 @@ import { VueGoodTable } from 'vue-good-table-next';
             }
         },
         mounted() {
-            ApiService.get('admin/careers').then((res) => {
-                this.careers = res.data.data
-            }).catch((res) => {
-                console.log(res);
-            })
+            this.getData();
         },
     }
 </script>

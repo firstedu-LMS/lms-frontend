@@ -1,9 +1,9 @@
 <template>
-    <div class="bg-white">
+    <div id="side" class="bg-white">
         <router-link to="/">
             <img class="w-1/3 m-1 mx-auto" src="../../../public/images/layout/logo.png" alt="">
         </router-link>
-        <ul class="py-2 text-sm mx-2 border-b-2 border-gray">
+        <ul class="py-2 mx-2 text-sm border-b-2 border-gray">
             <li>
                 <router-link class="flex items-center w-full my-1.5 py-1.5 px-3 hover:text-blue-2" :to="{name : 'AdminDashboardPage'}">
                     <span class="material-icons-sharp" style="font-size: 20px;">apps</span> 
@@ -11,7 +11,7 @@
                 </router-link>
             </li>
             <li v-for="item in items" :key="item.name">
-                <router-link active-class="text-white bg-blue-2 hover:text-white" class="flex items-center w-full py-4 px-3 hover:text-blue-2" :to="{name : item.path}">
+                <router-link active-class="text-white bg-blue-2 hover:text-white" class="flex items-center w-full px-3 py-4 hover:text-blue-2" :to="{name : item.path}">
                     <span class="material-icons-sharp" style="font-size: 20px;">{{ item.icon }}</span> 
                     &nbsp;{{ item.name }}
                 </router-link>
@@ -68,7 +68,7 @@ import { useAuthStore } from '@/stores/auth'
                         icon : 'contacts'
                     },
                     {
-                        name : 'Certificates',
+                        name : 'Achievements',
                         path : 'HC_Page',
                         icon : 'verified_user'
                     }

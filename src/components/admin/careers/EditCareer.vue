@@ -39,6 +39,9 @@
                     <option value="Yearly">Yearly</option>
                 </select>
             </div>
+            <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
+            </div>
             <div class="w-[27%] my-8">
                 <label for="deadline">Deadline</label>
                 <input  v-model="career.deadline" type="date" class="w-full px-2 py-1 border-b outline-none">
@@ -52,7 +55,7 @@
                 <quill-editor v-model:content="career.job_requirement" theme="snow" toolbar="full" contentType="html"></quill-editor>
             </div>
             <div class="flex justify-end w-full my-2">
-                <button class="px-3 py-1 text-white bg-blue-2">Submit</button>
+                <button :disabled="loading" class="px-3 py-1 text-white bg-blue-2">Submit</button>
             </div>
         </form>
     </div>
@@ -69,15 +72,19 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
         },
         data(){
             return {
+                loading : false,
                 career : {}
             }
         },
 
         methods : {
             editCareer(){
+                this.loading = true
                 ApiService.put(`admin/careers/${this.id}` , this.career).then(() => {
-                    window.location.reload()
+                    this.loading = false
+                    this.$emit('reload')
                 }).catch((res) => {
+                    this.loading = false
                     alert('Error!')
                     console.log(res);
                 })
@@ -85,9 +92,12 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
         },
 
         mounted(){
+            this.loading = true
             ApiService.get(`admin/careers/${this.id}`).then((res) => {
                 this.career = res.data.data;
+                this.loading = false
             }).catch((res) => {
+                this.loading = false
                 console.log(res);
             })
         }

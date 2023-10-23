@@ -1,0 +1,78 @@
+<template>
+    <div class="p-4">
+        <div class="flex justify-between">
+            <button @click="$router.go(-1)" class="px-2 py-0.5 mx-8 mb-6 text-white rounded bg-gray">Back</button>
+            <button class="px-2 py-0.5 mb-6 mx-8 text-white rounded bg-gray">Assignment</button>
+        </div>
+        <div class="justify-around sm:flex">
+            <ul class="sm:w-[25%] h-fit rounded bg-gray-2 mb-12" v-if="lessons.length">
+                <h1 v-if="lessons[0].week" class="my-3 text-lg font-bold text-center">{{ lessons[0].week.week_number }}</h1>
+                <li class="p-2 text-sm border border-gray-3" v-for="lesson,index in lessons" :key="lesson.id">
+                    <div  class="flex justify-between">
+                        <button :disabled="!lesson.locked" @click="changeActiveLesson(lesson)" :class="lesson.id == active_lesson.id ? 'text-blue-2' : ''">
+                            <p class="w-fit">Lesson - {{ index + 1 }}</p>
+                            <p class="w-fit">{{ lesson.name }}</p>
+                        </button>
+                        <span v-if="lesson.locked" style="color: rgb(16, 197, 16); font-size: 18px;margin-left: 7px; margin-top: 3px;" class="material-icons-sharp">lock</span>
+                        <span v-else style="color: red; font-size: 18px;margin-left: 7px; margin-top: 3px;" class="material-icons-sharp">lock</span>
+                    </div>
+                    <button class="w-full mt-3 text-left">Questions</button>
+                </li>
+            </ul>
+            <div v-if="active_lesson && active_lesson.video" class="mb-12 sm:w-2/3">
+                <video class="mb-8 rounded h-fit" v-if="active_lesson" controls>
+                    <source :src="filePath.videoPath(active_lesson.video.video)" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h1 class="my-8 text-2xl font-bold">{{ active_lesson.name }}</h1>
+                <h3 class="text-lg font-bold">Description</h3>
+                <p class="my-4" v-html="active_lesson.description"></p>
+                <button class="bg-blue-2 px-4 py-1.5 text-white">Go to questions &raquo;</button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+import ApiService from '@/services/ApiService';
+import filePath from '@/services/public/filePath';
+    export default {
+        data () {
+            return {
+                filePath : filePath,
+                student_id : this.$route.params.student_id,
+                course_id : this.$route.params.course_id,
+                batch_id : this.$route.params.batch_id,
+                week_id : this.$route.params.week_id,
+                lessons : [],
+                active_lesson : {}
+            }
+        },
+        async mounted () {
+            await this.getLessons();
+            this.active_lesson = this.lessons[0]
+        },
+
+        methods : {
+            getLessons () {
+                return ApiService.get(`student/get-lessons-of-week/${this.student_id}/${this.course_id}/${this.batch_id}/${this.week_id}`).then((res) => {
+                    this.lessons = res.data.data
+                    console.log(this.lessons);
+                }).catch((res) => {
+                    console.log(res);
+                })
+            },
+            changeActiveLesson (lesson) {
+                if (lesson.locked) {
+                    this.active_lesson = lesson
+                } else {
+                    alert('complete previous lessons')
+                }
+            }
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>

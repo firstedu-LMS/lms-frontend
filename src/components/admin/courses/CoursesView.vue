@@ -3,8 +3,8 @@
         <vue-good-table
          :columns="columns"
          :rows="courses"
-         :search-options="{enabled: true}"
-         :select-options="{ enabled: true , selectOnCheckboxOnly: true, }"
+         :search-options="{enabled: false}"
+         :select-options="{ enabled: false , selectOnCheckboxOnly: false, }"
         >
             <template #table-column="props">
                 <span class="text-sm">{{ props.column.field }}</span>

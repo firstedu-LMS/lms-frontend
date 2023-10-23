@@ -7,6 +7,9 @@
             <p v-if="errors.title" class="text-red py-1 mx-12">{{ errors.title[0] }}</p>
 
         </div>
+        <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
+        </div>
         <div class="w-1/2 mb-16">
             <label class="inline-block font-semibold w-[15%]" for="test_date">Test Date</label>
             <input v-model="assignment.test_date" type="date" class="w-1/2 px-1 bg-transparent border-b outline-none">
@@ -21,8 +24,9 @@
         </div>
         <div class="w-1/2 mb-16">
             <label class="inline-block font-semibold w-[15%]" for="test_date">File</label>
-            <input @change="saveFile" type="file" class="w-1/2 px-1 border-b outline-none file:bg-transparent file:hidden">
+            <input @change="saveFile" type="file" class="w-1/2 px-1 border-b outline-none file:bg-transparent file:hidden ">
             <p v-if="errors.file_id" class="text-red py-1 mx-12">{{ errors.file_id[0] }}</p>
+            <p v-if="errors.assignment" class="text-red py-1 mx-12">{{ errors.assignment[0] }}</p>
 
         </div>
         <div class="w-11/12 mx-auto mb-16">
@@ -32,7 +36,7 @@
   
         </div>
         <div class="w-full mt-16">
-            <button class="px-4 py-1 bg-[#eee] rounded shadow-xl">Submit</button>
+            <button :disabled="loading" class="px-4 py-1 bg-[#eee] rounded shadow-xl">Submit</button>
         </div>
     </form>
 </template>
@@ -55,27 +59,34 @@ import { QuillEditor } from '@vueup/vue-quill'
                     agenda : '',
                     file_id : null
                 },
-                errors : {}
+                errors : {},
+                loading : false,
             }
         },
         methods : {
             saveFile(e){
                 if (e.target.files[0]) {
                     let form = new FormData();
-                    form.set('video' , e.target.files[0])
-                    ApiService.post('admin/videos' , form).then((res) => {
+                    form.set('assignment' , e.target.files[0])
+                    ApiService.post('admin/files' , form).then((res) => {
                         this.assignment.file_id = res.data.data.id
                     }).catch((res) => {
-                        console.log(res);
+                    this.errors = res.response.data.error
+                    setTimeout(() => {
+                        this.errors = {}
+                    },3000)
                     })
                 }
             },
 
             createAssignment() {
+                this.loading = true
                 ApiService.post('admin/assignments' , this.assignment).then(() => {
+                    this.loading = false
                     window.location.reload()
                 }).catch((res) => {
                     this.errors = res.response.data.errors
+                    this.loading = false
                     setTimeout(() => {
                         this.errors = {}
                     },3000)

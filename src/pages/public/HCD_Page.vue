@@ -15,7 +15,10 @@
               <button @click="error = false" class="w-full py-1.5 text-white rounded hover:bg-transparent hover:text-red border border-red bg-red">Okay</button>
           </dialog>
       </transition>
-    <div :class="created ? 'blur-[1px]' : error ? 'blur-[1px]' : ''"  class="justify-between sm:w-[80%] p-2 mt-6 mx-auto sm:mb-0 sm:flex">
+      <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
+        </div>
+    <div :class="created || loading ? 'blur-[1px]' : error ? 'blur-[1px]' : ''"  class="justify-between sm:w-[80%] p-2 mt-6 mx-auto sm:mb-0 sm:flex">
       <div class="sm:w-1/2">
         <h1 class="mb-6 text-3xl font-bold text-blue">{{ course.name }}</h1>
         <p class="my-4" v-html="course.description"></p>
@@ -31,8 +34,8 @@
       </ul>
     </div>
     <div class="p-4 text-lg text-white sm:w-[80%] mx-auto">
-        <button @click="enrollCourse(course.id)" class="px-6 py-1 mr-2 bg-green">Enroll now</button>
-        <router-link :to="{name : 'HC_Page'}" class="px-4 py-2 bg-gray">Back</router-link>
+        <button :disabled="enrolling" @click="enrollCourse(course.id)" class="px-6 py-1 mr-2 bg-green">Enroll now</button>
+        <button @click="$router.go(-1)" class="px-4 py-1 bg-gray">Back</button>
     </div>
   </div>
 </template>
@@ -48,15 +51,18 @@ export default {
   },
   data() {
     return {
+      loading : false,
       created : false,
       error : false,
       course: {},
+      enrolling : false,
       id: this.$route.params.id,
       authStore : useAuthStore()
     };
   },
   methods : {
     async enrollCourse(id) {
+      this.enrolling = true;
       await this.authStore.getUser();
       let isStudent = this.authStore.roles.find((role) => role.name == 'student');
       if (isStudent && this.authStore.user.student) {
@@ -64,13 +70,18 @@ export default {
           course_id : id,
           student_id : this.authStore.user.student.id
         } 
-        ApiService.post('enrollments' , obj).then(() => {
+        this.loading = true;
+        ApiService.post('enrollments' , obj).then(() => {        
           this.created = true;
-        }).catch(() => {
+          this.loading = false
+        }).catch((res) => {
+          this.loading = false
+          console.log(res);
           this.error = true;
         })
       } else {
-        alert(`You are ${this.authStore.roles[0].name}. You can't enroll this course!`)
+        // alert(`You are ${this.authStore.roles[0].name}. You can't enroll this course!`)
+        this.$router.push({name : 'LoginPage'})
       }
     }
   },

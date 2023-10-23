@@ -45,6 +45,9 @@
                     </div>
                     <button @click="showForm" class="px-3 py-1 mt-10 mb-2 text-white rounded bg-blue-2">Add Question +</button>
                 </div>
+                <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+                    loading . . .
+                </div>
 
                 <form v-if="quesForm" class="p-4 shadow-md" @submit.prevent="CreateQues">
                     <div class="flex border border-b-0 border-gray-2">
@@ -78,7 +81,7 @@
                         <input v-model="question.answer" type="text" class="w-[85%] outline-none px-2 bg-transparent"/>
                     </div>
                     <div class="flex justify-end">
-                        <button class="px-4 py-1 my-4 bg-white shadow-lg">create</button>
+                        <button :disabled="loading" class="px-4 py-1 my-4 bg-white shadow-lg">create</button>
                     </div>
                 </form>
 
@@ -112,7 +115,8 @@ import filePath from '../../../services/public/filePath';
                     answer : '',
                 },
                 lesson : {},
-                filePath : filePath
+                filePath : filePath,
+                loading : false,
             }
         },
         methods : {
@@ -129,17 +133,21 @@ import filePath from '../../../services/public/filePath';
             },
             CreateQues(){
                 this.question.lesson_id = this.lesson.id
+                this.loading =true
                 ApiService.post('admin/questions', this.question).then((res) => {
                   console.log(res.data.data);
                   this.questions.push(res.data.data);
                   this.question = {};
+                  this.loading = false
                 }).catch((res) => {
                     console.log(res);
                 })
             },
             deleteQues(id){
+                this.loading = true
                 ApiService.delete(`admin/questions/${id}`).then(()=>{
                     this.getQuestions();
+                    this.loading = false
                 }).catch((res) => {
                     console.log(res.data.data);
                 })

@@ -2,13 +2,13 @@
     <div class="p-4 ">
         <h1 class="px-4 font-black">NEW</h1>
         <transition name="dialog">
-                <dialog v-if="created" class="fixed z-50 flex  flex-col items-center p-6 text-gray" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;" open>
+                <dialog v-if="created" class="fixed z-50 flex flex-col items-center p-6 text-gray" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;" open>
                     <span style="color: #22c55e; font-size: 6rem;" class="material-icons-sharp">check_circle</span>
                     <p class="my-6 text-xl">Job Has Been Created Successfully.</p>
                     <button class="w-full py-1.5 text-white rounded hover:bg-transparent hover:text-green border border-green bg-green" @click="reload">Okay</button>
                 </dialog>
         </transition>
-        <form @submit.prevent="createCareer" class="flex flex-wrap justify-between p-4">
+        <form id="form" @submit.prevent="createCareer" class="flex flex-wrap justify-between p-4">
             <div class="w-[27%] my-8">
                 <label class="text-[12px] font-semibold" for="name">Name</label>
                 <input v-model="career.name" type="text" class="px-2 w-[60%] mx-5 py-1 border-b outline-none">
@@ -26,6 +26,9 @@
                 <input v-model="career.age" type="text" class="px-2 w-[60%] mx-5 py-1 border-b outline-none">
                 <p v-if="errors.age" class="py-1 mx-4 text-red">{{ errors.age[0] }}</p>
 
+            </div>
+            <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
             </div>
             <div class="w-[27%] my-8">
                 <label class="text-[12px] font-semibold" for="status">Employment Status</label>
@@ -79,7 +82,7 @@
 
             </div>
             <div class="w-full my-4">
-                <button class="px-3 py-1 text-white bg-blue-2">Submit</button>
+                <button :disabled="loading" class="px-3 py-1 text-white bg-blue-2">Submit</button>
             </div>
         </form>
     </div>
@@ -96,6 +99,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
         data(){
             return {
                 created : false,
+                loading : false,
                 career : {
                     name : '',
                     vacancy : null,
@@ -111,15 +115,32 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
                 errors : {}
             }
         },
+        watch: {
+            // whenever question changes, this function will run
+            created(newCreated) {
+                if (newCreated) {
+                    document.getElementById('nav').classList.add('blur-[3px]')
+                    document.getElementById('side').classList.add('blur-[3px]')
+                    document.getElementById('form').classList.add('blur-[3px]')
+                }
+            }
+        },
+
 
         methods : {
             reload() {
+                document.getElementById('nav').classList.remove('blur-[3px]')
+                document.getElementById('side').classList.remove('blur-[3px]')
+                document.getElementById('form').classList.remove('blur-[3px]')
                 this.$emit('reload')
             },
             createCareer(){
+                this.loading = true
                 ApiService.post('admin/careers' , this.career).then(() => {
                     this.created = true;
+                    this.loading = false
                 }).catch((res) => {
+                    this.loading = false
                     this.errors = res.response.data.errors
                     setTimeout(() => {
                         this.errors = {}

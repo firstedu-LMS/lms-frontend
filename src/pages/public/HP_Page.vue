@@ -43,10 +43,6 @@ import HP05 from '@/components/public/HP_Page/HP05.vue';
             return {
                 bg_photo : './images/HP03/song.jpg'
             }
-        },
-        mounted(){
-            console.log('%c Just tell your grandma!🖕', 'font-size: 40px; font-weight: bold ; color : red');
-
         }
     }
 </script>

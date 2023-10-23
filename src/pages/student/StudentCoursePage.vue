@@ -1,21 +1,34 @@
 <template>
     <div>
-        <div class="flex w-full">
-            <button @click="showProgress" :class="progress ? 'bg-blue-2 text-white' : 'border border-blue-2'" class="w-[50%] sm:font-bold max-sm:text-sm py-2">IN PROGRESS
-                <span class="p-1.5 mx-3 rounded-sm" :class="progress ? 'bg-white text-blue-2' : 'bg-blue-2 text-white'">{{ profile.id_progess_course_count }}</span>
+        <div class="flex p-4">
+            <button :class="progress ? 'bg-[#89CFF0]' : ''" @click="showProgress" class="p-2 sm:font-bold max-sm:text-sm">IN PROGRESS
+                <span class="p-1.5 mx-1 rounded-sm" >{{ profile.id_progess_course_count }}</span>
             </button>
-            <button @click="showCompleted" :class="completed ? 'bg-blue-2 text-white' : 'border border-blue-2'" class="w-[50%] sm:font-bold max-sm:text-sm  py-2">COMPLETED
-                <span class="p-1.5 mx-3 rounded-sm" :class="completed ? 'bg-white text-blue-2' : 'bg-blue-2 text-white'">{{ profile.course_completion_count }}</span>
+            <button :class="completed ? 'bg-[#89CFF0]' : ''" @click="showCompleted" class="p-2 sm:font-bold max-sm:text-sm">COMPLETED
+                <span class="p-1.5 mx-1 rounded-sm">{{ profile.course_completion_count }}</span>
             </button>
         </div>
         <div class="p-10">
-            <button class="border border-blue-2 text-blue-2 px-3 py-1.5 font-bold hover:bg-blue-2 hover:text-white">DISCOVER COURSES</button>
-            <div class="sm:flex sm:my-6 my-4"  v-for="course in course_per_student" :key="course">
-                <img class="sm:w-1/4"  :src="filePath.imagePath(course.batch.course.image.image)" alt="">
-                <div class="flex-col sm:mx-3 justify-between sm:px-4 sm:flex sm:w-1/2">
-                    <h1 class="mt-2 text-4xl font-bold text-black max-sm:text-xl sm:mt-0">{{ course.batch.course.name }}</h1>                
-                        <button class="w-full text-xl font-semibold py-2 mt-4 max-sm:py-1 max-sm:text-lg text-white border  hover:bg-transparent bg-green hover:text-green border-green">Continue</button>       
+            <router-link :to="{name : 'HC_Page'}" class="border border-blue-2 text-blue-2 px-3 py-1.5 font-bold hover:bg-blue-2 hover:text-white">DISCOVER COURSES</router-link>
+            <div v-if="progress">
+                <div class="my-12 sm:flex"  v-for="course in course_per_student" :key="course">
+                    <img v-if="course.batch" class="sm:w-1/4"  :src="filePath.imagePath(course.batch.course.image.image)" alt="">
+                    <div class="flex-col justify-between sm:mx-3 sm:px-4 sm:flex sm:w-1/2">
+                        <h1 class="mt-2 text-xl font-bold text-black max-sm:text-xl sm:mt-0">{{ course.batch.course.name }}</h1>    
+                        <h3 class="my-2">{{ course.batch.name }}</h3>  
+                        <div class="w-full rounded-lg bg-gray-2">
+                            <div class="bg-cyan py-2 text-center text-xs font-medium rounded-lg" :class="`w-[${course.percentage}%]`" >
+                                {{ course.percentage }}%
+                            </div>
+                        </div>
+                        <router-link :to="{name :'StudentCourseDetailPage' , params : {student_id : profile.id , course_id : course.course_id , batch_id : course.batch.id}}" class="block w-full py-2 mt-4 text-xl font-semibold text-center text-white border max-sm:py-1 max-sm:text-lg hover:bg-transparent bg-green hover:text-green border-green">Continue</router-link>       
+
+                    </div>
                 </div>
+            </div>
+
+            <div v-else>
+                completed
             </div>
 
         </div>
@@ -32,7 +45,7 @@ import filePath from '@/services/public/filePath'
                 completed : false,
                 profile : {},
                 course_per_student : [],
-                filePath : filePath
+                filePath : filePath,
             }
         },
         methods: {
@@ -48,7 +61,7 @@ import filePath from '@/services/public/filePath'
         async mounted(){
             await ApiService.get('student/user').then((res) => {
                 this.profile = res.data;
-                console.log(res.data);
+                console.log(this.profile);
             }).catch((res) => {
                 console.log(res);
             })
@@ -58,7 +71,6 @@ import filePath from '@/services/public/filePath'
             }).catch((res) => {
                 console.log(res);
             })
-
 
         }
     }
