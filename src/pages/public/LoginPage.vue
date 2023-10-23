@@ -14,12 +14,15 @@
                     <input v-model="form.password" required type="password"  class="w-full mt-1 outline-none bg-transparent px-2 py-0.5 border">
                 </div>
                 <div  class="px-4 py-2 mt-4">
-                    <button class="w-full py-1 text-lg text-white bg-blue-2">Login</button>
+                    <button  :disabled="loading" class="w-full py-1 text-lg text-white bg-blue-2">Login</button>
                 </div>
                 <div  class="px-4 py-2 mt-4">
                     <p class="">Doesn't have an account? <router-link class="text-blue-2" :to="{name : 'RegisterPage'}">Sign Up</router-link></p>
                 </div>
             </form>
+            <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+                loading . . .
+            </div>
         </div>
     </div>
 </template>
@@ -35,26 +38,40 @@ import axios from 'axios';
         },
         data(){
             return {
+                loading : false,
                 authStore : useAuthStore(),
                 image : './images/layout/auth.jpg',
                 form : {
                     email : '',
                     password : '',
-                }
+                    available : true
+                },
+                errors : {}
             }
         },
         methods : {
             login () {
+                this.form.available = true;
+                this.loading = true
                 axios.post('login' , this.form).then((res) => {
                     TokenService.setToken(res.data.data.token)
                     this.authStore.setAuth(res.data.data);
+                    this.loading = false
                     if (this.authStore.authenticated && this.authStore.roles[0].name == 'admin') {
                         this.$router.push({name : 'AdminDashboardPage'});
                     } else if (this.authStore.authenticated && this.authStore.roles[0].name == 'student') {
                         this.$router.push({name : 'StudentProfilePage'});
                     }
                 }).catch((res) => {
-                    console.log(res);
+                    this.form.available = 1
+                    if (res.response && res.response.data.errors) {
+                        this.errors = res.response.data.errors;
+                        this.loading = false
+                        console.log(this.errors);
+                        setTimeout(() => {
+                                this.errors = {}
+                        },5000)
+                    }
                 })
             }
         }

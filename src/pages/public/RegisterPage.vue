@@ -26,12 +26,15 @@
                     <input v-model="form.password_confirmation" required type="password"  class="w-full mt-1 outline-none bg-transparent px-2 py-0.5 border">
                 </div>
                 <div  class="px-4 py-2 mt-4">
-                    <button class="w-full py-1 text-lg text-white bg-blue-2">Register</button>
+                    <button  :disabled="loading" class="w-full py-1 text-lg text-white bg-blue-2">Register</button>
                 </div>
                 <div  class="px-4 py-2 mt-4">
                     <p class="">Already have an account? <router-link class="text-blue-2" :to="{name : 'LoginPage'}">Sign In</router-link></p>
                 </div>
             </form>
+            <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+                loading . . .
+            </div>
         </div>
     </div>
 </template>
@@ -46,6 +49,7 @@ import axios from 'axios'
         },
         data(){
             return {
+                loading : false,
                 image : './images/layout/auth.jpg',
                 form : {
                     name : '',
@@ -68,10 +72,13 @@ import axios from 'axios'
                 })
             },
             register () {
+                this.loading = true
                 axios.post('register' , this.form).then((res) => {
                     TokenService.setToken(res.data.data.token)
                     this.$router.push({name : "LoginPage"});
+                    this.loading = false
                 }).catch((res) => {
+                    this.loading = false
                     console.log(res);
                 })
             }

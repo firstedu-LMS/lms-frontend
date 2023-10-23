@@ -73,6 +73,6 @@ import ApiService from '@/services/ApiService';
     }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>
