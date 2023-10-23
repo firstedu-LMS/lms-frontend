@@ -21,7 +21,7 @@
                 <input @change="insertCV" required type="file" class="w-full mt-1 border cursor-pointer file:cursor-pointer border-gray file:bg-transparent file:border-0 file:py-1 file:px-2">
             </div>
             <div>
-                <button :disabled="submitting" class="w-full py-1.5 text-center text-white bg-green text-lg">Submit</button>
+                <button :disabled="submitting || loading" class="w-full py-1.5 text-center text-white bg-green text-lg">Submit</button>
             </div>
         </form>
 
@@ -40,7 +40,8 @@ import axios from 'axios';
                     email : '',
                     cv : '',
                     career : this.name
-                }
+                },
+                loading : false,
             }
         },
         methods : {
@@ -52,18 +53,21 @@ import axios from 'axios';
                 let file = e.target.files[0];
                 let form = new FormData();
                 form.set('cv' , file)
+                this.loading = true
                 axios.post('admin/cv-forms' , form).then((res) => {
                     this.formData.cv_id = res.data.data.id
-                    this.submitting = false;
+                    this.submitting = this.loading = false;
                 }).catch((res) => {
                     alert('ERROR !')
                     console.log(res);
                 })
             },
             apply(){
-                this.submitting = true;
+                this.submitting = this.loading = true;
+
                 axios.post('admin/applications' , this.formData).then(() => {
                     this.submitted = true;
+                    this.loading = false
                 }).catch(res => {
                     console.log(res);
                 })

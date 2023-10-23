@@ -24,15 +24,9 @@
             <span class="relative block w-full text-center" v-if="props.column.field == 'actions'">
                 <span @click="showInstructorDialog(props.row)"  class="material-icons-outlined" style="padding: 0px 2rem;cursor: pointer;">more_horiz</span>
                 <div v-if="instructorDialog.id == props.row.id" class="absolute text-sm px-1 text-white top-[-4rem] left-[-6rem] bg-gray">
-                    <router-link to="/" class="flex items-center w-full px-2 my-2">
-                        <span class="material-icons-sharp">account_circle</span>&nbsp;&nbsp;profile
-                    </router-link>
-                    <router-link to="/" class="flex items-center w-full px-2 my-2">
-                        <span class="material-icons-sharp">email</span>&nbsp;&nbsp;send email
-                    </router-link>
-                    <router-link to="/" class="flex items-center w-full px-2 my-2">
-                        <span class="material-icons-sharp">article</span>&nbsp;&nbsp;show cv
-                    </router-link>
+                        <span class="material-icons-sharp" style="display: block;margin: 0px 15px ;">account_circle</span>&nbsp;&nbsp;profile
+                        <span class="material-icons-sharp" style="display: block;margin: 0px 15px ;">email</span>&nbsp;&nbsp;send email
+                        <span @click="showCv(props.row.cv.cv)" style="cursor: pointer;display: block;margin: 0px 15px ;" class="material-icons-sharp">article</span>&nbsp;&nbsp;show cv
                     <button class="flex items-center w-full px-2 my-2 text-red">
                         <span @click="deleteInstructor(props.row.id)" class="material-icons-sharp">cancel</span>&nbsp;&nbsp;remove
                     </button>
@@ -52,7 +46,7 @@
 <script>
 import 'vue-good-table-next/dist/vue-good-table-next.css'
 import { VueGoodTable } from 'vue-good-table-next'
-// import PaginationVue from '@/components/admin/PaginationVue.vue'
+import filePath from '@/services/public/filePath'
 import ApiService from '@/services/ApiService'
     export default {
         components : {
@@ -60,6 +54,7 @@ import ApiService from '@/services/ApiService'
         },
         data() {
             return {
+                filePath : filePath,
                 instructors : [],
                 filteredRows : [],
                 paginationData : {},
@@ -114,7 +109,11 @@ import ApiService from '@/services/ApiService'
                     console.log(res);
                 })
             },
-
+            showCv(cv) {
+                let path = this.filePath.cvPath(cv)
+                console.log(cv);
+                window.open(path , '_blank')
+            },
             showInstructorDialog(instructor){
                 if (this.instructorDialog.id == instructor.id) {
                     this.instructorDialog = {};
