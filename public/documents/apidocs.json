@@ -3,6 +3,7 @@
         path: "/",
         method: "get",
         header: "application/json",
+        
         authorization: {
             bareer_token: ""
         },
@@ -12,7 +13,7 @@
             data: "",
             message: "",
         },
-        error: {
+        error : {
             status: 500,
             message: "",
         }

@@ -82,7 +82,7 @@
 
             </div>
             <div class="w-full my-4">
-                <button :disabled="loading" class="px-3 py-1 text-white bg-blue-2">Submit</button>
+                <button :disabled="loading" class="px-3 py-1 bg-white shadow-lg text-gray">Submit</button>
             </div>
         </form>
     </div>

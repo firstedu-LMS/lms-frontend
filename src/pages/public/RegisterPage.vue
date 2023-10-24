@@ -8,7 +8,7 @@
                 <div class="px-4 py-2">
                     <label for="" class="text-sm font-semibold">Name</label>
                     <input required v-model="form.name"  type="text" class="w-full mt-1 outline-none bg-transparent border px-2 py-0.5">
-                    <p v-if="errors.name" class="text-red">{{ errors.name[0] }}</p>
+                    <p v-if="error.name" class="text-red">{{ error.name[0] }}</p>
                 </div>
                 <div  class="px-4 py-2">
                     <label for="" class="text-sm font-semibold">Profile Picture</label>
@@ -27,15 +27,18 @@
                 <div  class="px-4 py-2">
                     <label for="" class="text-sm font-semibold ">Confirm Your Password</label>
                     <input v-model="form.password_confirmation" required type="password"  class="w-full mt-1 outline-none bg-transparent px-2 py-0.5 border">
-                    <p v-if="error.password" class="py-1 mx-8 text-red">{{ error.password[0] }}</p>
+                    <p v-if="error.password" class="py-1  text-red">{{ error.password[0] }}</p>
                 </div>
                 <div  class="px-4 py-2 mt-4">
-                    <button :disabled="uploading" class="w-full py-1 text-lg text-white bg-blue-2">Register</button>
+                    <button :disabled="uploading || loading" class="w-full py-1 text-lg text-white bg-blue-2">Register</button>
                 </div>
                 <div  class="px-4 py-2 mt-4">
                     <p class="">Already have an account? <router-link class="text-blue-2" :to="{name : 'LoginPage'}">Sign In</router-link></p>
                 </div>
             </form>
+            <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
+            </div>
         </div>
     </div>
 </template>
@@ -50,7 +53,6 @@ import axios from 'axios'
         },
         data(){
             return {
-                errors : {},
                 image : './images/layout/auth.jpg',
                 uploading : false,
                 error : {},
@@ -60,7 +62,8 @@ import axios from 'axios'
                     email : '',
                     password : '',
                     password_confirmation : '',
-                }
+                },
+                loading : false
             }
         },
         methods : {
@@ -68,24 +71,28 @@ import axios from 'axios'
                 this.uploading = true;
                 let form = new FormData();
                 form.set('user_image' , e.target.files[0])
+                this.loading = true
                 axios.post('register/profile' , form).then((res) => {
                     console.log(res.data.data);
                     this.form.image_id = res.data.data.id;
                     this.uploading = false;
+                    this.loading = false
                 }).catch((res) => {
                     console.log(res);
                 })
             },
             register () {
                 this.uploading = true;
+                this.loading = true
                 axios.post('register' , this.form).then((res) => {
                     TokenService.setToken(res.data.data.token)
+                    this.loading = false
                     this.$router.push({name : "LoginPage"});
                 }).catch((res) => {
                     if(res.response && res.response.data.errors) {
                         this.error = res.response.data.errors;
                         setTimeout(() => {
-                            this.errors = {};
+                            this.error = {};
                         } , 3000)
                     }
                 })
