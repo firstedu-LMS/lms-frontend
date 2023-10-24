@@ -23,7 +23,7 @@
             <li>Publish on - {{ career.created_at }}</li>
             <li>Deadline - {{ career.deadline }}</li>
             <li class="text-white bg-blue">
-                <button @click="showForm" class="w-full">Apply Now</button>
+                <button  @click="showForm" class="w-full">Apply Now</button>
             </li>
         </ul>
     </div>
@@ -40,7 +40,8 @@ import axios from 'axios'
         },
         data(){
             return{
-                career : {}
+                career : {},
+                loading : false
             }
         },
         mounted(){
