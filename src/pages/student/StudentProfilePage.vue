@@ -68,7 +68,10 @@
                 <form v-if="info && profile " class="bg-white " @submit.prevent="editProfile">
                 <div class="flex justify-end">
                     <p @click="editing" v-if="saving" class="px-4 underline text-end text-blue-2">Edit</p>
-                    <button v-if="isEditing" class="px-4 underline text-end text-blue-2">Save</button>
+                    <button v-if="isEditing" :disabled="loading" class="px-4 underline text-end text-blue-2">Save</button>
+                </div>
+                <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
                 </div>
                 <div class="flex border border-b-0 border-gray-2">
                         <p class="py-1.5 text-center border-r font-semibold text-sm border-gray-2 w-[35%]">EMAIL ADDRESS</p>
@@ -127,6 +130,7 @@ import filePath from '@/services/public/filePath'
                 activities : [],
                 isEditing : false,
                 saving : true,
+                loading : false
             }
         },
         methods: {
@@ -149,8 +153,10 @@ import filePath from '@/services/public/filePath'
                     education : this.profile.education,
                     date_of_birth : this.profile.date_of_birth
                 }
+                this.loading = true
                 ApiService.patch(`student/user/${this.profile.id}`, obj).then((res) =>{
                    console.log(res); 
+                   this.loading = false
                 }).catch((res) => {
                     console.log(res);
                 })
