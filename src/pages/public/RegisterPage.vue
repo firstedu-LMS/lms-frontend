@@ -27,10 +27,10 @@
                 <div  class="px-4 py-2">
                     <label for="" class="text-sm font-semibold ">Confirm Your Password</label>
                     <input v-model="form.password_confirmation" required type="password"  class="w-full mt-1 outline-none bg-transparent px-2 py-0.5 border">
-                    <p v-if="error.password" class="py-1  text-red">{{ error.password[0] }}</p>
+                    <p v-if="error.password" class="py-1 text-red">{{ error.password[0] }}</p>
                 </div>
                 <div  class="px-4 py-2 mt-4">
-                    <button :disabled="uploading || loading" class="w-full py-1 text-lg text-white bg-blue-2">Register</button>
+                    <button :disabled="loading" class="w-full py-1 text-lg text-white bg-blue-2">Register</button>
                 </div>
                 <div  class="px-4 py-2 mt-4">
                     <p class="">Already have an account? <router-link class="text-blue-2" :to="{name : 'LoginPage'}">Sign In</router-link></p>
@@ -54,7 +54,6 @@ import axios from 'axios'
         data(){
             return {
                 image : './images/layout/auth.jpg',
-                uploading : false,
                 error : {},
                 form : {
                     name : '',
@@ -68,21 +67,19 @@ import axios from 'axios'
         },
         methods : {
             saveImage(e) {
-                this.uploading = true;
+                this.loading = true;
                 let form = new FormData();
                 form.set('user_image' , e.target.files[0])
                 this.loading = true
                 axios.post('register/profile' , form).then((res) => {
                     console.log(res.data.data);
                     this.form.image_id = res.data.data.id;
-                    this.uploading = false;
                     this.loading = false
                 }).catch((res) => {
                     console.log(res);
                 })
             },
             register () {
-                this.uploading = true;
                 this.loading = true
                 axios.post('register' , this.form).then((res) => {
                     TokenService.setToken(res.data.data.token)
@@ -91,6 +88,7 @@ import axios from 'axios'
                 }).catch((res) => {
                     if(res.response && res.response.data.errors) {
                         this.error = res.response.data.errors;
+                        this.loading = false;
                         setTimeout(() => {
                             this.error = {};
                         } , 3000)

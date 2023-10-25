@@ -11,12 +11,12 @@
                 <div  class="px-4 py-2">
                     <label for="" class="text-sm font-semibold ">Email</label>
                     <input v-model="form.email" required type="email"  class="w-full mt-1 outline-none bg-transparent border px-2 py-0.5">
-                    <p v-if="error.email" class="text-red text-sm py-1">{{ error.email[0] }}</p>
+                    <p v-if="error.email" class="py-1 text-sm text-red">{{ error.email }}</p>
                 </div>
                 <div  class="px-4 py-2">
                     <label for="" class="text-sm font-semibold ">Password</label>
                     <input v-model="form.password" required type="password"  class="w-full mt-1 outline-none bg-transparent px-2 py-0.5 border">
-                    <p v-if="error.password" class="text-red text-sm py-1">{{ error.password[0] }}</p>
+                    <p v-if="error.password" class="py-1 text-sm text-red">{{ error.password}}</p>
                 </div>
                 <div  class="px-4 py-2 mt-4">
                     <button :disabled="loading" class="w-full py-1 text-lg text-white bg-blue-2">Login</button>
@@ -58,13 +58,15 @@ import axios from 'axios';
                     this.authStore.setAuth(res.data.data);
                     this.loading = false
                     if (this.authStore.authenticated && this.authStore.roles[0].name == 'admin') {
-                        this.$router.push({name : 'AdminDashboardPage'});
+                        this.$router.replace({name : 'AdminDashboardPage'});
                     } else if (this.authStore.authenticated && this.authStore.roles[0].name == 'student') {
-                        this.$router.push({name : 'StudentProfilePage'});
+                        this.$router.replace({name : 'StudentProfilePage'});
                     }
                 }).catch((res) => {
-                    if(res.response && res.response.data.error) {
-                        this.error = res.response.data.error;
+                    console.log(res);
+                    this.loading = false;
+                    if(res.response && res.response.data.errors) {
+                        this.error = res.response.data.errors;
                         setTimeout(() => {
                             this.error = {};
                         } , 3000)
