@@ -1,25 +1,31 @@
 <template>
   <div class="flex bg-[#eae8e8]">
-    <aside class="sticky top-0 hidden w-1/6 h-screen sm:block">
-      <router-link class="block" to="/">
-          <img class="w-24 mx-auto my-2" src="../../../public/images/layout/logo.png" alt="">
-        </router-link>
-      <ul class="mt-8">
-        <li class="p-2 m-4" v-for="item in sideItems" :key="item.name">
-          <router-link :to="{name : item.path}" class="flex items-center hover:text-blue-2">
-            <span style="margin-right: 7px;margin-top: -4px;" class="material-icons-outlined">{{ item.icon }}</span>
-            {{ item.name }}
-          </router-link>
-        </li>
-        <li class="p-2 font-bold m-4 border-t border-gray-2 text-red">
-          <button @click="logout" class="flex items-center">
-            <span style="margin-right: 7px;margin-top: -4px;" class="material-icons-outlined">logout</span>
-            Logout
-          </button>
-        </li>
-      </ul>
+    <aside class="sticky top-0 hidden h-screen sm:block" :class="SideBar ? 'w-1/6' : 'w-1/12'">
+      <button @click="SideBar = !SideBar" class="block mx-6 mt-2">
+        <span class="material-icons-sharp">menu</span>
+      </button>
+        <div>
+          <ul class="mt-4">
+            <li class="py-2 my-4" v-for="item in sideItems" :key="item.name">
+              <router-link :to="{name : item.path}" class="flex items-center hover:text-blue-2">
+                <span style="background-color: #eae8e8; z-index: 1;width: 50px;text-align: end;margin-right: 5px;" class="material-icons-outlined">{{ item.icon }}</span>
+                <Transition name="SideBar">
+                <span style="z-index: 0.1;" v-if="SideBar">{{ item.name }}</span>
+                </Transition>
+              </router-link>
+            </li>
+            <li class="py-2 font-bold my-4 border-t border-gray-2 text-red">
+              <button @click="logout" class="flex w-full items-center">
+                <span  style="background-color: #eae8e8; z-index: 1;width: 50px;text-align: end;margin-right: 5px;"  class="material-icons-outlined">logout</span> 
+                <Transition name="SideBar">
+                  <span style="z-index: 0.1;" v-if="SideBar">Logout</span>
+                </Transition>
+              </button>
+            </li>
+          </ul>
+        </div>
     </aside>
-    <div class="w-full sm:w-5/6">
+    <div class="transition" :class="SideBar ? 'w-full sm:w-5/6' : 'w-11/12'">
       <nav class="sticky top-0 z-50 flex justify-between px-4 py-1 sm:justify-end">
         <button class="sm:hidden">
           <span style="margin: auto 0px;" class="material-icons-sharp">notifications</span>
@@ -41,7 +47,7 @@ export default {
   data() {
     return {
       btn: true,
-      sideBar: false,
+      SideBar: false,
       authStore : useAuthStore(),
       sideItems: [
         {
@@ -87,4 +93,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.SideBar-enter-from , .SideBar-leave-to{
+        transform: translateX(-100px);
+    }
+.SideBar-enter-active , .SideBar-leave-active {
+        transition: all 0.5s ease;
+    }
+</style>
