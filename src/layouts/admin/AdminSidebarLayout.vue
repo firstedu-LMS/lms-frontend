@@ -17,7 +17,7 @@
                 </router-link>
             </li>
         </ul>
-        <ul class="py-2 mx-2">
+        <ul class="py-2 mx-2 text-sm">
             <li>
                 <router-link class="flex items-center w-full my-1 py-1.5 px-4 hover:text-blue-2" to="/admin">
                     <span class="material-icons-sharp" style="font-size: 20px;">settings</span>
@@ -68,7 +68,7 @@ import { useAuthStore } from '@/stores/auth'
                         icon : 'contacts'
                     },
                     {
-                        name : 'Certificates',
+                        name : 'Achievements',
                         path : 'HC_Page',
                         icon : 'verified_user'
                     }

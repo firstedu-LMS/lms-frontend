@@ -5,6 +5,9 @@
             <label class="inline-block font-semibold w-[15%]" for="title">Title</label>
             <input v-model="assignment.title" type="text" class="w-1/2 px-1 bg-transparent border-b outline-none">
         </div>
+        <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
+            </div>
         <div class="w-1/2 mb-16">
             <label class="inline-block font-semibold w-[15%]" for="test_date">Test Date</label>
             <input v-model="assignment.test_date" type="date" class="w-1/2 px-1 bg-transparent border-b outline-none">
@@ -22,7 +25,7 @@
             <quill-editor v-model:content="assignment.agenda" class="shadow-sm shadow-black" theme="snow" toolbar="full" contentType="html"></quill-editor>
         </div>
         <div class="w-full mt-16">
-            <button class="px-4 py-1 bg-[#eee] rounded shadow-xl">Submit</button>
+            <button :disabled="loading" class="px-4 py-1 bg-[#eee] rounded shadow-xl">Submit</button>
         </div>
     </form>
 </template>
@@ -41,16 +44,20 @@ import { QuillEditor } from '@vueup/vue-quill'
         },
         data(){
             return {
-                assignment : {}
+                assignment : {},
+                loading : false,
             }
         },
         methods : {
             editAssignment(){
+                this.loading = true
                 ApiService.patch(`admin/assignments/${this.id}` , this.assignment).then((res) => {
+                    this.loading =false
                     window.location.reload();
                     console.log(res);
                 }).catch((res) => {
                     console.log(res);
+                    this.loading = false
                 })
             }
         },

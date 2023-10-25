@@ -1,6 +1,11 @@
 <template>
     <div class="p-4">
-        <button @click="$router.go(-1)" class="px-2 py-0.5 mb-6 text-white rounded bg-gray">Back</button>
+        <div class="flex justify-between">
+            <button @click="$router.go(-1)" class="sm:ml-4">
+                <span class="material-icons-outlined">arrow_back</span>
+            </button>
+            <button @click="showAssignmentsFun" class="px-2 py-0.5 mb-6 sm:mr-6 text-white rounded bg-blue-2">Assignment</button>
+        </div>
         <div class="justify-around sm:flex">
             <ul class="sm:w-[25%] h-fit rounded bg-gray-2 mb-12" v-if="lessons.length">
                 <h1 v-if="lessons[0].week" class="my-3 text-lg font-bold text-center">{{ lessons[0].week.week_number }}</h1>
@@ -10,22 +15,27 @@
                             <p class="w-fit">Lesson - {{ index + 1 }}</p>
                             <p class="w-fit">{{ lesson.name }}</p>
                         </button>
-                        <span v-if="lesson.locked" style="color: rgb(16, 197, 16); font-size: 18px;margin-left: 7px; margin-top: 3px;" class="material-icons-sharp">lock</span>
-                        <span v-else style="color: red; font-size: 18px;margin-left: 7px; margin-top: 3px;" class="material-icons-sharp">lock</span>
+                        <span v-if="!lesson.locked" style="color: red; font-size: 18px;margin-left: 7px; margin-top: 3px;" class="material-icons-sharp">lock</span>
                     </div>
                     <button class="w-full mt-3 text-left">Questions</button>
                 </li>
             </ul>
-            <div v-if="active_lesson && active_lesson.video" class="mb-12 sm:w-2/3">
-                <video class="mb-8 rounded h-fit" v-if="active_lesson" controls>
+
+            <!-- show lesson -->
+            <div v-if="showLesson && active_lesson.video" class="mb-12 sm:w-2/3">
+                <video class="mb-8 rounded h-fit" v-if="active_lesson" controls controlsList="nodownload" >
                     <source :src="filePath.videoPath(active_lesson.video.video)" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 <h1 class="my-8 text-2xl font-bold">{{ active_lesson.name }}</h1>
                 <h3 class="text-lg font-bold">Description</h3>
                 <p class="my-4" v-html="active_lesson.description"></p>
-                <button class="bg-blue-2 px-4 py-1.5 text-white">Go to questions &raquo;</button>
+                <button @click="showQuestionsFun(active_lesson.id)" class="bg-blue-2 px-4 py-1.5 text-white">Go to questions &raquo;</button>
             </div>
+
+            <!-- Assignments -->
+            <AssignmentsView :course_id="course_id" :batch_id="batch_id" class="mb-12 sm:w-2/3" v-if="showAssignments" />
+            <QuestionsView :lesson_id="lessonIdForQues" class="mb-12 sm:w-2/3" v-if="showQuestions" />
         </div>
     </div>
 </template>
@@ -33,7 +43,12 @@
 <script>
 import ApiService from '@/services/ApiService';
 import filePath from '@/services/public/filePath';
+import AssignmentsView from '@/components/student/AssignmentView.vue';
+import QuestionsView from '@/components/student/QuestionsView.vue';
     export default {
+        components : {
+            AssignmentsView , QuestionsView
+        },
         data () {
             return {
                 filePath : filePath,
@@ -42,12 +57,17 @@ import filePath from '@/services/public/filePath';
                 batch_id : this.$route.params.batch_id,
                 week_id : this.$route.params.week_id,
                 lessons : [],
-                active_lesson : {}
+                active_lesson : {},
+                showLesson : false,
+                showAssignments : false,
+                showQuestions : false,
+                lessonIdForQues : 0
             }
         },
         async mounted () {
             await this.getLessons();
             this.active_lesson = this.lessons[0]
+            this.showLesson = true;
         },
 
         methods : {
@@ -62,9 +82,25 @@ import filePath from '@/services/public/filePath';
             changeActiveLesson (lesson) {
                 if (lesson.locked) {
                     this.active_lesson = lesson
+                    this.showLesson = true
+                    this.showAssignments = this.showQuestions = false;
                 } else {
                     alert('complete previous lessons')
                 }
+            },
+            showAssignmentsFun() {
+                if (this.showAssignments) {
+                    this.showAssignments = this.showQuestions = false;
+                    this.showLesson = true;
+                } else {
+                    this.showLesson = this.showQuestions = false;
+                    this.showAssignments = true;
+                }
+            },
+            showQuestionsFun(id){
+                this.showAssignments = this.showLesson = false;
+                this.showQuestions = true;
+                this.lessonIdForQues = id;
             }
         }
     }

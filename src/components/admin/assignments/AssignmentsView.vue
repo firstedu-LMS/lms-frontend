@@ -3,7 +3,7 @@
         <vue-good-table
          :columns="columns"
          :rows="assignments"
-         :search-options="{enabled: true}" >
+         :search-options="{enabled: false}" >
 
             <template #table-column="props">
                 <span class="text-sm">{{ props.column.label }}</span>
@@ -11,7 +11,7 @@
 
             <template #table-row="props">
                 <span v-if="props.column.field == 'actions'">
-                    <span @click="editAssignment(props.row.id)" style="cursor: pointer;margin: 2px 10px;color: rgb(194, 194, 6);" class="material-icons-outlined">tune</span>
+                    <span  @click="editAssignment(props.row.id)" style="cursor: pointer;margin: 2px 10px;color: rgb(194, 194, 6);" class="material-icons-outlined">tune</span>
                     <span  @click="deleteAssignment(props.row.id)" style="margin: 2px 10px;color: rgb(243, 31, 31);cursor: pointer;" class="material-icons-outlined">delete</span>
                 </span>
                 <span class="text-sm" v-else>{{props.formattedRow[props.column.field]}}</span>

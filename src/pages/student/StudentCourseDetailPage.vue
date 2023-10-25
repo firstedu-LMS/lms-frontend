@@ -1,9 +1,9 @@
 <template>
     <div class="p-4">
-        <div class="flex justify-between mb-6">
-            <h1 v-if="weeks.length && weeks[0].course" class="text-2xl font-bold underline">{{ weeks[0].course.name }}</h1>
-            <button>Back</button>
-        </div>
+        <button @click="$router.go(-1)">
+            <span class="material-icons-outlined">arrow_back</span>
+        </button>
+        <h1 v-if="weeks.length && weeks[0].course" class="my-4 text-2xl font-bold underline">{{ weeks[0].course.name }}</h1>
         <ul>
             <li class="px-8 py-3 text-lg font-bold border border-gray-2">Week Numbers</li>
             <li class="px-8 py-3 border border-t-0 border-gray-2" v-for="week in weeks" :key="week.id">

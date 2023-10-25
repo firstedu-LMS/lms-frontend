@@ -2,17 +2,13 @@
     <div class="p-4">
         <h1 class="px-4 font-black">NEW</h1>
         <transition name="dialog">
-                <dialog v-if="created" class="fixed z-50 flex flex-col items-center p-6 text-gray" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;" open>
-                    <span style="color: #22c55e; font-size: 6rem;" class="material-icons-sharp">check_circle</span>
-                    <p class="my-6 text-xl">Course Has Been Created Successfully.</p>
-                    <button class="w-full py-1.5 text-white rounded hover:bg-transparent hover:text-green border border-green bg-green" @click="reload">Okay</button>
-                </dialog>
+            <SuccessDialog v-if="created"/>
         </transition>
         <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
             loading . . .
         </div>
         <form id="form" class="z-30 flex flex-wrap justify-around" @submit.prevent="createCourse" >
-                <div class="w-[30%] my-8">
+                <div class="w-[40%] my-8">
                     <label class="text-sm font-semibold" for="name">Name</label>
                     <input v-model="course.name" type="text" class="px-2 w-[60%] mx-5 py-1 border-b outline-none">
                     <p v-if="errors.name" class="py-1 mx-12 text-red">{{ errors.name[0] }}</p>
@@ -45,10 +41,17 @@
                 <p v-if="errors.status" class="py-1 mx-12 text-red">{{ errors.status[0] }}</p>
 
             </div>
-            <div class="w-[40%] flex my-10">
+          
+            <div class="w-[95%] ml-[45px] mt-8 mb-32">
+                <label class="font-semibold text-[12px]" for="description">Description</label>
+                <quill-editor class="w-full shadow-md shadow-black" v-model:content="course.description" theme="snow" toolbar="full" contentType="html"></quill-editor>
+                <p v-if="errors.description" class="py-1 mx-12 text-red">{{ errors.description[0] }}</p>
+
+            </div>
+            <div class="w-[40%] my-10">
                 <label for="image" class="text-sm font-bold">Image</label>
-                <input @change="saveImage" type="file" class="w-full px-2 py-1 border-b outline-none file:border-0 file:text-sm">
-                <p v-if="errors.image_id" class="py-1 mx-12 text-red">{{ errors.image_id[0] }}</p>
+                <input @change="saveImage" type="file" class="w-[80%] px-2 py-1 border-b outline-none file:border-0 file:text-sm">
+                <p v-if="errors.image_id" class="py-1 mx-10 text-red">{{ errors.image_id[0] }}</p>
 
             </div>
             <div class="w-[40%] my-8">
@@ -58,18 +61,14 @@
 
             </div>
 
-          
-            <div class="w-[95%] ml-[45px] mt-8 mb-32">
-                <label class="font-semibold text-[12px]" for="description">Description</label>
-                <quill-editor class="w-full shadow-md shadow-black" v-model:content="course.description" theme="snow" toolbar="full" contentType="html"></quill-editor>
-                <p v-if="errors.description" class="py-1 mx-12 text-red">{{ errors.description[0] }}</p>
-
-            </div>
             <div class="flex w-full ml-10 my-2">
                 <button :disabled="loading" class="px-3 py-1 mx-3 bg-white shadow-lg text-gray">Submit</button>
             </div>
+            <div class="w-full ml-10 ">
+                <img v-if="previewImage" :src="previewImage" style="height: 300px;" class="ml-10" alt="">
+            </div>
+
         </form>
-        <img :src="previewImage" alt="">
     </div>
 </template>
 
@@ -78,9 +77,11 @@ import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import ApiService from '@/services/ApiService';
 import filePath from '../../../services/public/filePath';
+import SuccessDialog from '@/components/dialog/SuccessDialog.vue'
     export default {
         components : {
-            QuillEditor
+            QuillEditor,
+            SuccessDialog
         },
 
         data() {
@@ -142,6 +143,7 @@ import filePath from '../../../services/public/filePath';
                     this.loading = false;
                     if (res.response && res.response.data.errors) {
                         this.errors = res.response.data.errors
+                        console.log(res.response.data.errors);
                             setTimeout(() => {
                                 this.errors = {}
                             },5000)
