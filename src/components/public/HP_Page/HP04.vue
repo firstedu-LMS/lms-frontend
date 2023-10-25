@@ -3,7 +3,7 @@
         <h1 class="py-6 text-2xl font-bold text-center">Latest Courses</h1>
         <div class="justify-around text-white sm:flex">
             <div v-for="course in courses" :key="course.name" class="pb-2 flex flex-col justify-between my-4 sm:w-[23%] sm:my-0 bg-blue">
-                <img v-if="course.image" :src="filePath.imagePath(course.image.image)" class="w-full" alt="">
+                <img v-if="course.image" :src="filePath.imagePath(course.image.image)" class="w-full h-[170px]" alt="">
                 <h1 class="p-2 mb-3 text-xl font-semibold">{{ course.name }}</h1>
                 <router-link :to="{name : 'HCD_Page' , params: {id : course.id} }" class="block py-1 mx-6 text-center sm:mx-2 hover:bg-cyan-2 bg-cyan">
                     Show  Detail

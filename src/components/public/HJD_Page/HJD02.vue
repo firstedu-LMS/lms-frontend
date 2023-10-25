@@ -18,7 +18,7 @@
             </div>
             <div class="my-4">
                 <label  for="email">Your Resume or Curriculum Vitae (PDF only)</label>
-                <input @change="insertCV" required type="file" class="w-full mt-1 border cursor-pointer file:cursor-pointer border-gray file:bg-transparent file:border-0 file:py-1 file:px-2">
+                <input accept=".pdf" @change="insertCV" required type="file" class="w-full mt-1 border cursor-pointer file:cursor-pointer border-gray file:bg-transparent file:border-0 file:py-1 file:px-2">
             </div>
             <div>
                 <button :disabled="submitting || loading" class="w-full py-1.5 text-center text-white bg-green text-lg">Submit</button>

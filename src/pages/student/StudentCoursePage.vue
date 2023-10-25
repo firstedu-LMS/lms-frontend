@@ -17,7 +17,7 @@
                         <h1 class="mt-2 text-xl font-bold text-black max-sm:text-xl sm:mt-0">{{ course.batch.course.name }}</h1>    
                         <h3 class="my-2">{{ course.batch.name }}</h3>  
                         <div class="w-full rounded-lg bg-gray-2">
-                            <div class="bg-cyan py-2 text-center text-xs font-medium rounded-lg" :class="`w-[${course.percentage}%]`" >
+                            <div class="py-2 text-xs font-medium text-center rounded-lg bg-cyan" :class="`w-[${course.percentage}%]`" >
                                 {{ course.percentage }}%
                             </div>
                         </div>
