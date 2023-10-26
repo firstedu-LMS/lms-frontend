@@ -2,28 +2,33 @@
     <div class="p-4">
         <h1 class="px-4 font-black" v-if="course">{{ course.name }}</h1>
         <form @submit.prevent="editCourse" >
-            <div class="ml-10 flex flex-wrap w-[60%] justify-between">
-                <div class="w-[40%] my-8">
+            <div class="ml-10 flex flex-wrap  justify-between">
+                <div class="w-[30%] my-8">
                     <label class="text-sm font-semibold" for="name">Name</label>
                     <input v-model="course.name" type="text" class="px-2 w-[60%] mx-5 py-1 border-b outline-none">
                 </div>
-                <div class="w-[40%] my-8">
+                <div class="w-[30%] my-8">
                     <label class="text-sm font-semibold" for="fee">Fee</label>
                     <input v-model="course.fee" type="number" class=" w-[60%] mx-5 px-2 py-1 border-b outline-none">
                     <span class="text-sm font-semibold">MMK</span>
                 </div>
-                <div class="w-[40%] flex  my-8">
-                <label class="text-sm font-semibold">Condition</label>
-                <span class="mx-2 text-center pl-2">
-                    <input type="radio" class="" v-model="course.available" :value="Boolean(true)" />
-                    <br><label class="text-xs">open now</label>     
-                </span>
-                <span class="mx-2 text-center pl-2">
-                    <input type="radio" class="" v-model="course.available" :value="Boolean(false)" />
-                    <br><label class="text-xs">temporary closed</label>
-                </span>
-                </div>                
-                <div class="w-[40%] my-8">
+                <div class="w-[30%] flex  my-8">
+                    <label class="text-sm font-semibold">Condition</label>
+                    <span class="mx-2 text-center pl-2">
+                        <input type="radio" class="" v-model="course.available" :value="Boolean(true)" />
+                        <br><label class="text-xs">open now</label>     
+                    </span>
+                    <span class="mx-2 text-center pl-2">
+                        <input type="radio" class="" v-model="course.available" :value="Boolean(false)" />
+                        <br><label class="text-xs">temporary closed</label>
+                    </span>
+                </div> 
+                <div class="flex w-full">
+                    <div class="w-[30%] my-8">
+                    <label class="text-sm font-semibold" for="age">Age</label>
+                    <input v-model="course.age" type="text" class=" w-[60%] mx-5 px-2 py-1 border-b outline-none">
+                </div>               
+                <div class="w-[30%] ml-16 px-2 my-8">
                 <label for="status" class="text-sm font-semibold">Status</label>
                 <select v-model="course.status" class=" w-[60%] mx-5 px-2 py-1.5 bg-transparent border-b outline-none">
                     <option class="text-sm" disabled selected></option>
@@ -32,24 +37,22 @@
                 </select>
                 </div>
 
-                <div class="w-[40%] my-8">
-                    <label class="text-sm font-semibold" for="image">Image</label>
-                    <input @change="saveImage" type="file" class=" w-[60%] mx-5 file:border-0 file:text-sm px-2 py-1 border-b outline-none">
                 </div>
-                <div class="w-[40%] my-8">
-                    <label class="text-sm font-semibold" for="age">Age</label>
-                    <input v-model="course.age" type="text" class=" w-[60%] mx-5 px-2 py-1 border-b outline-none">
-                </div>
-
                 <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
                 loading . . .
                 </div>
-            </div>
-
-
-            <div class="w-[70%] ml-10 mt-8 mb-32">
+                <div class="w-full  mt-8 mb-32">
                 <label class="font-semibold text-sm" for="description">Description</label>
                 <quill-editor class="shadow-md shadow-black w-full" v-model:content="course.description" theme="snow" toolbar="full" contentType="html"></quill-editor>
+            </div>
+            <div class="w-[40%] my-8">
+                    <label class="text-sm font-semibold" for="image">Image</label>
+                    <input @change="saveImage" type="file" class=" w-[60%] mx-5 file:border-0 file:text-sm px-2 py-1 border-b outline-none">
+                </div>
+
+            </div>
+            <div class="w-full ml-10 ">
+                <img v-if="previewImage" :src="previewImage" style="height: 300px;" class="ml-10" alt="">
             </div>
 
             <div class="flex w-full my-2 mx-10">
@@ -61,15 +64,17 @@
 
 <script>
 import ApiService from '@/services/ApiService';
+import filePath from '@/services/public/filePath';
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
     export default {
         props : ['id'],
         components: {
-            QuillEditor
+            QuillEditor,
         },
         data(){
             return {
+                filePath : filePath,
                 loading : false,
                 course : {}
             }
@@ -95,6 +100,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
                 ApiService.post('admin/images' , form).then((res) => {
                     this.loading = false
                     this.course.image_id = res.data.data.id;
+                    this.previewImage = filePath.imagePath(res.data.data.image)
                 }).catch((res) => {
                     this.loading = false
                     console.log(res);
@@ -103,10 +109,12 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
         },
 
-        mounted(){
+        async mounted(){
             this.loading = true
-            ApiService.get(`admin/courses/${this.id}`).then((res) => {
+            await ApiService.get(`admin/courses/${this.id}`).then((res) => {
                 this.course = res.data.data;
+                console.log(res.data.data);
+                this.previewImage = filePath.imagePath(res.data.data.image.image)
                 this.loading = false
             }).catch((res) => {
                 this.loading = false
