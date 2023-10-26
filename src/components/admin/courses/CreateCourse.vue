@@ -68,8 +68,8 @@
                 <p v-if="errors.age" class="py-1 mx-12 text-red">{{ errors.age[0] }}</p>
             </div>
             
-            <div class="w-full ml-10 ">
-                <img v-if="previewImage" :src="previewImage" style="height: 300px;" class="ml-10" alt="">
+            <div class="w-full ml-5 my-2">
+                <img v-if="previewImage" :src="previewImage" style="height: 300px;"  alt="">
             </div>
             
             <div class="flex w-full  my-2">

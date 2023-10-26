@@ -1,6 +1,6 @@
 <template>
     <div class="p-4">
-        <h1 class="px-4 font-black" v-if="course">{{ course.name }}</h1>
+        <h1 class="px-4 ml-6 font-black" v-if="course">{{ course.name }}</h1>
         <form @submit.prevent="editCourse" >
             <div class="ml-10 flex flex-wrap  justify-between">
                 <div class="w-[30%] my-8">
@@ -51,7 +51,7 @@
                 </div>
 
             </div>
-            <div class="w-full ml-10 ">
+            <div class="w-full my-2">
                 <img v-if="previewImage" :src="previewImage" style="height: 300px;" class="ml-10" alt="">
             </div>
 
