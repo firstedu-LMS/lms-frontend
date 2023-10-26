@@ -1,5 +1,7 @@
 <template>
     <div>
+        <SuccessDialog :message="`Batch has been created successfully.`" @reload="reload" v-if="created" />
+
         <form  @submit.prevent="createBatch" class="flex flex-wrap justify-around w-2/3 text-sm font-semibold">
             
             <div class="w-1/2 p-4 my-4">
@@ -63,16 +65,21 @@
 
 <script>
 import ApiService from '@/services/ApiService'
+import SuccessDialog from '../../dialog/SuccessDialog.vue'
     export default {
         props : {
             course_id : {
                 required : true
             }
         },
+        components : {
+            SuccessDialog
+        },
         data(){
             return {
                 loading : false,
                 instructors : [],
+                created : false,
                 batch : {
                     instructor_id : null,
                     course_id : this.$props.course_id,
@@ -93,12 +100,15 @@ import ApiService from '@/services/ApiService'
             })
         },
         methods : {
+            reload(){
+                this.$emit('reload')
+            },
             createBatch(){
                 this.batch.course_id = this.$props.course_id;
                 this.loading = true
                 ApiService.post('admin/batches' , this.batch).then(() => {
-                    this.$emit('reload')
                     this.loading = false
+                    this.created = true;
                 }).catch((res) => {
                     this.loading = false
                     this.errors = res.response.data.errors

@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="flex p-4">
-            <button :class="progress ? 'bg-[#89CFF0]' : ''" @click="showProgress" class="p-2 sm:font-bold max-sm:text-sm">IN PROGRESS
-                <span class="p-1.5 mx-1 rounded-sm" >{{ profile.id_progess_course_count }}</span>
+            <button :class="progress ? 'bg-[#89CFF0]' : ''" @click="showProgress" class="p-2 rounded-r-lg rounded-b-none sm:font-bold max-sm:text-sm">IN PROGRESS
+                <span class="px-2 py-1 mx-1 rounded-full bg-white" >{{ profile.id_progess_course_count }}</span>
             </button>
-            <button :class="completed ? 'bg-[#89CFF0]' : ''" @click="showCompleted" class="p-2 sm:font-bold max-sm:text-sm">COMPLETED
-                <span class="p-1.5 mx-1 rounded-sm">{{ profile.course_completion_count }}</span>
+            <button :class="completed ? 'bg-[#89CFF0]' : ''" @click="showCompleted" class="p-2 rounded-r-lg rounded-b-none sm:font-bold max-sm:text-sm">COMPLETED
+                <span class="px-2 py-1 mx-1 rounded-full bg-white">{{ profile.course_completion_count }}</span>
             </button>
         </div>
         <div class="p-10">
@@ -16,10 +16,9 @@
                     <div class="flex-col justify-between sm:mx-3 sm:px-4 sm:flex sm:w-1/2">
                         <h1 class="mt-2 text-xl font-bold text-black max-sm:text-xl sm:mt-0">{{ course.batch.course.name }}</h1>    
                         <h3 class="my-2">{{ course.batch.name }}</h3>  
-                        <div class="w-full rounded-lg bg-gray-2">
-                            <div class="py-2 text-xs font-medium text-center rounded-lg bg-cyan" :class="`w-[${course.percentage}%]`" >
-                                {{ course.percentage }}%
-                            </div>
+                        <div class="flex items-center relative">
+                            <label class="absolute text-white left-4 z-50" for="success">{{ course.percentage }}%</label>
+                            <progress class="w-full h-6 z-10 bg-indigo" :value="course.percentage" id="success" max="100"> 32% </progress>
                         </div>
                         <router-link :to="{name :'StudentCourseDetailPage' , params : {student_id : profile.id , course_id : course.course_id , batch_id : course.batch.id}}" class="block w-full py-2 mt-4 text-xl font-semibold text-center text-white border max-sm:py-1 max-sm:text-lg hover:bg-transparent bg-green hover:text-green border-green">Continue</router-link>       
 
@@ -77,5 +76,10 @@ import filePath from '@/services/public/filePath'
 </script>
 
 <style scoped>
-
+progress::-webkit-progress-bar {
+   background-color: rgb(202, 195, 195);
+}
+progress::-webkit-progress-value {
+   background-color: rgb(17, 216, 17);
+}
 </style>

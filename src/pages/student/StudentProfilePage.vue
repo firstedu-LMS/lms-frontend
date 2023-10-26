@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div  v-if="showImage" class="fixed w-5/6 sm:w-[450px] sm:h-[450px] shadow-xl z-50 top-1/2 left-1/2" style="transform: translate(-50% , -50%);" >
-            <span @click="showImage = false" class="absolute px-2 font-bold text-white rounded-full cursor-pointer right-2 top-2 bg-green">x</span>
-            <img  v-if="profile && profile.image" :src="filePath.imagePath(profile.image)" class=" sm:w-[450px] sm:h-[450px] rounded"  alt="">
+        <div @click="showImage = !showImage" v-if="showImage" class="fixed bg-gray bg-opacity-75 top-0 left-0 w-screen h-screen shadow-xl z-50">
+            <!-- <span @click="showImage = false" class="absolute px-2 font-bold text-white rounded-full cursor-pointer right-2 top-2 bg-green">x</span> -->
+            <img  v-if="profile && profile.image" :src="filePath.imagePath(profile.image)" class=" sm:w-[450px] sm:h-[450px] rounded absolute top-1/2 left-1/2" style="transform: translate(-50% , -50%);"  alt="">
         </div>
         <div v-if="profile" class="py-6 sm:flex" :class="showImage ? 'blur-[2px]' : ''">
             <img @click="showImage = true" v-if="profile && profile.image" :src="filePath.imagePath(profile.image)" style="height : 220px;width : 220px;" class="mx-16 border-8 rounded-full cursor-pointer sm:my-8 border-teal" alt="">

@@ -6,10 +6,9 @@
         <h1 v-if="weeks.length && weeks[0].course" class="my-4 text-2xl font-bold underline">{{ weeks[0].course.name }}</h1>
         <ul>
             <li class="px-8 py-3 text-lg font-bold border border-gray-2">Week Numbers</li>
-            <li class="px-8 py-3 border border-t-0 border-gray-2" v-for="week in weeks" :key="week.id">
+            <li class="px-8 hover:text-blue-2 py-3 border border-t-0 border-gray-2" v-for="week in weeks" :key="week.id">
                 <router-link v-if="week.locked" :to="{name : 'StudentLessonDetailPage' , params : {student_id : student_id , course_id : course_id , batch_id : batch_id , week_id : week.id}}" class="flex items-center">
                     {{ week.week_number }}
-                    <span style="color: rgb(16, 197, 16); font-size: 18px;margin-left: 7px; margin-top: -1px;" class="material-icons-sharp">lock</span>
                 </router-link>
                 <span v-else class="flex items-center">
                     {{ week.week_number }}

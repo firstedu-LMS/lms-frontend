@@ -1,5 +1,7 @@
 <template>
     <div class="p-4">
+        <SuccessDialog :message="`Lesson has been created successfully.`" @reload="reload" v-if="created" />
+
         <h1 class="font-black">NEW</h1>
         <form class="flex flex-wrap" @submit.prevent="createLesson" >
                 <div class="w-full my-6">
@@ -36,13 +38,15 @@
 import ApiService from '@/services/ApiService';
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import SuccessDialog from '../../dialog/SuccessDialog.vue'
     export default {
         components : {
-            QuillEditor
+            QuillEditor , SuccessDialog
         } ,
         data() {
             return {
                 loading : false,
+                created : false,
                 lesson : {
                     name : '',
                     description : '',
@@ -53,6 +57,9 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
             }
         },
         methods : {
+            reload () {
+                this.$emit('reload');
+            },
             saveVideo(e){
                 if (e.target.files) {
                     let form = new FormData();
@@ -77,7 +84,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
                 this.lesson.week_id = this.$route.params.week_id;
                 this.loading = true
                 ApiService.post('admin/lessons' , this.lesson).then(() => {
-                    this.$emit('reload');
+                    this.created = true;
                     this.loading = false
                 }).catch((res) => {
                     console.log(res);
