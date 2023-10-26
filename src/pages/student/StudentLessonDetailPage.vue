@@ -34,7 +34,7 @@
             </div>
 
             <!-- Assignments -->
-            <AssignmentsView :course_id="course_id" :batch_id="batch_id" class="mb-12 sm:w-2/3" v-if="showAssignments" />
+            <AssignmentsView class="mb-12 sm:w-2/3" v-if="showAssignments" />
             <QuestionsView :lesson_id="lessonIdForQues" class="mb-12 sm:w-2/3" v-if="showQuestions" />
         </div>
     </div>
@@ -67,7 +67,7 @@ import QuestionsView from '@/components/student/QuestionsView.vue';
         async mounted () {
             await this.getLessons();
             this.active_lesson = this.lessons[0]
-            this.showLesson = true;
+            this.showAssignments = true;
         },
 
         methods : {
