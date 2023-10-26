@@ -1,20 +1,8 @@
 <template>
   <div>
     <HPNavbar />
-    <transition name="dialog" class="my-24">
-          <dialog v-if="created" class="fixed z-50 flex flex-col items-center p-6 text-gray" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;" open>
-              <span style="color: #22c55e; font-size: 6rem;" class="material-icons-sharp">check_circle</span>
-              <p class="my-6 text-xl">Course Has Been Created Successfully.</p>
-              <button @click="created = false" class="w-full py-1.5 text-white rounded hover:bg-transparent hover:text-green border border-green bg-green">Okay</button>
-          </dialog>
-      </transition>
-      <transition name="dialog" class="my-24">
-          <dialog v-if="error" class="fixed z-50 flex flex-col items-center p-6 text-gray" style="box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;" open>
-              <span style="color: rgb(228, 32, 32); font-size: 6rem;" class="material-icons-sharp">error</span>
-              <p class="my-6 text-xl">You have already enrolled this course.</p>
-              <button @click="error = false" class="w-full py-1.5 text-white rounded hover:bg-transparent hover:text-red border border-red bg-red">Okay</button>
-          </dialog>
-      </transition>
+    <SuccessDialog :message="`Enrolled course successfully.`" @reload="navigate" v-if="created" />
+    <ErrorDialog :message="`You have already enrolled this course.`" @reload="reload" v-if="error" />
       <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
             loading . . .
         </div>
@@ -34,7 +22,7 @@
       </ul>
     </div>
     <div class="p-4 text-lg text-white sm:w-[80%] mx-auto">
-        <button :disabled="enrolling" @click="enrollCourse(course.id)" class="px-6 py-1 mr-2 bg-green">Enroll now</button>
+        <button :disabled="loading" @click="enrollCourse(course.id)" class="px-6 py-1 mr-2 bg-green">Enroll now</button>
         <button @click="$router.go(-1)" class="px-4 py-1 bg-gray">Back</button>
     </div>
   </div>
@@ -45,9 +33,11 @@ import HPNavbar from "@/layouts/public/HPNavbar.vue";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 import ApiService from "@/services/ApiService";
+import SuccessDialog from "@/components/dialog/SuccessDialog.vue";
+import ErrorDialog from "@/components/dialog/ErrorDialog.vue";
 export default {
   components: {
-    HPNavbar,
+    HPNavbar, SuccessDialog , ErrorDialog
   },
   data() {
     return {
@@ -55,14 +45,19 @@ export default {
       created : false,
       error : false,
       course: {},
-      enrolling : false,
       id: this.$route.params.id,
       authStore : useAuthStore()
     };
   },
   methods : {
+    navigate() {
+      this.$router.push({name : 'StudentCoursePage'})
+    },
+    reload() {
+      this.created = false;
+      this.error = false;
+    },
     async enrollCourse(id) {
-      this.enrolling = true;
       await this.authStore.getUser();
       let isStudent = this.authStore.roles.find((role) => role.name == 'student');
       if (isStudent && this.authStore.user.student) {

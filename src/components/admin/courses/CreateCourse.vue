@@ -2,7 +2,7 @@
     <div class="p-4">
         <h1 class="px-4 font-black">NEW</h1>
         <transition name="dialog">
-            <SuccessDialog v-if="created"/>
+            <SuccessDialog :message="`Course has been created successfully.`" @reload="reload" v-if="created" />
         </transition>
         <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
             loading . . .
@@ -61,7 +61,7 @@
 
             </div>
 
-            <div class="flex w-full ml-10 my-2">
+            <div class="flex w-full my-2 ml-10">
                 <button :disabled="loading" class="px-3 py-1 mx-3 bg-white shadow-lg text-gray">Submit</button>
             </div>
             <div class="w-full ml-10 ">

@@ -24,7 +24,7 @@
         </div>
 
         <AssignmentView @edit="editAssignment" v-if="table" />
-        <CreateAssignment v-if="createForm" />
+        <CreateAssignment v-if="createForm" @reload="showTable" />
         <EditAssignment v-if="editForm" :id="idforEdit" />
 
     </div>
