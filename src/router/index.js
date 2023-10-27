@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-// import { useAuthStore } from "@/stores/auth";
+import { useAuthStore } from "@/stores/auth";
 
 import HP_Page from "@/pages/public/HP_Page.vue";
 import HC_Page from "@/pages/public/HC_Page.vue";
@@ -30,7 +30,7 @@ import StudentCoursePage from "@/pages/student/StudentCoursePage.vue"
 import StudentCourseDetailPage from "@/pages/student/StudentCourseDetailPage.vue"
 import StudentLessonDetailPage from "@/pages/student/StudentLessonDetailPage.vue"
 
-// import TokenService from "@/services/TokenService";
+import TokenService from "@/services/TokenService";
 
 const routes = [
   {
@@ -169,25 +169,25 @@ const router = createRouter({
   routes
 })
 
-// router.beforeEach(async (to , from , next) => {
-//   let authStore = useAuthStore()
-//   if(to.meta.middleware){
-//     let token = TokenService.getToken();
-//     if (token) {
-//           await authStore.getUser();
-//             if (authStore.authenticated) {
-//               let isAuthenticatedByRole = authStore.roles.find((role) => role.name == to.meta.middleware);
-//               isAuthenticatedByRole ? next() : next('/login');
-//             } else {
-//               next('/login')
-//             }
-//     } else {
-//         authStore.destroyAuth();
-//         next('/login');
-//     }
-//   } else {
-//     next();
-//   }
-// })
+router.beforeEach(async (to , from , next) => {
+  let authStore = useAuthStore()
+  if(to.meta.middleware){
+    let token = TokenService.getToken();
+    if (token) {
+          await authStore.getUser();
+            if (authStore.authenticated) {
+              let isAuthenticatedByRole = authStore.roles.find((role) => role.name == to.meta.middleware);
+              isAuthenticatedByRole ? next() : next('/login');
+            } else {
+              next('/login')
+            }
+    } else {
+        authStore.destroyAuth();
+        next('/login');
+    }
+  } else {
+    next();
+  }
+})
 
 export default router
