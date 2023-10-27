@@ -1,186 +1,93 @@
 <template>
-    <div>
-        <div @click="showImage = !showImage" v-if="showImage" class="fixed bg-gray bg-opacity-75 top-0 left-0 w-screen h-screen shadow-xl z-50">
-            <!-- <span @click="showImage = false" class="absolute px-2 font-bold text-white rounded-full cursor-pointer right-2 top-2 bg-green">x</span> -->
-            <img  v-if="profile && profile.image" :src="filePath.imagePath(profile.image)" class=" sm:w-[450px] sm:h-[450px] rounded absolute top-1/2 left-1/2" style="transform: translate(-50% , -50%);"  alt="">
+  <div class="text-gray-1">
+    <div class="flex flex-wrap items-center justify-center py-12">
+        <div class="flex justify-center w-full sm:w-[45%]">
+            <img :src="filePath.imagePath(profile.image)" class="w-[240px] h-[240px] rounded-full border-[0.4rem] border-green" alt="">
         </div>
-        <div v-if="profile" class="py-6 sm:flex" :class="showImage ? 'blur-[2px]' : ''">
-            <img @click="showImage = true" v-if="profile && profile.image" :src="filePath.imagePath(profile.image)" style="height : 220px;width : 220px;" class="mx-16 border-8 rounded-full cursor-pointer sm:my-8 border-teal" alt="">
-            <img v-else src="" style="height : 220px;width : 220px;" class="mx-16 border-8 rounded-full border-teal sm:my-8 sm:mx-16 sm:px-6 " alt="">
-            <div class="sm:w-[70%]">
-                <h1 class="px-8 py-4 text-3xl font-bold sm:px-12 sm:py-8 sm:mt-4 sm:mx-1">{{ profile.name }}</h1>
-                <p class="font-semibold px-8 py-1 text-lg sm:px-1.5 sm:mx-12">Student ID - [ <span class="text-green">{{ profile.student_id }}</span> ]</p>
-                <p class="font-semibold text-lg px-8 py-1 sm:my-6 sm:px-1.5 sm:mx-12">Joined at -[ <span class="text-green">{{ profile.created_at }}</span> ]</p>
-            </div>
+        <div class="w-full sm:w-[45%] sm:p-0 p-6">
+            <h1 class="text-3xl font-semibold">{{ profile.name }}</h1>
+            <h3 class="my-6 text-xl font-semibold">Student Id  &raquo; [ <span class="text-green">{{ profile.student_id }}</span> ]</h3>
+            <h3 class="my-6 text-xl font-semibold">Joined at  &raquo; [ <span class="text-green">{{ profile.created_at }}</span> ]</h3>
         </div>
-<!-- for responsive that I can do as much as I can hee" -->
-       <div class="w-full py-12 sm:hidden"  :class="showImage ? 'blur-[3px]' : ''">
-            <button @click="showInfo" class="w-1/2 py-1 " :class="info ? 'bg-blue-2 text-white': 'bg-white text-gray'">Personal Information</button>
-            <button @click="showActivity" class="w-1/2 py-1" :class="show_activities ? 'bg-blue-2 text-white': 'bg-white text-gray'">Activities</button>
-        <form v-if="info && profile" class="mx-1 my-6" @submit.prevent="editProfile">
-              <div class="flex justify-end">
-                <p @click="editing" v-if="saving" class="px-4 mt-2 underline text-end text-blue-2">Edit</p>
-                <button  v-if="isEditing" class="px-4 mt-2 underline text-end text-blue-2">Save</button>
-              </div>            
-              <div class="mt-6 bg-white">
-                <div class="flex border border-b-0 border-gray-2">
-                    <p class="py-4 text-center border-r font-semibold text-xs border-gray-2 w-[40%]">EMAIL ADDRESS</p>
-                    <input v-model="profile.email" disabled type="email"   class="py-4 px-4 w-[60%] outline-none">
-                </div> 
-                <div class="flex border border-b-0 border-gray-2">
-                    <p class="py-4 text-center border-r font-semibold text-xs border-gray-2 w-[40%]">PHONE NUMBER</p>
-                    <input :disabled="!isEditing" v-model="profile.phone" type="text" class="py-4 px-4 w-[60%] outline-none">
-                </div>
-                <div class="flex border border-b-0 border-gray-2">
-                        <p class="py-4 text-center border-r font-semibold text-xs border-gray-2 w-[40%]">EDUCATION</p>
-                        <input :disabled="!isEditing" v-model="profile.education" type="text" class="py-4 px-4 w-[60%] outline-none">
-                </div>   
-                <div class="flex border border-b-0 border-gray-2">
-                        <p class="py-4 text-center border-r font-semibold text-xs border-gray-2 w-[40%]">DATE OF BIRTH</p>
-                        <input :disabled="!isEditing" v-model="profile.date_of_birth" type="date" class="py-4 px-4 w-[60%] outline-none" >
-                </div>
-                <div class="flex border border-b border-gray-2">
-                        <p class="py-4 text-center border-r font-semibold text-xs border-gray-2 w-[40%]">ADDRESS</p>
-                        <input :disabled="!isEditing" v-model="profile.address" type="text" class="py-4 px-4 w-[60%] outline-none">
-                </div>
-            </div>
-        </form>
-        <div v-if="show_activities" class="w-full">
-                <div class="mx-1 my-16 bg-white">
-                <div class="flex border border-b-0 border-gray-2">
-                        <p class="py-5 text-xs px-3 font-semibold text-center border-r border-gray-2 w-[40%]">IN-PROGRESS COURSES</p>
-                        <p class="py-5 text-center text-xs font-semibold px-4 w-[60%]">{{ profile.id_progess_course_count }}</p>
-                </div>     
-                <div class="flex border border-b-0 border-gray-2">
-                        <p class="py-6 px-3 text-xs font-semibold text-center border-r border-gray-2 w-[40%]">COMPLETED COURSES</p>
-                        <p class="py-6 text-xs font-semibold text-center px-4 w-[60%]">{{ profile.course_completion_count }}</p>
-                </div>
-                <div class="flex border border-b border-gray-2">
-                        <p class="py-6 text-xs font-semibold text-center border-r border-gray-2 w-[40%]">ACHIEVEMENTS</p>
-                        <p class="py-6 text-xs font-semibold px-4 w-[60%]"></p>
-                </div>                      
-            </div>
-        </div>
-        </div>
-        <div class="flex justify-around pb-16 max-sm:hidden"  :class="showImage ? 'blur-[3px]' : ''">
-            <div class="sm:w-[45%] sm:mt-6">
-                <p class="font-semibold underline text-blue-2">Personal information</p>
-                <form v-if="info && profile " class="bg-white " @submit.prevent="editProfile">
-                <div class="flex justify-end">
-                    <p @click="editing" v-if="saving" class="px-4 underline text-end text-blue-2">Edit</p>
-                    <button v-if="isEditing" :disabled="loading" class="px-4 underline text-end text-blue-2">Save</button>
-                </div>
-                <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
-            loading . . .
-                </div>
-                <div class="flex border border-b-0 border-gray-2">
-                        <p class="py-1.5 text-center border-r font-semibold text-sm border-gray-2 w-[35%]">EMAIL ADDRESS</p>
-                        <input v-model="profile.email" disabled type="email"  class="py-1.5 px-4 outline-none w-[60%]">
-                </div>
-                <div class="flex border border-b-0 border-gray-2">
-                        <p class="py-1.5 text-center border-r font-semibold text-sm border-gray-2 w-[35%]">PHONE NUMBER</p>
-                        <input :disabled="!isEditing" v-model="profile.phone" type="text" class="py-1.5 px-4 outline-none w-[65%]">
-                </div>
-                <div class="flex border border-b-0 border-gray-2">
-                        <p class="py-1.5 text-center border-r font-semibold text-sm border-gray-2 w-[35%]">EDUCATION</p>
-                        <input :disabled="!isEditing" v-model="profile.education" type="text" class="py-1.5 px-4 outline-none w-[65%]">
-                </div>   
-                <div class="flex border border-b-0 border-gray-2">
-                        <p class="py-1.5 text-center border-r font-semibold text-sm border-gray-2 w-[35%]">DATE OF BIRTH</p>
-                        <input :disabled="!isEditing" v-model="profile.date_of_birth"  type="date" class="py-1.5 px-4 outline-none w-[65%]">
-                </div>
-                <div class="flex border border-b border-gray-2">
-                        <p class="py-1.5 text-center border-r font-semibold text-sm border-gray-2 w-[35%]">ADDRESS</p>
-                        <input :disabled="!isEditing" v-model="profile.address" class="py-1.5 px-4 w-[65%] outline-none">
-                </div>
-                </form>
-            </div>
-            <div class="w-[45%] mt-6">
-                <p class="font-semibold underline text-blue-2">Activites</p>
-                <div class="mt-6 bg-white">
-                <div class="flex border border-b-0 border-gray-2">
-                        <p class="py-5 text-xs font-semibold text-center border-r border-gray-2 w-[40%]">IN-PROGRESS COURSES</p>
-                        <p class="py-5 text-center text-xs font-semibold px-4 w-[60%]">{{ profile.id_progess_course_count }}</p>
-                </div>     
-                <div class="flex border border-b-0 border-gray-2">
-                        <p class="py-6 text-xs font-semibold text-center border-r border-gray-2 w-[40%]">COMPLETED COURSES</p>
-                        <p class="py-6 text-xs font-semibold text-center px-4 w-[60%]">{{ profile.course_completion_count }}</p>
-                </div>
-                <div class="flex border border-b border-gray-2">
-                        <p class="py-6 text-xs font-semibold text-center border-r border-gray-2 w-[40%]">ACHIEVEMENTS</p>
-                        <p class="py-6 text-xs font-semibold px-4 w-[60%]"></p>
-                </div>                      
-            </div>
-            </div>
-        </div>       
     </div>
+    <div class="w-full sm:flex justify-evenly bg-[#f2efef]">
+        <div class="w-full sm:w-[45%] px-2 pt-4 pb-8">
+            <h1 class="text-xl underline text-blue-2">PERSONAL INFORMATIONS</h1>
+            <button @click="editing = true" v-if="!editing" class="float-right text-blue-2">edit</button>
+            <form>
+                <button v-if="editing" class="float-right ml-4 text-blue-2">save</button>
+                <span v-if="editing" @click="editing = false" class="float-right cursor-pointer text-blue-2">cancel</span>
+                <div :class="classes.inputGroups">
+                    <label :class="classes.labels" for="email">EMAIL ADDRESS</label>
+                    <input :class="classes.inputs" type="text" :disabled="!editing" v-model="profile.email">
+                </div>
+                <div :class="classes.inputGroups">
+                    <label :class="classes.labels" for="email">PHONE NUMBER</label>
+                    <input :class="classes.inputs" type="text" :disabled="!editing" v-model="profile.phone">
+                </div>
+                <div :class="classes.inputGroups">
+                    <label :class="classes.labels" for="email">EDUCATION</label>
+                    <input :class="classes.inputs" type="text" :disabled="!editing" v-model="profile.education">
+                </div>
+                <div :class="classes.inputGroups">
+                    <label :class="classes.labels" for="email">DATE OF BIRTH</label>
+                    <input :class="classes.inputs" type="text" :disabled="!editing" v-model="profile.date_of_birth">
+                </div>
+                <div :class="classes.inputGroups">
+                    <label :class="classes.labels" for="email">ADDRESS</label>
+                    <textarea rows="2" :class="classes.inputs" type="text" :disabled="!editing" v-model="profile.address">
+                    </textarea>
+                </div>
+            </form>
+        </div>
+        <div class="w-full sm:w-[45%] px-2 pt-4 pb-8">
+            <h1 class="text-xl underline text-blue-2">ACTIVITIES</h1>
+            <button class="float-right text-[#f2efef]">.</button>
+            <div>
+                <div :class="classes.inputGroups">
+                    <p :class="classes.labels">IN PROGRESS COURSES</p>
+                    <p :class="classes.inputs" class="text-center">{{ profile.in_progress_course_count }}</p>
+                </div>
+                <div :class="classes.inputGroups">
+                    <p :class="classes.labels">COMPLETED COURSES</p>
+                    <p :class="classes.inputs" class="text-center">{{ profile.course_completion_count }}</p>
+                </div>
+                <div :class="classes.inputGroups">
+                    <p :class="classes.labels">ACHIEVEMENTS</p>
+                    <p :class="classes.inputs" class="text-center">{{ profile.achievement_count }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import ApiService from '@/services/ApiService'
-import filePath from '@/services/public/filePath'
-    export default {
-        data() {
-            return {
-                info: true,
-                profile : {},
-                showImage : false,
-                filePath : filePath,
-                show_activities : false,
-                activities : [],
-                isEditing : false,
-                saving : true,
-                loading : false
-            }
+import ApiService from "@/services/ApiService";
+import filePath from "@/services/public/filePath";
+export default {
+    data() {
+    return {
+        classes : {
+            inputGroups : 'border bg-white flex w-full border-[#f2efef]',
+            labels : 'w-[40%] p-2 border-r block border-[#f2efef] text-sm',
+            inputs : 'w-[60%] p-2 bg-transparent outline-none'
         },
-        methods: {
-            showInfo() {
-                this.info = true,
-                this.show_activities = false               
-            },
-            showActivity() {
-                this.info = false,
-                this.show_activities = true
-            },
-            editing(){
-                this.saving = false,
-                this.isEditing = true
-            },
-            editProfile(){
-                let obj = {
-                    phone : this.profile.phone,
-                    address : this.profile.address,
-                    education : this.profile.education,
-                    date_of_birth : this.profile.date_of_birth
-                }
-                this.loading = true
-                ApiService.patch(`student/user/${this.profile.id}`, obj).then((res) =>{
-                   console.log(res); 
-                   this.loading = false
-                }).catch((res) => {
-                    console.log(res);
-                })
-                this.saving = true,
-                this.isEditing = false
-
-            }
-        },
-        async mounted(){
-            await ApiService.get('student/user').then((res) => {
-                this.profile = res.data;
-                console.log(res.data);
+        editing : false,
+        profile: "",
+        filePath: filePath,
+    };
+    },
+    mounted() {
+        ApiService.get("student/user").then((res) => {
+            this.profile = res.data;
+            console.log(res.data);
             }).catch((res) => {
-                console.log(res);
-            })
-            // await ApiService.get(`student/course-per-students/${this.profile.id}`).then((res) => {
-            //     this.activities = res.data.data;
-            // })
-
-
-        }
-    }
+            console.log(res);
+            });
+    },
+};
 </script>
 
 <style scoped>
-
 </style>
