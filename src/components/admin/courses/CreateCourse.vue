@@ -62,11 +62,7 @@
 
 
             </div>
-            <div class="w-[40%] my-8">
-                <label class="text-sm font-semibold" for="age">Age</label>
-                <input v-model="course.age" type="text" class=" w-[60%] mx-5 px-2 py-1 border-b outline-none">
-                <p v-if="errors.age" class="py-1 mx-12 text-red">{{ errors.age[0] }}</p>
-            </div>
+
             
             <div class="w-full ml-10 ">
                 <img v-if="previewImage" :src="previewImage" style="height: 300px;" class="ml-10" alt="">
