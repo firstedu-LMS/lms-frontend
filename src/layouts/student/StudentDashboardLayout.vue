@@ -40,7 +40,6 @@
             <router-view></router-view>
         </main>
       </div>
-
   </div>
 </template>
 
