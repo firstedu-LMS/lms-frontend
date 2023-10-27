@@ -67,7 +67,7 @@ import SuccessDialog from '../../dialog/SuccessDialog.vue'
                 },
                 errors : {},
                 loading : false,
-                created : true
+                created : false
             }
         },
         methods : {
