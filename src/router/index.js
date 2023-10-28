@@ -29,6 +29,8 @@ import StudentProfilePage from "@/pages/student/StudentProfilePage.vue";
 import StudentCoursePage from "@/pages/student/StudentCoursePage.vue"
 import StudentCourseDetailPage from "@/pages/student/StudentCourseDetailPage.vue"
 import StudentLessonDetailPage from "@/pages/student/StudentLessonDetailPage.vue"
+import StudentAssignmentPage from '@/pages/student/assignments/StudentAssignmentPage'
+import StudentDownloadPdfPage from '@/pages/student/assignments/StudentDownloadPdfPage'
 
 import TokenService from "@/services/TokenService";
 
@@ -160,6 +162,16 @@ const routes = [
         name : 'StudentLessonDetailPage',
         component : StudentLessonDetailPage
       },
+      {
+        path : 'assignments',
+        name : 'StudentAssignmentPage',
+        component : StudentAssignmentPage
+      },
+      {
+        path : 'assignments/:id',
+        name : 'StudentDownloadPdfPage',
+        component : StudentDownloadPdfPage
+      }
     ]
   }
 ];

@@ -71,7 +71,6 @@ import SuccessDialog from '../../dialog/SuccessDialog.vue'
                     }).catch((res) => {
                         console.log(res);
                         this.loading = false
-                        this.errors = res.response.data.errors
                     setTimeout(() => {
                         this.errors = {}
                     },3000)
