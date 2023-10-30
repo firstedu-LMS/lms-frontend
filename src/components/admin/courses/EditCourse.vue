@@ -1,6 +1,6 @@
 <template>
     <div class="p-4">
-        <h1 class="px-4 font-black" v-if="course">{{ course.name }}</h1>
+        <h1 class="px-4 ml-6 font-black" v-if="course">{{ course.name }}</h1>
         <form @submit.prevent="editCourse" >
             <div class="ml-10 flex flex-wrap  justify-between">
                 <div class="w-[30%] my-8">
@@ -15,11 +15,11 @@
                 <div class="w-[30%] flex  my-8">
                     <label class="text-sm font-semibold">Condition</label>
                     <span class="mx-2 text-center pl-2">
-                        <input type="radio" class="" v-model="course.available" :value="Boolean(true)" />
+                        <input type="radio" v-model="course.available" :value="Boolean(true)" />
                         <br><label class="text-xs">open now</label>     
                     </span>
                     <span class="mx-2 text-center pl-2">
-                        <input type="radio" class="" v-model="course.available" :value="Boolean(false)" />
+                        <input type="radio"  v-model="course.available" :value="Boolean(false)" />
                         <br><label class="text-xs">temporary closed</label>
                     </span>
                 </div> 
@@ -51,7 +51,7 @@
                 </div>
 
             </div>
-            <div class="w-full ml-10 ">
+            <div class="w-full my-2">
                 <img v-if="previewImage" :src="previewImage" style="height: 300px;" class="ml-10" alt="">
             </div>
 

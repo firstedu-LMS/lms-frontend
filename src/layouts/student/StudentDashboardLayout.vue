@@ -13,6 +13,14 @@
             </Transition>
           </router-link>
         </li>
+        <li class="border-t border-t-gray-3">
+          <button @click="logout" class="flex items-center  my-5 text-red">
+              <span  class="material-icons-sharp" style="margin-right: 8px; background-color: rgb(249 250 251 / var(--tw-bg-opacity));z-index: 1; padding-left: 15px;">logout</span>
+            <Transition>
+              <span v-if="sideBar" style="z-index: 0.5;">Logout</span>
+            </Transition>
+          </button>
+        </li>
       </ul>
     </aside>
  <!-- :class="sideBar ? 'sm:w-5/6 w-screen' : 'w-[calc(100vw_-_60px)]'" -->
