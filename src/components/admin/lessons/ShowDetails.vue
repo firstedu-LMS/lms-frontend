@@ -40,7 +40,7 @@
                             <p class="py-1 px-4 w-[85%]">{{ question.answer }}</p>
                         </div>
                         <div class="flex justify-end">
-                            <button @click="deleteQues(question.id)" class="px-4 py-1 my-2 text-white rounded-sm bg-red">remove</button>
+                            <button :disabled="loading" @click="deleteQues(question.id)" class="px-4 py-1 my-2 text-white rounded-sm bg-red">remove</button>
                         </div>
                     </div>
                     <button @click="showForm" class="px-3 py-1 mt-10 mb-2 text-white rounded bg-blue-2">Add Question +</button>
@@ -123,6 +123,7 @@ import filePath from '../../../services/public/filePath';
             getQuestions () {
                 ApiService.get(`admin/questions`).then((res) => {
                     this.questions = res.data.data
+                    console.log(res.data.data);
                 }).catch((res) => {
                     console.log(res);
                 })
@@ -135,7 +136,6 @@ import filePath from '../../../services/public/filePath';
                 this.question.lesson_id = this.lesson.id
                 this.loading =true
                 ApiService.post('admin/questions', this.question).then((res) => {
-                  console.log(res.data.data);
                   this.questions.push(res.data.data);
                   this.question = {};
                   this.loading = false

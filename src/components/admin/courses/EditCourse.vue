@@ -15,11 +15,11 @@
                 <div class="w-[30%] flex  my-8">
                     <label class="text-sm font-semibold">Condition</label>
                     <span class="mx-2 text-center pl-2">
-                        <input type="radio" class="" v-model="course.available" :value="Boolean(true)" />
+                        <input type="radio" v-model="course.available" :value="Boolean(true)" />
                         <br><label class="text-xs">open now</label>     
                     </span>
                     <span class="mx-2 text-center pl-2">
-                        <input type="radio" class="" v-model="course.available" :value="Boolean(false)" />
+                        <input type="radio"  v-model="course.available" :value="Boolean(false)" />
                         <br><label class="text-xs">temporary closed</label>
                     </span>
                 </div> 

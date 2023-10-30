@@ -21,7 +21,6 @@
                             <progress class="z-10 w-full h-6 bg-indigo" :value="course.percentage" id="success" max="100"> 32% </progress>
                         </div>
                         <router-link :to="{name :'StudentCourseDetailPage' , params : {student_id : profile.id , course_id : course.course_id , batch_id : course.batch.id}}" class="block w-full py-2 mt-4 text-xl font-semibold text-center text-white border max-sm:py-1 max-sm:text-lg hover:bg-transparent bg-green hover:text-green border-green">Continue</router-link>       
-
                     </div>
                 </div>
             </div>
