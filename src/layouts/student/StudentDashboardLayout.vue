@@ -55,6 +55,11 @@ export default {
           icon : 'personal_video'
         },
         {
+          name: "Assignments",
+          path: "StudentAssignmentPage",
+          icon : 'personal_video'
+        },
+        {
           name: "Achievements",
           path: "StudentProfilePage",
           icon : 'check_circle'

@@ -1,23 +1,24 @@
 <template>
     <div>
-        <h1>{{ course_id }}</h1>
-        <h1>{{ batch_id }}</h1>
+        {{ batch_id }}
+        {{ course_id }}
     </div>
 </template>
 
 <script>
 import ApiService from '@/services/ApiService';
+
     export default {
         data () {
             return {
-                course_id : this.$route.params.course_id,
                 batch_id : this.$route.params.batch_id,
+                course_id : this.$route.params.course_id,
                 assignments : {}
             }
         },
         mounted () {
-            ApiService.get(`students/assignments/${this.course_id}/${this.batch_id}`).then((res) => {
-                console.log(res);
+            ApiService.get(`student/assignments/${this.batch_id}/${this.course_id}`).then((res) => {
+                console.log(res.data);
             }).catch((res) => {
                 console.log(res);
             })
