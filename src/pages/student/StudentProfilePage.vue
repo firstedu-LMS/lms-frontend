@@ -79,7 +79,7 @@ export default {
     };
     },
     mounted() {
-        ApiService.get("student/user").then((res) => {
+        ApiService.get("students/user").then((res) => {
             this.profile = res.data;
             console.log(res.data);
             }).catch((res) => {

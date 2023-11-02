@@ -35,7 +35,7 @@
 
             <!-- Assignments -->
             <AssignmentsView class="mb-12 sm:w-2/3" v-if="showAssignments" />
-            <QuestionsView :lesson_id="lessonIdForQues" class="mb-12 sm:w-2/3" v-if="showQuestions" />
+            <QuestionsView :lesson_id="lessonIdForQues"  class="mb-12 sm:w-2/3" v-if="showQuestions" />
         </div>
     </div>
 </template>
@@ -71,10 +71,10 @@ import QuestionsView from '@/components/student/QuestionsView.vue';
         },
 
         methods : {
-            getLessons () {
-                return ApiService.get(`student/get-lessons-of-week/${this.student_id}/${this.course_id}/${this.batch_id}/${this.week_id}`).then((res) => {
+             getLessons () {
+                 return ApiService.get(`students/get-lessons-of-week/${this.student_id}/${this.course_id}/${this.batch_id}/${this.week_id}`).then((res) => {
                     this.lessons = res.data.data
-                    console.log(this.lessons);
+                    
                 }).catch((res) => {
                     console.log(res);
                 })

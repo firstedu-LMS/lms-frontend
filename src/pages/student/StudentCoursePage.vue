@@ -57,13 +57,13 @@ import filePath from '@/services/public/filePath'
             }
         },
         async mounted(){
-            await ApiService.get('student/user').then((res) => {
+            await ApiService.get('students/user').then((res) => {
                 this.profile = res.data;
                 console.log(this.profile);
             }).catch((res) => {
                 console.log(res);
             })
-            await ApiService.get(`student/course-per-students/${this.profile.id}`).then((res) => {
+            await ApiService.get(`students/course-per-students/${this.profile.id}`).then((res) => {
                 this.course_per_student  = res.data.data
                 console.log(res.data.data);
             }).catch((res) => {
