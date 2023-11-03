@@ -31,14 +31,11 @@
                 </div>
             </div>
         </div>
-        <div class="flex">
-            <button v-if="score" class="py-1 px-3 bg-blue-2 mx-3 flex  items-center text-white my-6">
-            <span class="material-icons-sharp">keyboard_double_arrow_right</span>&nbsp;Next
-            </button>
-            <button v-else  :disabled="loading" class="py-1.5 px-2 bg-blue-2 text-white my-6">Submit</button>
-          
-        </div>
+            <button :disabled="loading" v-if="!score" class="py-1.5 px-2 bg-blue-2 text-white my-6">Submit</button>                  
     </form>
+    <button v-if="score"  class="py-1 px-3 bg-blue-2 mx-3 flex  items-center text-white my-6">
+            <span class="material-icons-sharp">keyboard_double_arrow_right</span>&nbsp;Next
+    </button>
     </div>
 
 </template>
@@ -59,6 +56,9 @@ import ApiService from '@/services/ApiService'
                 },            
                 loading : false
             }
+        },
+        mounted() {
+            this.getQues();
         },
         methods: {
             getQues(){
@@ -89,20 +89,18 @@ import ApiService from '@/services/ApiService'
                 this.submitData.answers = this.answers,
                 this.submitData.trueAnswers = this.trueAnswer,
                 ApiService.post(`students/question/submissions/`,this.submitData).then((res) => {
-                    console.log(res);
                     this.getQues()
+                    console.log(res);
                     this.loading =false
                 }).catch((res) => {
                     console.log(res);
                     this.loading =false
 
                 })
+
             }
         },
 
-        mounted() {
-            this.getQues();
-        },
     }
 </script>
 

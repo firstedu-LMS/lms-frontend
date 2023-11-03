@@ -141,6 +141,7 @@ import filePath from '../../../services/public/filePath';
                   this.loading = false
                 }).catch((res) => {
                     console.log(res);
+                    this.loadig = false
                 })
             },
             deleteQues(id){
