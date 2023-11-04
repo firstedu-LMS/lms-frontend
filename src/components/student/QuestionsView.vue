@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="w-full  bg-blue rounded-full">
-            <div v-if="score" class="text-center py-1  text-white bg-gray rounded-full" :class="`w-[${score}]`">
+        <div class="w-full  bg-white rounded-full">
+            <div v-if="score" class="text-center py-1  text-white bg-oragne rounded-full" :class="`w-[${score}]`">
                 {{ score }}
             </div>
             <div v-else class="text-center py-1  text-white rounded-full">
