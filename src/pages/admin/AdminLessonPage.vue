@@ -13,15 +13,15 @@
                  <span class="text-blue-2" v-if="heading.lesson">{{ heading.lesson }}</span>
             </h1>
             <div v-if="!show" class="my-auto mr-6">
-                <button @click="showLessonsTable" :class="lessonsTable ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'" class="px-6 py-1 cursor-pointer rounded-l-md">table</button>
-                <button @click="showLessonForm" :class="createForm ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'" class="px-6 py-1 cursor-pointer rounded-r-md">+ new</button>
+                <button @click="setActive('show')" :class="active == 'show' ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'" class="px-6 py-1 cursor-pointer rounded-l-md">table</button>
+                <button @click="setActive('create')" :class="active == 'create' ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'" class="px-6 py-1 cursor-pointer rounded-r-md">+ new</button>
             </div>
         </div>    
         <div>
-            <LessonsView @setHeading="setHeading" @showDetails="showDetails" v-if="lessonsTable"/>
-            <CreateLesson @reload="showLessonsTable" v-if="createForm"/>
-            <ShowDetails @setLesson="setLesson" v-if="show" :id="idForEditAndDetail" />
-            <EditLesson v-if="editForm" :id="idForEditAndDetail"/>
+            <CreateLesson @reload="setActive" v-if="active == 'create'"/>
+            <ShowDetails @setLesson="setLesson" v-else-if="active == 'details'" :id="idForEditAndDetail" />
+            <EditLesson v-else-if="active == 'edit'" :id="idForEditAndDetail"/>
+            <LessonsView @setHeading="setHeading" @showDetails="showDetails" v-else/>
         </div>
     </div>
 </template>
@@ -37,11 +37,8 @@ import EditLesson from '@/components/admin/lessons/EditLesson.vue'
         },
         data() {
             return {
-                lessonsTable : true,
                 heading : {},
-                createForm : false,
-                editForm : false,
-                show : false,
+                active : 'show',
                 idForEditAndDetail : null,
 
             }
@@ -54,21 +51,14 @@ import EditLesson from '@/components/admin/lessons/EditLesson.vue'
                 this.heading.lesson = lesson;
             },
             showDetails(id) {
-                this.lessonsTable = this.createForm = this.editForm = false
-                this.show = true;
+                this.setActive('details');
                 this.idForEditAndDetail = id;
             },
-            showLessonForm(){
-                this.lessonsTable = this.editForm = this.show = false
-                this.createForm = true
-            },
-            showLessonsTable(){
-                this.createForm = this.editForm = this.show = false
-                this.lessonsTable = true
+            setActive(component) {
+                this.active = component;
             },
             showEditForm(id){
-                this.lessonsTable = this.createForm = this.show = false
-                this.editForm = true
+                this.setActive('edit');
                 this.idForEditAndDetail = id
             }
         },

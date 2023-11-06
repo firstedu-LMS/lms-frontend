@@ -93,7 +93,7 @@ import ApiService from '@/services/ApiService';
             editBatch(){
                 this.loading = true
                 ApiService.patch(`admin/batches/${this.batch_id}` , this.batch).then(() => {
-                    this.$emit('reload');
+                    this.$emit('reload' , 'show');
                     this.loading = false
                 }).catch((res) => {
                     this.loading = false
