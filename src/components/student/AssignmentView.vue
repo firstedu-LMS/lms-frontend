@@ -17,7 +17,7 @@ import ApiService from '@/services/ApiService';
             }
         },
         mounted () {
-            ApiService.get(`student/assignments/${this.batch_id}/${this.course_id}`).then((res) => {
+            ApiService.get(`student/assignments/${this.course_id}/${this.batch_id}`).then((res) => {
                 console.log(res.data);
             }).catch((res) => {
                 console.log(res);

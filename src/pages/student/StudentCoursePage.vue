@@ -1,14 +1,14 @@
 <template>
     <div>
-        <div class="flex p-4">
-            <button :class="progress ? 'bg-[#89CFF0]' : ''" @click="showProgress" class="p-2 rounded-b-none rounded-tr-lg sm:font-bold max-sm:text-sm">IN PROGRESS
-                <span class="px-2 py-1 mx-1 bg-white rounded-full" >{{ profile.id_progess_course_count }}</span>
+        <div class="flex p-1 sm:p-4">
+            <button :class="progress ? 'bg-[#89CFF0]' : ''" @click="showProgress" class="p-1 rounded-b-none rounded-tr-lg sm:font-bold max-sm:text-sm">IN PROGRESS
+                <span class="px-2 py-1 mx-1 bg-white rounded-full" >{{ profile.in_progess_course_count }}</span>
             </button>
             <button :class="completed ? 'bg-[#89CFF0]' : ''" @click="showCompleted" class="p-2 rounded-b-none rounded-tr-lg sm:font-bold max-sm:text-sm">COMPLETED
                 <span class="px-2 py-1 mx-1 bg-white rounded-full">{{ profile.course_completion_count }}</span>
             </button>
         </div>
-        <div class="p-10">
+        <div class="px-1 py-8 sm:p-10">
             <router-link :to="{name : 'HC_Page'}" class="border border-blue-2 text-blue-2 px-3 py-1.5 font-bold hover:bg-blue-2 hover:text-white">DISCOVER COURSES</router-link>
             <div v-if="progress">
                 <div class="my-12 sm:flex"  v-for="course in course_per_student" :key="course">
@@ -18,9 +18,9 @@
                         <h3>{{ course.batch.name }}</h3>
                         <div class="relative flex items-center">
                             <label class="absolute z-50 text-white left-4" for="success">{{ course.percentage }}%</label>
-                            <progress class="z-10 w-full h-6 bg-indigo" :value="course.percentage" id="success" max="100"> 32% </progress>
+                            <progress class="z-10 w-full h-6 my-2 bg-indigo" :value="course.percentage" id="success" max="100"> 32% </progress>
                         </div>
-                        <router-link :to="{name :'StudentCourseDetailPage' , params : {student_id : profile.id , course_id : course.course_id , batch_id : course.batch.id}}" class="block w-full py-2  text-xl font-semibold text-center text-white border max-sm:py-1 max-sm:text-lg hover:bg-transparent bg-green hover:text-green border-green">Continue</router-link>       
+                        <router-link :to="{name :'StudentCourseDetailPage' , params : {student_id : profile.id , course_id : course.course_id , batch_id : course.batch.id}}" class="block w-full py-2 text-xl font-semibold text-center text-white border max-sm:py-1 max-sm:text-lg hover:bg-transparent bg-green hover:text-green border-green">Continue</router-link>       
                     </div>
                 </div>
             </div>
