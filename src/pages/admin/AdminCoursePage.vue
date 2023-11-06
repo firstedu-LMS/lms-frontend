@@ -21,7 +21,7 @@ import CreateCourse from '@/components/admin/courses/CreateCourse.vue'
 import EditCourse from '@/components/admin/courses/EditCourse.vue'
 export default {
     components : {
-        CoursesView,CreateCourse,EditCourse
+        CoursesView, CreateCourse, EditCourse
     },
     data () {
         return {
@@ -32,7 +32,6 @@ export default {
     methods : {
         setActive (component) {
             this.active = component;
-            console.log(this.active , 'hello');
         },
         showEdit(id) {
             this.idToEdit = id;
