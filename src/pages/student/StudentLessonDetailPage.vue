@@ -17,7 +17,7 @@
                         </button>
                         <span v-if="!lesson.locked" style="color: red; font-size: 18px;margin-left: 7px; margin-top: 3px;" class="material-icons-sharp">lock</span>
                     </div>
-                    <button class="w-full mt-3 text-left">Questions</button>
+                    <button @click="showQuestionsFun(lesson.id)" class="w-full mt-3 text-left">Questions</button>
                 </li>
             </ul>
 
@@ -33,7 +33,6 @@
                 <button @click="showQuestionsFun(active_lesson.id)" class="bg-blue-2 px-4 py-1.5 text-white">Go to questions &raquo;</button>
             </div>
 
-            <!-- Assignments -->
             <AssignmentsView class="mb-12 sm:w-2/3" v-if="showAssignments" />
             <QuestionsView @nextLesson="nextLesson" @reload="getLessons"  :lesson_id="lessonIdForQues"  class="mb-12 sm:w-2/3" v-if="showQuestions" />
         </div>
@@ -58,7 +57,7 @@ import QuestionsView from '@/components/student/QuestionsView.vue';
                 week_id : this.$route.params.week_id,
                 lessons : [],
                 active_lesson : {},
-                showLesson : false,
+                showLesson : true,
                 showAssignments : false,
                 showQuestions : false,
                 lessonIdForQues : 0,
@@ -67,17 +66,13 @@ import QuestionsView from '@/components/student/QuestionsView.vue';
         async mounted () {
             await this.getLessons();
             this.active_lesson = this.lessons[0]
-            this.showAssignments = true;
         },
 
         methods : {
-             getLessons () {
+             async getLessons () {
                  return ApiService.get(`students/get-lessons-of-week/${this.student_id}/${this.course_id}/${this.batch_id}/${this.week_id}`).then((res) => {
                     this.lessons = res.data.data
-                    // this.lessonIdArray = res.data.data.map((lesson)=>{
-                    //     return lesson.id
-                    // });
-                    
+                    console.log(this.lessons);
                 }).catch((res) => {
                     console.log(res);
                 })
@@ -109,6 +104,9 @@ import QuestionsView from '@/components/student/QuestionsView.vue';
                 this.lessons.forEach((lesson , index) => {
                     if (lesson.id == id) {
                         this.changeActiveLesson(this.lessons[index + 1])
+                    } else {
+                        this.showQuestions = false;
+                        this.showLesson = true;
                     }
                 })
             }

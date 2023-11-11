@@ -5,7 +5,7 @@
         <span class="material-icons-outlined">menu</span>
       </button>
       <ul>
-        <li class="my-5" v-for="item in sideItems" :key="item.name">
+        <li :title="item.name" class="my-5" v-for="item in sideItems" :key="item.name">
           <router-link :to="{name : item.path}" class="flex items-center">
             <span class="material-icons-sharp" style="margin-right: 8px; background-color: rgb(249 250 251 / var(--tw-bg-opacity));z-index: 1; padding-left: 15px;">{{ item.icon }}</span>
             <Transition>
@@ -14,7 +14,7 @@
           </router-link>
         </li>
         <li class="border-t border-t-gray-3">
-          <button @click="logout" class="flex items-center  my-5 text-red">
+          <button @click="logout" class="flex items-center my-5 text-red">
               <span  class="material-icons-sharp" style="margin-right: 8px; background-color: rgb(249 250 251 / var(--tw-bg-opacity));z-index: 1; padding-left: 15px;">logout</span>
             <Transition>
               <span v-if="sideBar" style="z-index: 0.5;">Logout</span>
@@ -26,7 +26,9 @@
  <!-- :class="sideBar ? 'sm:w-5/6 w-screen' : 'w-[calc(100vw_-_60px)]'" -->
     <div  :class="sideBar ? 'sm:w-5/6 w-[calc(100vw_-_60px)]' : 'w-[calc(100vw_-_60px)]'"  class="transition-all ease-in-out">
       <nav class="sticky top-0 flex justify-end w-full p-2 text-white shadow-lg bg-green">
-        <span class="material-icons-sharp">home</span>
+        <router-link :to="{name : 'HP_Page'}">
+          <span class="material-icons-sharp">home</span>
+        </router-link>
         <span style="margin: 0px 12px;" class="material-icons-sharp">home</span>
       </nav>
       <RouterView />
@@ -57,7 +59,7 @@ export default {
         {
           name: "Assignments",
           path: "StudentAssignmentPage",
-          icon : 'personal_video'
+          icon : 'assignment'
         },
         {
           name: "Achievements",
