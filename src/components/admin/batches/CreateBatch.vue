@@ -101,7 +101,7 @@ import SuccessDialog from '../../dialog/SuccessDialog.vue'
         },
         methods : {
             reload(){
-                this.$emit('reload')
+                this.$emit('reload' , 'show')
             },
             createBatch(){
                 this.batch.course_id = this.$props.course_id;

@@ -6,7 +6,7 @@
         <h1 v-if="weeks.length && weeks[0].course" class="my-4 text-2xl font-bold underline">{{ weeks[0].course.name }}</h1>
         <ul>
             <li class="px-8 py-3 text-lg font-bold border border-gray-2">Week Numbers</li>
-            <li class="px-8 hover:text-blue-2 py-3 border border-t-0 border-gray-2" v-for="week in weeks" :key="week.id">
+            <li class="px-8 py-3 border border-t-0 hover:text-blue-2 border-gray-2" v-for="week in weeks" :key="week.id">
                 <router-link v-if="week.locked" :to="{name : 'StudentLessonDetailPage' , params : {student_id : student_id , course_id : course_id , batch_id : batch_id , week_id : week.id}}" class="flex items-center">
                     {{ week.week_number }}
                 </router-link>
@@ -36,7 +36,7 @@ import ApiService from '@/services/ApiService';
         },
         methods : {
             getWeeks() {
-                ApiService.get(`student/get-weeks-of-course/${this.student_id}/${this.course_id}/${this.batch_id}`).then((res) => {
+                ApiService.get(`students/get-weeks-of-course/${this.student_id}/${this.course_id}/${this.batch_id}`).then((res) => {
                     this.weeks = res.data.data;
                     console.log(this.weeks);
                 }).catch((res) => {

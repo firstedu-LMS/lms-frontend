@@ -7,15 +7,15 @@
                 <span class="text-blue-2">{{ course.name }}</span>
             </h1>
             <div class="my-auto mr-6">
-                <span @click="showTable"  :class="batchTable ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'" class="px-6 py-1.5 cursor-pointer rounded-l-md">table</span>
-                <span @click="showCreate"  :class="createForm ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'" class="px-6 py-1.5 cursor-pointer rounded-r-md">+ new</span>
+                <span @click="setActive('show')"  :class="active== 'show' ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'" class="px-6 py-1.5 cursor-pointer rounded-l-md">table</span>
+                <span @click="setActive('create')"  :class="active == 'create' ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'" class="px-6 py-1.5 cursor-pointer rounded-r-md">+ new</span>
             </div>
         </div>
 
         <div>
-            <BatchesView @course="setCourse"  @edit="showEdit" v-if="batchTable" :course_id="courseId" />
-            <CreateBatch @reload="showTable" v-if="createForm" :course_id="courseId" />
-            <EditBatch @reload="showTable" v-if="editForm" :batch_id="idForEdit" />
+            <CreateBatch @reload="setActive" v-if="active == 'create'" :course_id="courseId" />
+            <EditBatch @reload="setActive" v-else-if="active == 'edit'" :batch_id="idForEdit" />
+            <BatchesView @course="setCourse"  @edit="showEdit" v-else />
         </div>
 
     </div>
@@ -33,9 +33,7 @@ import EditBatch from '@/components/admin/batches/EditBatch.vue'
             return {
                 courseId : this.$route.params.course_id,
                 course : '',
-                batchTable : true,
-                createForm : false,
-                editForm : false,
+                active : 'show',
                 idForEdit : ''
             }
         },
@@ -43,22 +41,12 @@ import EditBatch from '@/components/admin/batches/EditBatch.vue'
             setCourse(course) {
                 this.course = course
             },
-            showCreate() {
-                this.batchTable = false;
-                this.createForm = true;
-                this.editForm = false;
-            },
-            showTable(){
-                this.batchTable = true;
-                this.createForm = false;
-                this.editForm = false;
+            setActive(component) {
+                this.active = component;
             },
             showEdit(id){
-                console.log(id);
                 this.idForEdit = id;
-                this.batchTable = false;
-                this.createForm = false;
-                this.editForm = true;
+                this.active = 'edit';
             }
         }
     }

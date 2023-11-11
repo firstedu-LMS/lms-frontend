@@ -10,12 +10,12 @@
         <form id="form" class="z-30 flex flex-wrap justify-between mx-5" @submit.prevent="createCourse" >
                 <div class="w-[30%] my-8">
                     <label class="text-sm font-semibold" for="name">Name</label>
-                    <input v-model="course.name" type="text" class="px-2 w-[60%] mx-5 py-1 border-b outline-none">
+                    <input v-model="course.name" type="text" class="w-3/5 px-2 py-1 mx-5 border-b outline-none">
                     <p v-if="errors.name" class="py-1 mx-12 text-red">{{ errors.name[0] }}</p>
                 </div>
                 <div class="w-[30%] my-8">
                     <label class="text-sm font-semibold" for="fee">Fee</label>
-                    <input v-model="course.fee" type="number" class=" w-[60%] mx-2 px-2 py-1 border-b outline-none">
+                    <input v-model="course.fee" type="number" class="w-3/5 px-2 py-1 mx-2 border-b outline-none ">
                     <span class="text-sm font-semibold">MMK</span>
                     <p v-if="errors.fee" class="py-1 mx-12 text-red">{{ errors.fee[0] }}</p>
                 </div>
@@ -33,7 +33,7 @@
             <div class="flex w-full">
                 <div class="w-[30%] my-8 mx-2">
                 <label class="text-sm font-semibold" for="age">Age</label>
-                <input v-model="course.age" type="text" class=" w-[60%] mx-5 px-2 py-1 border-b outline-none">
+                <input v-model="course.age" type="text" class="w-3/5 px-2 py-1 mx-5 border-b outline-none ">
                 <p v-if="errors.age" class="py-1 mx-12 text-red">{{ errors.age[0] }}</p>
 
             </div>
@@ -53,22 +53,18 @@
                 <label class="font-semibold text-[12px]" for="description">Description</label>
                 <quill-editor class="w-full shadow-md shadow-black" v-model:content="course.description" theme="snow" toolbar="full" contentType="html"></quill-editor>
                 <p v-if="errors.description" class="py-1 mx-12 text-red">{{ errors.description[0] }}</p>
-
             </div>
             <div class="w-[30%] my-10 mx-5">
                 <label for="image" class="text-sm font-bold">Image</label>
                 <input @change="saveImage" type="file" class="w-[80%] px-2 py-1 border-b outline-none file:border-0 file:text-sm">
                 <p v-if="errors.image_id" class="py-1 mx-10 text-red">{{ errors.image_id[0] }}</p>
-
-
             </div>
-
-            
-            <div class="w-full ml-5 my-2">
-                <img v-if="previewImage" :src="previewImage" style="height: 300px;"  alt="">
+  
+            <div class="w-1/2 my-2">
+                <img v-if="previewImage" :src="previewImage" style="height: 150px;"  alt="hello">
             </div>
             
-            <div class="flex w-full  my-2">
+            <div class="flex w-full my-2">
                 <button :disabled="loading" class="px-3 py-1 mx-3 bg-white shadow-lg text-gray">Submit</button>
             </div>
 
@@ -107,23 +103,10 @@ import SuccessDialog from '@/components/dialog/SuccessDialog.vue'
                 errors : {}
             }
         },
-        watch: {
-            // whenever question changes, this function will run
-            created(newCreated) {
-                if (newCreated) {
-                    document.getElementById('nav').classList.add('blur-[3px]')
-                    document.getElementById('side').classList.add('blur-[3px]')
-                    document.getElementById('form').classList.add('blur-[3px]')
-                }
-            }
-        },
 
         methods : {
             reload() {
-                document.getElementById('nav').classList.remove('blur-[3px]')
-                document.getElementById('side').classList.remove('blur-[3px]')
-                document.getElementById('form').classList.remove('blur-[3px]')
-                this.$emit('reload');
+                this.$emit('reload' , 'show');
             },
             saveImage(e) {
                 let file = e.target.files[0];

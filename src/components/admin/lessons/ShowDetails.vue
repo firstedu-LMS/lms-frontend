@@ -121,7 +121,7 @@ import filePath from '../../../services/public/filePath';
         },
         methods : {
             getQuestions () {
-                ApiService.get(`admin/questions`).then((res) => {
+                ApiService.get(`admin/questions/all/${this.id}`).then((res) => {
                     this.questions = res.data.data
                     console.log(res.data.data);
                 }).catch((res) => {
@@ -141,6 +141,7 @@ import filePath from '../../../services/public/filePath';
                   this.loading = false
                 }).catch((res) => {
                     console.log(res);
+                    this.loadig = false
                 })
             },
             deleteQues(id){
@@ -156,7 +157,6 @@ import filePath from '../../../services/public/filePath';
         mounted () {
             ApiService.get(`admin/lessons/${this.id}`).then((res) => {
                 this.lesson = res.data.data;
-                console.log(this.lesson);
                 this.$emit('setLesson' , this.lesson.name)
             }).catch((res) => {
                 console.log(res);

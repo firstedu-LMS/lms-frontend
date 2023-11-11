@@ -3,14 +3,14 @@
         <div class="flex justify-between text-white ">
             <h1 class="p-2 text-xl font-bold text-gray">Courses</h1>
             <div class="my-auto mr-6">
-                <button @click="showTable" class="px-6 py-1 font-semibold rounded-l-md"  :class="courseTable ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'">table</button>
-                <button @click="showCreate" class="px-6 py-1 font-semibold rounded-r-md" :class="courseCreate ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg' ">+ new</button>
+                <button @click="setActive('show')" class="px-6 py-1 font-semibold rounded-l-md"  :class="active == 'show' ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg'">table</button>
+                <button @click="setActive('create')" class="px-6 py-1 font-semibold rounded-r-md" :class="active == 'create' ? 'bg-cyan shadow-inner' : 'bg-white text-black  shadow-lg' ">+ new</button>
             </div>
         </div>
         <div>
-            <CoursesView @edit="showEdit" v-if="courseTable" />
-            <CreateCourse @reload="showTable" v-if="courseCreate" />
-            <EditCourse @reload="showTable" :id="idToEdit"  v-if="courseEdit" />
+            <CreateCourse @reload="setActive" v-if="active == 'create'" />
+            <EditCourse @reload="setActive" :id="idToEdit"  v-else-if="active == 'edit'" />
+            <CoursesView @edit="showEdit" v-else />
         </div>
     </div>
 </template>
@@ -21,32 +21,21 @@ import CreateCourse from '@/components/admin/courses/CreateCourse.vue'
 import EditCourse from '@/components/admin/courses/EditCourse.vue'
 export default {
     components : {
-        CoursesView,CreateCourse,EditCourse
+        CoursesView, CreateCourse, EditCourse
     },
     data () {
         return {
-            courseTable : true,
-            courseCreate : false,
-            courseEdit : false,
+            active : 'show',
             idToEdit : null
         }
     },
     methods : {
-        showTable() {
-            this.courseTable = true;
-            this.courseCreate = false;
-            this.courseEdit = false;
-        },
-        showCreate() {
-            this.courseTable = false;
-            this.courseCreate = true;
-            this.courseEdit = false;
+        setActive (component) {
+            this.active = component;
         },
         showEdit(id) {
             this.idToEdit = id;
-            this.courseTable = false;
-            this.courseCreate = false;
-            this.courseEdit = true;
+            this.setActive('edit')
         }
 
     }

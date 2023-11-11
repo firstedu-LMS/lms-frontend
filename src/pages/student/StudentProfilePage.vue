@@ -12,9 +12,9 @@
     </div>
     <div class="w-full sm:flex justify-evenly bg-[#f2efef]">
         <div class="w-full sm:w-[45%] px-2 pt-4 pb-8">
-            <h1 class="text-xl underline text-blue-2">PERSONAL INFORMATIONS</h1>
+            <h1 class="font-semibold underline text-blue-2">PERSONAL INFORMATIONS</h1>
             <button @click="editing = true" v-if="!editing" class="float-right text-blue-2">edit</button>
-            <form>
+            <form class="text-sm">
                 <button v-if="editing" class="float-right ml-4 text-blue-2">save</button>
                 <span v-if="editing" @click="editing = false" class="float-right cursor-pointer text-blue-2">cancel</span>
                 <div :class="classes.inputGroups">
@@ -41,9 +41,9 @@
             </form>
         </div>
         <div class="w-full sm:w-[45%] px-2 pt-4 pb-8">
-            <h1 class="text-xl underline text-blue-2">ACTIVITIES</h1>
+            <h1 class="font-semibold underline text-blue-2">ACTIVITIES</h1>
             <button class="float-right text-[#f2efef]">.</button>
-            <div>
+            <div class="text-sm">
                 <div :class="classes.inputGroups">
                     <p :class="classes.labels">IN PROGRESS COURSES</p>
                     <p :class="classes.inputs" class="text-center">{{ profile.in_progress_course_count }}</p>
@@ -79,9 +79,8 @@ export default {
     };
     },
     mounted() {
-        ApiService.get("student/user").then((res) => {
+        ApiService.get("students/user").then((res) => {
             this.profile = res.data;
-            console.log(res.data);
             }).catch((res) => {
             console.log(res);
             });

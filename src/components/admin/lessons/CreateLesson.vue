@@ -58,7 +58,7 @@ import SuccessDialog from '../../dialog/SuccessDialog.vue'
         },
         methods : {
             reload () {
-                this.$emit('reload');
+                this.$emit('reload' , 'show');
             },
             saveVideo(e){
                 if (e.target.files) {
