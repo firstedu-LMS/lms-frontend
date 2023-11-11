@@ -35,7 +35,7 @@
 
             <!-- Assignments -->
             <AssignmentsView class="mb-12 sm:w-2/3" v-if="showAssignments" />
-            <QuestionsView @reload="getLessons"  :lesson_id="lessonIdForQues"  class="mb-12 sm:w-2/3" v-if="showQuestions" />
+            <QuestionsView @nextLesson="nextLesson" @reload="getLessons"  :lesson_id="lessonIdForQues"  class="mb-12 sm:w-2/3" v-if="showQuestions" />
         </div>
     </div>
 </template>
@@ -104,6 +104,13 @@ import QuestionsView from '@/components/student/QuestionsView.vue';
                 this.showAssignments = this.showLesson = false;
                 this.showQuestions = true;
                 this.lessonIdForQues = id;
+            },
+            nextLesson(id) {
+                this.lessons.forEach((lesson , index) => {
+                    if (lesson.id == id) {
+                        this.changeActiveLesson(this.lessons[index + 1])
+                    }
+                })
             }
         }
     }

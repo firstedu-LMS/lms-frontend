@@ -1,20 +1,20 @@
 <template>
     <div>
-        <div class="w-full  bg-white rounded-md">
-            <div v-if="score" class="text-center py-1  text-white bg-oragne rounded-md" :class="`w-[${score}]`">
+        <div class="w-full bg-white rounded-md">
+            <div v-if="score" class="py-1 text-center text-white rounded-md bg-oragne" :class="`w-[${score}]`">
                 {{ score }}
             </div>
-            <div v-else class="text-center py-1  text-white rounded-full">
-                33%
+            <div v-else class="py-1 text-center rounded-full">
+                0%
             </div>
         </div>
 
-        <form  @submit.prevent="submitQuestion" action="" class="px-3">
+        <form  @submit.prevent="submitQuestion" class="px-3">
         <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
             loading . . .
         </div>
         <div  v-for="(question,index) in questions" :key="question" class="border-b">
-            <h1 class="font-semibold my-4">Question - {{ index + 1 }}</h1>
+            <h1 class="my-4 font-semibold">Question - {{ index + 1 }}</h1>
             <h1 class="my-2">{{ question.title }}</h1>
             <div class="my-3">
                 <div>
@@ -33,7 +33,7 @@
         </div>
             <button :disabled="loading" v-if="!score" class="py-1.5 px-2 bg-blue-2 text-white my-6">Submit</button>                  
     </form>
-    <button v-if="score" class="py-1 px-3 bg-blue-2 mx-3 flex  items-center text-white my-6">
+    <button @click="next" v-if="score" class="flex items-center px-3 py-1 mx-3 my-6 text-white bg-blue-2">
             <span class="material-icons-sharp">keyboard_double_arrow_right</span>&nbsp;Next
     </button>
     </div>
@@ -100,11 +100,12 @@ import ApiService from '@/services/ApiService'
                     this.loading =false
                 }).catch((res) => {
                     console.log(res);
-
                 })
-
             },
 
+            next() {
+                this.$emit('nextLesson' , this.lesson_id)
+            }
             
 
         },
