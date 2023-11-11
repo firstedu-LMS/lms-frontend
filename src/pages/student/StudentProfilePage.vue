@@ -1,8 +1,11 @@
 <template>
   <div class="text-gray-1">
-    <div class="flex flex-wrap items-center justify-center py-12">
+    <div v-if="previewImg" @click.self="previewImg = !previewImg" class="fixed top-0 left-0 z-50 w-screen h-screen p-4 bg-opacity-90 bg-gray-2">
+        <img :src="filePath.imagePath(profile.image)" class="absolute w-11/12 rounded sm:w-1/3 top-1/2 left-1/2" style="transform: translate(-50% , -50%);" alt="">
+    </div>
+    <div class="z-10 flex flex-wrap items-center justify-center py-12">
         <div class="flex justify-center w-full sm:w-[45%]">
-            <img :src="filePath.imagePath(profile.image)" class="w-[240px] h-[240px] rounded-full border-[0.4rem] border-green" alt="">
+            <img @click="previewImg = true" :src="filePath.imagePath(profile.image)" class="cursor-pointer w-[240px] h-[240px] rounded-full border-[0.4rem] border-green" alt="">
         </div>
         <div class="w-full sm:w-[45%] sm:p-0 p-6">
             <h1 class="text-3xl font-semibold">{{ profile.name }}</h1>
@@ -46,7 +49,7 @@
             <div class="text-sm">
                 <div :class="classes.inputGroups">
                     <p :class="classes.labels">IN PROGRESS COURSES</p>
-                    <p :class="classes.inputs" class="text-center">{{ profile.in_progress_course_count }}</p>
+                    <p :class="classes.inputs" class="text-center">{{ profile.in_progess_course_count }}</p>
                 </div>
                 <div :class="classes.inputGroups">
                     <p :class="classes.labels">COMPLETED COURSES</p>
@@ -76,15 +79,17 @@ export default {
         editing : false,
         profile: "",
         filePath: filePath,
+        previewImg : false,
     };
     },
     mounted() {
         ApiService.get("students/user").then((res) => {
             this.profile = res.data;
+            console.log(this.profile);
             }).catch((res) => {
             console.log(res);
             });
-    },
+    }
 };
 </script>
 
