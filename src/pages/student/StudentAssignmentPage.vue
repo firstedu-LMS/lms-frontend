@@ -24,28 +24,30 @@
             <div  class="sm:flex justify-between w-full my-3 py-2 text-blue-2 border-b border-b-blue-2" v-else>
                 <h1>{{ assignment.title }}</h1>
                 <div class="flex sm:py-0 py-3">
-                    <router-link :to="{name : 'StudentDownloadPdfPage' , params :{id : assignment.id}}" class="py-1 px-4 bg-blue-2 rounded-xl mr-4 text-white">{{ assignment.test_date }}/{{ assignment.test_time }}</router-link>
+                    <router-link :to="{name : 'StudentAssignmentsPage' , params :{id : assignment.id}}" class="py-1 px-4 bg-blue-2 rounded-xl mr-4 text-white">{{ assignment.test_date }}/{{ assignment.test_time }}</router-link>
                     <span class="material-icons-sharp py-1 px-1 rounded-full bg-blue-2 text-white">mobile_friendly</span>
                 </div>
             </div>          
         </div>
     </div>
 </template>
+
 <script>
 import ApiService from '@/services/ApiService';
 
     export default {
         data () {
             return {
+                id : this.$route.params.id,
                 course_id : this.$route.params.course_id,
                 batch_id : this.$route.params.batch_id,
-                assignments : {}
+                assignments : {},
             }
         },
         mounted () {
-            ApiService.get(`students/assignments/`).then((res) => {
-                this.assignments = res.data.data;
-                console.log(res.data.data);
+            ApiService.get(`students/assignment/${this.course_id}/${this.batch_id}`).then((res) => {
+                console.log(res.data);
+                this.assignments = res.data.data
             }).catch((res) => {
                 console.log(res);
             })
@@ -53,6 +55,6 @@ import ApiService from '@/services/ApiService';
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>
