@@ -1,17 +1,15 @@
 <template>
 <div>
     <SuccessDialog :message="`Assignment has been created successfully.`" @reload="reload" v-if="created" />
-
+    <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+            loading . . .
+    </div>
     <form @submit.prevent="createAssignment" class="flex flex-wrap justify-between p-4 text-sm text-gray">
         <h1 class="w-full mb-6 text-xl font-bold">New</h1>
         <div class="w-1/2 mb-16">
             <label class="inline-block font-semibold w-[15%]" for="title">Title</label>
             <input v-model="assignment.title" type="text" class="w-1/2 px-1 bg-transparent border-b outline-none">
             <p v-if="errors.title" class="py-1 mx-12 text-red">{{ errors.title[0] }}</p>
-
-        </div>
-        <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
-            loading . . .
         </div>
         <div class="w-1/2 mb-16">
             <label class="inline-block font-semibold w-[15%]" for="test_date">Test Date</label>
@@ -27,7 +25,7 @@
         </div>
         <div class="w-1/2 mb-16">
             <label class="inline-block font-semibold w-[15%]" for="test_date">File</label>
-            <input @change="saveFile" type="file" class="w-1/2 px-1 border-b outline-none file:bg-transparent file:hidden ">
+            <input accept=".pdf" @change="saveFile" type="file" class="w-1/2 px-1 border-b outline-none file:bg-transparent file:hidden ">
             <p v-if="errors.file_id" class="py-1 mx-12 text-red">{{ errors.file_id[0] }}</p>
             <p v-if="errors.assignment" class="py-1 mx-12 text-red">{{ errors.assignment[0] }}</p>
 

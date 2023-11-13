@@ -1,60 +1,77 @@
 <template>
     <div>
+        <div v-if="assignment.file && assignment.file.file" class="flex justify-between px-1 m-2 sm:m-8 sm:px-6 bg-gray-2">
+            <img class="w-12 sm:w-16" src="/images/layout/pdf-svgrepo-com.svg" alt="">
+            <p class="hidden my-auto font-bold sm:block">Download Your Assignments Paper</p>
+            <a target="_blank" :download="filePath.cvPath(assignment.file.file)" :href="filePath.cvPath(assignment.file.file)" class="px-2 py-1 my-auto font-bold text-black bg-white h-1/2 sm:py-2 sm:px-3">Download PDF</a>
+        </div>
+        <div class="px-2 sm:px-8">
+            <h1 class="text-xl font-bold">{{ assignment.title }}</h1>
+            <h1 class="py-4 font-bold">Agenda</h1>
+            <p v-html="assignment.agenda"></p>
+            <h1 class="pt-8 font-bold">Due Date</h1>
+            <p class="py-3 ">{{ assignment.test_date }}//{{ assignment.test_time }}</p>
+        </div>
+        <div class="px-2 py-1 mx-2 mt-8 font-bold text-center sm:mx-8 bg-gray-2 sm:py-3 sm:px-6 sm:w-1/3">
+            <button @click="FileUpload">Upload Your Assignment Paper (pdf file only)</button>
+            <input @change="InputFileUpload" class="hidden" ref="Upload" type="file">
+        </div>
         <div class="flex">
-            <router-link to="/">
-                <span style="font-size: 30px ; font-weight: 300; margin-top : 15px; margin-left: 20px;" class="material-icons-sharp">arrow_back</span>
-            </router-link>
-            <h1 class="text-xl w-32 font-bold my-4 mx-4 border-b-2">Assignments</h1>
+            <img class="mt-2 ml-2 w-14 sm:ml-8"  src="/images/layout/pdf-svgrepo-com.svg" alt="">
+            <p class="mx-3 my-2">{{ this.FileName }}</p>
         </div>
-        <div  v-for="assignment in  assignments" :key="assignment.id" class="sm:mx-16 mx-2 my-3 py-1.5">
-            <div class="sm:flex justify-between w-full my-3 py-2 text-green border-b border-b-green" v-if="assignment.finish">
-                <h1>{{ assignment.title }}</h1>
-                <div class="flex sm:py-0 py-3">
-                    <button class="py-1 px-4 bg-green rounded-xl mr-4 text-white">{{ assignment.test_date }}/{{ assignment.test_time }}</button>
-                    <span class="material-icons-sharp py-1 px-1 rounded-full bg-green text-white">task_alt</span>
-                </div>
-            </div> 
-            <div class="sm:flex justify-between w-full my-3 py-2 text-red border-b border-b-red" v-else-if="assignment.over_test_date">
-                <h1>{{ assignment.title }}</h1>
-                <div class="flex sm:py-0 py-3">
-                    <button class="py-1 px-4 bg-red rounded-xl mr-4 text-white" disabled>{{ assignment.test_date }}/{{ assignment.test_time }}</button>
-                    <span class="material-icons-sharp py-1 px-1 rounded-full bg-red text-white">highlight_off</span>
-                </div>
-            </div>
-            <div  class="sm:flex justify-between w-full my-3 py-2 text-blue-2 border-b border-b-blue-2" v-else>
-                <h1>{{ assignment.title }}</h1>
-                <div class="flex sm:py-0 py-3">
-                    <router-link :to="{name : 'StudentAssignmentsPage' , params :{id : assignment.id}}" class="py-1 px-4 bg-blue-2 rounded-xl mr-4 text-white">{{ assignment.test_date }}/{{ assignment.test_time }}</router-link>
-                    <span class="material-icons-sharp py-1 px-1 rounded-full bg-blue-2 text-white">mobile_friendly</span>
-                </div>
-            </div>          
-        </div>
+        <button @click="UploadPdf" class="px-4 mx-2 my-3 text-white rounded-lg bg-blue-2 sm:mx-8">Upload</button>
     </div>
 </template>
 
 <script>
 import ApiService from '@/services/ApiService';
-
+import filePath from '../../services/public/filePath';
     export default {
         data () {
             return {
+                filePath : filePath,
                 id : this.$route.params.id,
-                course_id : this.$route.params.course_id,
-                batch_id : this.$route.params.batch_id,
-                assignments : {},
+                assignment : {},
+                submission : {},
+                FileName : ''
             }
         },
         mounted () {
-            ApiService.get(`students/assignment/${this.course_id}/${this.batch_id}`).then((res) => {
-                console.log(res.data);
-                this.assignments = res.data.data
+            ApiService.get(`students/assignments/${this.id}`).then((res) => {
+                this.assignment = res.data.data;
+                console.log(res.data.data);
             }).catch((res) => {
                 console.log(res);
             })
-        }
+        },
+        methods: {
+            FileUpload(){
+                this.$refs.Upload.click();
+            },
+            InputFileUpload(e){
+                this.FileName = e.target.files[0].name;
+                let ev = e.target.files[0];
+                let fd = new FormData();
+                fd.append('submission_file',ev);
+                ApiService.post('students/assignment/submission-file' ,fd).then((res) => {
+                    this.submission.submission_file_id = res.data.data.id;
+                }).catch((res) => {
+                    console.log(res);
+                })
+            },
+            UploadPdf () {
+                this.submission.assignment_id = this.id;
+                ApiService.post('students/submissions',this.submission).then((res) => {
+                    console.log(res);
+                }).catch((res) => {
+                    console.log(res);
+                })
+            }
+        },
     }
 </script>
 
-<style lang="scss" scoped>
+<style  scoped>
 
 </style>

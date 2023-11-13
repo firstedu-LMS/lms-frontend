@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
+                    loading . . .
+        </div>
         <div class="w-3/4 pb-10 mx-auto" >
             <video v-if="lesson.video" controls>
                 <source :src="filePath.videoPath(lesson.video.video)" type="video/mp4">
@@ -44,9 +47,6 @@
                         </div>
                     </div>
                     <button @click="showForm" class="px-3 py-1 mt-10 mb-2 text-white rounded bg-blue-2">Add Question +</button>
-                </div>
-                <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
-                    loading . . .
                 </div>
 
                 <form v-if="quesForm" class="p-4 shadow-md" @submit.prevent="CreateQues">
@@ -141,7 +141,7 @@ import filePath from '../../../services/public/filePath';
                   this.loading = false
                 }).catch((res) => {
                     console.log(res);
-                    this.loadig = false
+                    this.loading = false
                 })
             },
             deleteQues(id){
