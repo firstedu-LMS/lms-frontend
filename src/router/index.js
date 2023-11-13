@@ -165,13 +165,13 @@ const routes = [
       },
       {
         path : 'courses/:student_id/:course_id/:batch_id/assignments',
-        name : 'StudentAssignmentPage',
-        component : StudentAssignmentPage
+        name : 'StudentAssignmentsPage',
+        component : StudentAssignmentsPage
       },
       {
         path : 'courses/:student_id/:course_id/:batch_id/assignments/:id',
-        name : 'StudentAssignmentsPage',
-        component : StudentAssignmentsPage
+        name : 'StudentAssignmentPage',
+        component : StudentAssignmentPage
       },
 
     ]
