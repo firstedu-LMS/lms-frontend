@@ -12,7 +12,8 @@
                 </div>
                 <div  class="px-4 py-2">
                     <label for="" class="text-sm font-semibold">Profile Picture</label>
-                    <input @change="saveImage" type="file" class="w-full mt-1 outline-none bg-transparent border px-2 py-0.5 file:bg-transparent file:border-0">
+                    <input accept="image/*" @change="saveImage" type="file" class="w-full mt-1 outline-none bg-transparent border px-2 py-0.5 file:bg-transparent file:border-0">
+                    <p v-if="error.image" class="text-red">{{ error.image[0] }}</p>
                 </div>
                 <div  class="px-4 py-2">
                     <label for="" class="text-sm font-semibold ">Email</label>
@@ -76,7 +77,11 @@ import axios from 'axios'
                     this.form.image_id = res.data.data.id;
                     this.loading = false
                 }).catch((res) => {
-                    console.log(res);
+                    this.error.image = res.response.data && res.response.data.errors ? res.response.data.errors.user_image : "Uploading image failed. Please try again."
+                    setTimeout(() => {
+                        this.error = {};
+                    } , 3000)
+                    this.loading = false
                 })
             },
             register () {
