@@ -1,10 +1,10 @@
 <template>
-    <div class="p-4">
-        <div class="flex justify-between">
+    <div class="p-2">
+        <div class="flex items-center justify-between mb-6">
             <button @click="$router.go(-1)" class="sm:ml-4">
                 <span class="material-icons-outlined">arrow_back</span>
             </button>
-            <button @click="showAssignmentsFun" class="px-2 py-0.5 mb-6 sm:mr-6 text-white rounded bg-blue-2">Assignment</button>
+            <router-link :to="{name : 'StudentAssignmentsPage' , params : {student_id : student_id , course_id : course_id , batch_id : batch_id}}" class="px-2 py-0.5 sm:mr-6 text-white rounded bg-blue-2">Assignment</router-link>
         </div>
         <div class="justify-around sm:flex">
             <ul class="sm:w-[25%] h-fit rounded bg-gray-2 mb-12" v-if="lessons.length">

@@ -29,7 +29,7 @@
         <router-link :to="{name : 'HP_Page'}">
           <span class="material-icons-sharp">home</span>
         </router-link>
-        <span style="margin: 0px 12px;" class="material-icons-sharp">home</span>
+        <span style="margin: 0px 12px;" class="material-icons-sharp">notifications</span>
       </nav>
       <RouterView />
     </div>
@@ -56,11 +56,11 @@ export default {
           path: "StudentCoursePage",
           icon : 'personal_video'
         },
-        {
-          name: "Assignments",
-          path: "StudentAssignmentPage",
-          icon : 'assignment'
-        },
+        // {
+        //   name: "Assignments",
+        //   path: "StudentAssignmentPage",
+        //   icon : 'assignment'
+        // },
         {
           name: "Achievements",
           path: "StudentProfilePage",

@@ -1,26 +1,28 @@
 <template>
     <div>
-        <div class="flex justify-between sm:m-8 m-2 sm:px-6 px-1 bg-gray-2">
-            <img class="sm:w-16 w-12" src="/images/layout/pdf-svgrepo-com.svg" alt="">
-            <p class="my-auto font-bold hidden sm:block">Download Your Assignments Paper</p>
-            <button class="h-1/2 sm:py-2 py-1 sm:px-3 px-2 my-auto bg-white text-black font-bold">Download PDF</button>
+        <div class="flex items-center my-6">
+            <button @click="$router.go(-1)" class="sm:ml-4">
+                <span class="material-icons-outlined">arrow_back</span>
+            </button>
+            <h1 class="mx-4 text-xl font-bold border-b-2">Assignments</h1>
         </div>
-        <div class="sm:px-8 px-2">
-            <h1 class="font-bold text-xl">{{ assignment.title }}</h1>
-            <h1 class="py-4 font-bold">Agenda</h1>
-            <p v-html="assignment.agenda"></p>
-            <h1 class="pt-8  font-bold">Due Date</h1>
-            <p class=" py-3">{{ assignment.test_date }}//{{ assignment.test_time }}</p>
+        <div  v-for="assignment in  assignments" :key="assignment.id" class="sm:mx-16 mx-2 my-3 py-1.5">
+            <div @click="!assignment.finish && !assignment.over_test_date ? $router.push({name : 'StudentAssignmentsPage' , params :{id : assignment.id}}) : ''" :class="`text-${checkAssignmentForColor(assignment)}`" class="justify-between w-full p-2 border-b sm:flex">
+                <h1>{{ assignment.title }}</h1>
+                <div class="flex py-3 sm:py-0"  v-if="assignment.finish">
+                    <button class="px-4 py-1 mr-4 text-white bg-green rounded-xl">{{ assignment.test_date }} / {{ assignment.test_time }}</button>
+                    <span class="px-1 py-1 text-white rounded-full material-icons-sharp bg-green">task_alt</span>
+                </div>
+                <div class="flex py-3 sm:py-0" v-else-if="assignment.over_test_date">
+                    <button class="px-4 py-1 mr-4 text-white bg-red rounded-xl" disabled>{{ assignment.test_date }} / {{ assignment.test_time }}</button>
+                    <span class="px-1 py-1 text-white rounded-full material-icons-sharp bg-red">highlight_off</span>
+                </div>
+                <div class="flex py-3 sm:py-0" v-else>
+                    <router-link :to="{name : 'StudentAssignmentsPage' , params :{id : assignment.id}}" class="px-4 py-1 mr-4 text-white bg-blue-2 rounded-xl">{{ assignment.test_date }} / {{ assignment.test_time }}</router-link>
+                    <span class="px-1 py-1 text-white rounded-full material-icons-sharp bg-blue-2">mobile_friendly</span>
+                </div>
+            </div> 
         </div>
-        <div class="sm:mx-8 mx-2 mt-8 bg-gray-2 sm:py-3 py-1 font-bold sm:px-6 px-2 sm:w-1/3 text-center">
-            <button @click="FileUpload">Upload Your Assignment Paper(pdf file only)</button>
-            <input @change="InputFileUpload" class="hidden" ref="Upload" type="file">
-        </div>
-        <div class="flex">
-            <img class="w-14 ml-2 sm:ml-8 mt-2"  src="/images/layout/pdf-svgrepo-com.svg" alt="">
-            <p class="my-2 mx-3">{{ this.FileName }}</p>
-        </div>
-        <button @click="UploadPdf" class="bg-blue-2 sm:mx-8 mx-2 px-4 rounded-lg text-white my-3">Upload</button>
     </div>
 </template>
 
@@ -31,46 +33,33 @@ import ApiService from '@/services/ApiService';
         data () {
             return {
                 id : this.$route.params.id,
-                assignment : {},
-                submission : {},
-                FileName : ''
+                course_id : this.$route.params.course_id,
+                batch_id : this.$route.params.batch_id,
+                assignments : {},
+            }
+        },
+        methods : {
+            checkAssignmentForColor (assignment) {
+                if (assignment.finish) {
+                    return "green"
+                } else if(assignment.over_test_date) {
+                    return "red"
+                } else {
+                    return "blue-2 cursor-pointer hover:bg-gray-3"
+                }
             }
         },
         mounted () {
-            ApiService.get(`students/assignments/${this.id}`).then((res) => {
-                this.assignment = res.data.data;
-                console.log(res.data.data);
+            ApiService.get(`students/assignment/${this.course_id}/${this.batch_id}`).then((res) => {
+                console.log(res.data);
+                this.assignments = res.data.data
             }).catch((res) => {
                 console.log(res);
             })
-        },
-        methods: {
-            FileUpload(){
-                this.$refs.Upload.click();
-            },
-            InputFileUpload(e){
-                this.FileName = e.target.files[0].name;
-                let ev = e.target.files[0];
-                let fd = new FormData();
-                fd.append('submission_file',ev);
-                ApiService.post('students/files' ,fd).then((res) => {
-                    this.submission.submission_file_id = res.data.data.id;
-                }).catch((res) => {
-                    console.log(res);
-                })
-            },
-            UploadPdf () {
-                this.submission.assignment_id = this.id;
-                ApiService.post('students/submissions',this.submission).then((res) => {
-                    console.log(res);
-                }).catch((res) => {
-                    console.log(res);
-                })
-            }
-        },
+        }
     }
 </script>
 
-<style  scoped>
+<style lang="scss" scoped>
 
 </style>
