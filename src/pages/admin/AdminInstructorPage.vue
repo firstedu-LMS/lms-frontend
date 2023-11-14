@@ -24,9 +24,9 @@
             <span class="relative block w-full text-center" v-if="props.column.field == 'actions'">
                 <span @click="showInstructorDialog(props.row)"  class="material-icons-outlined" style="padding: 0px 2rem;cursor: pointer;">more_horiz</span>
                 <div v-if="instructorDialog.id == props.row.id" class="absolute text-sm px-1 text-white top-[-4rem] left-[-6rem] bg-gray">
-                        <span class="material-icons-sharp" style="display: block;margin: 0px 15px ;">account_circle</span>&nbsp;&nbsp;profile
-                        <span class="material-icons-sharp" style="display: block;margin: 0px 15px ;">email</span>&nbsp;&nbsp;send email
-                        <span @click="showCv(props.row.cv.cv)" style="cursor: pointer;display: block;margin: 0px 15px ;" class="material-icons-sharp">article</span>&nbsp;&nbsp;show cv
+                        <span class="material-icons-sharp" style="display: block;margin: 2px 15px ;">account_circle</span>&nbsp;&nbsp;profile
+                        <a :href="`https://mail.google.com/mail/?view=cm&fs=1&to=${props.row.user.email}`" target="_blank" class="material-icons-sharp" style="display: block;margin: 2px 15px ;">email</a>&nbsp;&nbsp;send email
+                        <span @click="showCv(props.row.cv.cv)" style="cursor: pointer;display: block;margin: 2px 15px ;" class="material-icons-sharp">article</span>&nbsp;&nbsp;show cv
                     <button class="flex items-center w-full px-2 my-2 text-red">
                         <span @click="deleteInstructor(props.row.id)" class="material-icons-sharp">cancel</span>&nbsp;&nbsp;remove
                     </button>
@@ -98,6 +98,7 @@ import ApiService from '@/services/ApiService'
                 ApiService.get(`admin/instructors?page=${page}`).then((res) => {
                     this.paginationData = res.data.data.pagination;
                     this.instructors = res.data.data.instructors;
+                    console.log(this.instructors);
                 }).catch((res) => {
                     console.log(res);
                 })

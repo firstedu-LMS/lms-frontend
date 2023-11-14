@@ -1,35 +1,36 @@
 <template>
     <div>
-        <div class="flex justify-between sm:m-8 m-2 sm:px-6 px-1 bg-gray-2">
-            <img class="sm:w-16 w-12" src="/images/layout/pdf-svgrepo-com.svg" alt="">
-            <p class="my-auto font-bold hidden sm:block">Download Your Assignments Paper</p>
-            <button class="h-1/2 sm:py-2 py-1 sm:px-3 px-2 my-auto bg-white text-black font-bold">Download PDF</button>
+        <div v-if="assignment.file && assignment.file.file" class="flex justify-between px-1 m-2 sm:m-8 sm:px-6 bg-gray-2">
+            <img class="w-12 sm:w-16" src="/images/layout/pdf-svgrepo-com.svg" alt="">
+            <p class="hidden my-auto font-bold sm:block">Download Your Assignments Paper</p>
+            <a target="_blank" :download="filePath.cvPath(assignment.file.file)" :href="filePath.cvPath(assignment.file.file)" class="px-2 py-1 my-auto font-bold text-black bg-white h-1/2 sm:py-2 sm:px-3">Download PDF</a>
         </div>
-        <div class="sm:px-8 px-2">
-            <h1 class="font-bold text-xl">{{ assignment.title }}</h1>
+        <div class="px-2 sm:px-8">
+            <h1 class="text-xl font-bold">{{ assignment.title }}</h1>
             <h1 class="py-4 font-bold">Agenda</h1>
             <p v-html="assignment.agenda"></p>
-            <h1 class="pt-8  font-bold">Due Date</h1>
-            <p class=" py-3">{{ assignment.test_date }}//{{ assignment.test_time }}</p>
+            <h1 class="pt-8 font-bold">Due Date</h1>
+            <p class="py-3 ">{{ assignment.test_date }}//{{ assignment.test_time }}</p>
         </div>
-        <div class="sm:mx-8 mx-2 mt-8 bg-gray-2 sm:py-3 py-1 font-bold sm:px-6 px-2 sm:w-1/3 text-center">
-            <button @click="FileUpload">Upload Your Assignment Paper(pdf file only)</button>
+        <div class="px-2 py-1 mx-2 mt-8 font-bold text-center sm:mx-8 bg-gray-2 sm:py-3 sm:px-6 sm:w-1/3">
+            <button @click="FileUpload">Upload Your Assignment Paper (pdf file only)</button>
             <input @change="InputFileUpload" class="hidden" ref="Upload" type="file">
         </div>
         <div class="flex">
-            <img class="w-14 ml-2 sm:ml-8 mt-2"  src="/images/layout/pdf-svgrepo-com.svg" alt="">
-            <p class="my-2 mx-3">{{ this.FileName }}</p>
+            <img class="mt-2 ml-2 w-14 sm:ml-8"  src="/images/layout/pdf-svgrepo-com.svg" alt="">
+            <p class="mx-3 my-2">{{ this.FileName }}</p>
         </div>
-        <button @click="UploadPdf" class="bg-blue-2 sm:mx-8 mx-2 px-4 rounded-lg text-white my-3">Upload</button>
+        <button @click="UploadPdf" class="px-4 mx-2 my-3 text-white rounded-lg bg-blue-2 sm:mx-8">Upload</button>
     </div>
 </template>
 
 <script>
 import ApiService from '@/services/ApiService';
-
+import filePath from '../../services/public/filePath';
     export default {
         data () {
             return {
+                filePath : filePath,
                 id : this.$route.params.id,
                 assignment : {},
                 submission : {},
@@ -53,7 +54,7 @@ import ApiService from '@/services/ApiService';
                 let ev = e.target.files[0];
                 let fd = new FormData();
                 fd.append('submission_file',ev);
-                ApiService.post('students/files' ,fd).then((res) => {
+                ApiService.post('students/assignment/submission-file' ,fd).then((res) => {
                     this.submission.submission_file_id = res.data.data.id;
                 }).catch((res) => {
                     console.log(res);

@@ -3,7 +3,10 @@
         <button @click="$router.go(-1)">
             <span class="material-icons-outlined">arrow_back</span>
         </button>
-        <h1 v-if="weeks.length && weeks[0].course" class="my-4 text-2xl font-bold underline">{{ weeks[0].course.name }}</h1>
+        <div class="flex justify-between">
+            <h1 v-if="weeks.length && weeks[0].course" class="my-4 text-2xl font-bold underline">{{ weeks[0].course.name }}</h1>
+            <router-link :to="{name : 'StudentAssignmentsPage' , params : {student_id : student_id , course_id : course_id , batch_id : batch_id}}"  class="px-2 py-1 my-4 text-white bg-blue-2">Asignments</router-link>
+        </div>
         <ul>
             <li class="px-8 py-3 text-lg font-bold border border-gray-2">Week Numbers</li>
             <li class="px-8 py-3 border border-t-0 hover:text-blue-2 border-gray-2" v-for="week in weeks" :key="week.id">

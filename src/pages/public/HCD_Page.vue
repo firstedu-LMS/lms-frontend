@@ -1,7 +1,7 @@
 <template>
   <div>
     <HPNavbar />
-    <SuccessDialog :message="`Enrolled course successfully.`" @reload="navigate" v-if="created" />
+    <SuccessDialog :message="`Enrolled course successfully. You will get access to this course shortly`" @reload="navigate" v-if="created" />
     <ErrorDialog :message="`You have already enrolled this course.`" @reload="reload" v-if="error" />
       <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
             loading . . .
