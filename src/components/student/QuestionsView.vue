@@ -1,14 +1,17 @@
 <template>
     <div>
-        <div class="w-full  bg-white rounded-md">
+        <!-- <div class="w-full  bg-white rounded-md">
             <div v-if="score" class="text-center py-1  text-white bg-oragne rounded-md" :class="`w-[${score}]`">
                 {{ score }}
             </div>
             <div v-else class="text-center py-1  text-white rounded-full">
                 33%
             </div>
+        </div> -->
+        <div v-if="score" class="flex items-center">
+            <label class="absolute z-50 text-blue left-4" for="success">{{ score }}</label>
+            <progress class="z-10 w-full h-6 my-2 bg-indigo" :value="score" id="success" max="100"> {{ score }} </progress>
         </div>
-
         <form  @submit.prevent="submitQuestion" action="" class="px-3">
         <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
             loading . . .
@@ -113,5 +116,10 @@ import ApiService from '@/services/ApiService'
 </script>
 
 <style scoped>
-
+progress::-webkit-progress-bar {
+   background-color: rgb(202, 195, 195);
+}
+progress::-webkit-progress-value {
+   background-color: rgb(17, 216, 17);
+}
 </style>
