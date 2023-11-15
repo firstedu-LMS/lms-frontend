@@ -56,11 +56,11 @@ export default {
           path: "StudentCoursePage",
           icon : 'personal_video'
         },
-        // {
-        //   name: "Assignments",
-        //   path: "StudentAssignmentPage",
-        //   icon : 'assignment'
-        // },
+        {
+          name: "AssignmentScores",
+          path: "StudentAssignmentScoresPage",
+          icon : 'assignment'
+        },
         {
           name: "Achievements",
           path: "StudentProfilePage",
@@ -91,6 +91,7 @@ export default {
     }
   },
 };
+
 </script>
 
 <style scoped>
