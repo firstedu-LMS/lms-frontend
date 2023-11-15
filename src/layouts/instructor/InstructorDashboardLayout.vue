@@ -53,7 +53,7 @@
           },
           {
             name: "Courses",
-            path: "StudentCoursePage",
+            path: "InstructorCoursePage",
             icon : 'personal_video'
           },
           {
