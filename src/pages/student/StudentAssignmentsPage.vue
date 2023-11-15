@@ -63,3 +63,4 @@ import ApiService from '@/services/ApiService';
 <style lang="scss" scoped>
 
 </style>
+

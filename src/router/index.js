@@ -29,8 +29,11 @@ import StudentProfilePage from "@/pages/student/StudentProfilePage.vue";
 import StudentCoursePage from "@/pages/student/StudentCoursePage.vue"
 import StudentCourseDetailPage from "@/pages/student/StudentCourseDetailPage.vue"
 import StudentLessonDetailPage from "@/pages/student/StudentLessonDetailPage.vue"
-import StudentAssignmentsPage from '@/pages/student/StudentAssignmentsPage'
-import StudentAssignmentPage from '@/pages/student/StudentAssignmentPage';
+
+import StudentAssignmentsPage from '@/pages/student/StudentAssignmentsPage.vue'
+import StudentAssignmentPage from '@/pages/student/StudentAssignmentPage.vue';
+import StudentAssignmentScoresPage from '@/pages/student/StudentAssignmentScoresPage.vue'
+
 
 //instructors
 import InstructorDashboardLayout from '@/layouts/instructor/InstructorDashboardLayout.vue'
@@ -160,6 +163,11 @@ const routes = [
         path : 'courses/:student_id/:course_id/:batch_id',
         name : 'StudentCourseDetailPage',
         component : StudentCourseDetailPage
+      },
+      {
+        path : ':course_id/assignments-scores',
+        name : 'StudentAssignmentScoresPage',
+        component : StudentAssignmentScoresPage
       },
       {
         path : 'courses/:student_id/:course_id/:batch_id/:week_id',
