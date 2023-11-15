@@ -30,8 +30,11 @@ import StudentCoursePage from "@/pages/student/StudentCoursePage.vue"
 import StudentCourseDetailPage from "@/pages/student/StudentCourseDetailPage.vue"
 import StudentLessonDetailPage from "@/pages/student/StudentLessonDetailPage.vue"
 import StudentAssignmentsPage from '@/pages/student/StudentAssignmentsPage'
-
 import StudentAssignmentPage from '@/pages/student/StudentAssignmentPage';
+
+//instructors
+import InstructorDashboardLayout from '@/layouts/instructor/InstructorDashboardLayout.vue'
+import InstructorProfilePage from '@/pages/instructor/InstructorProfilePage.vue'
 
 import TokenService from "@/services/TokenService";
 
@@ -173,7 +176,20 @@ const routes = [
         name : 'StudentAssignmentPage',
         component : StudentAssignmentPage
       },
+    ]
+  },
 
+  //instructors
+  {
+    path : '/instructor',
+    name : 'InstructorDashboardLayout',
+    component : InstructorDashboardLayout,
+    children : [
+      {
+        path : '',
+        name : 'InstructorProfilePage',
+        component : InstructorProfilePage
+      }
     ]
   }
 ];

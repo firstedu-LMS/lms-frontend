@@ -7,7 +7,7 @@
             <h1 class="mx-4 text-xl font-bold border-b-2">Assignments</h1>
         </div>
         <div  v-for="assignment in  assignments" :key="assignment.id" class="sm:mx-16 mx-2 my-3 py-1.5">
-            <div @click="!assignment.finish && !assignment.over_test_date ? $router.push({name : 'StudentAssignmentsPage' , params :{id : assignment.id}}) : ''" :class="`text-${checkAssignmentForColor(assignment)}`" class="justify-between w-full p-2 border-b sm:flex">
+            <div @click="!assignment.finish && !assignment.over_test_date ? $router.push({name : 'StudentAssignmentPage' , params :{id : assignment.id}}) : ''" :class="`text-${checkAssignmentForColor(assignment)}`" class="justify-between w-full p-2 border-b sm:flex">
                 <h1>{{ assignment.title }}</h1>
                 <div class="flex py-3 sm:py-0"  v-if="assignment.finish">
                     <button class="px-4 py-1 mr-4 text-white bg-green rounded-xl">{{ assignment.test_date }} / {{ assignment.test_time }}</button>
@@ -18,7 +18,7 @@
                     <span class="px-1 py-1 text-white rounded-full material-icons-sharp bg-red">highlight_off</span>
                 </div>
                 <div class="flex py-3 sm:py-0" v-else>
-                    <router-link :to="{name : 'StudentAssignmentsPage' , params :{id : assignment.id}}" class="px-4 py-1 mr-4 text-white bg-blue-2 rounded-xl">{{ assignment.test_date }} / {{ assignment.test_time }}</router-link>
+                    <router-link :to="{name : 'StudentAssignmentPage' , params :{id : assignment.id}}" class="px-4 py-1 mr-4 text-white bg-blue-2 rounded-xl">{{ assignment.test_date }} / {{ assignment.test_time }}</router-link>
                     <span class="px-1 py-1 text-white rounded-full material-icons-sharp bg-blue-2">mobile_friendly</span>
                 </div>
             </div> 
