@@ -1,21 +1,21 @@
 [
     {
-        path: "/",
-        method: "get",
-        header: "application/json",
+        "path": "/",
+        "method": "get",
+        "header": "application/json",
         
-        authorization: {
-            bareer_token: ""
+        "authorization": {
+            "bareer_token": ""
         },
-        request: "",
-        response: {
-            status: 200, 
-            data: "",
-            message: "",
+        "request": "",
+        "response": {
+            "status": 200, 
+            "data": "",
+            "message": ""
         },
-        error : {
-            status: 500,
-            message: "",
+        "error" : {
+            "status": 500,
+            "message": ""
         }
     }
 ]

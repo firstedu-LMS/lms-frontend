@@ -5,7 +5,7 @@
         </div>
         <div class="py-4 my-6 shadow-md sm:p-6 sm:flex" v-for="course in filteredCourses" :key="course" >
                 <img v-if="course.image" class="sm:w-1/4"  :src="filePath.imagePath(course.image.image)" alt="">
-                <div class="flex-col justify-between sm:px-4 sm:flex sm:w-1/2">
+                <div class="flex-col justify-between px-2 sm:px-4 sm:flex sm:w-1/2">
                     <h1 class="mt-2 text-xl text-black sm:mt-0">{{ course.name }}</h1>
                     <div class="flex-wrap text-sm font-semibold sm:flex">
                         <p class="sm:w-1/2 py-1.5">available age - over {{ course.age }}</p>

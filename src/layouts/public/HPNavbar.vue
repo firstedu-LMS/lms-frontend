@@ -12,7 +12,7 @@
         </ul>
         <div class="flex justify-end w-1/4">
             <button class="mr-2 sm:hidden">
-                <span class="material-icons-sharp" style="font-size: 36px;">menu</span>
+                <span class="material-icons-sharp" style="font-size: 36px;margin: 5px 0px;">menu</span>
             </button>
             <button @click="navigate">
                 <svg width="36px" height="36px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
