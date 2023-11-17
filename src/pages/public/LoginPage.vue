@@ -5,7 +5,7 @@
             loading . . .
         </div>
         <div class="flex justify-center mt-6 sm:items-center sm:mx-20 sm:shadow-xl">
-            <img :src="image" class="hidden w-2/3 sm:block" alt="">
+            <img src="@/assets/images/layout/authStore.jpg" class="hidden w-2/3 sm:block" alt="">
             <form @submit.prevent="login" class="p-2 mb-24 sm:w-1/3">
                 <h1 class="text-2xl font-semibold text-center text-blue-2">Login Your Account</h1>
                 <div  class="px-4 py-2">
@@ -41,7 +41,6 @@ import axios from 'axios';
         data(){
             return {
                 authStore : useAuthStore(),
-                image : './images/layout/auth.jpg',
                 error : {},
                 form : {
                     email : '',

@@ -4,7 +4,7 @@
         <HP01 />
 
         <!-- HERO SECTION -->
-        <div style="background-image: url('./images/HP03/song.jpg');background-repeat: no-repeat; background-size: cover;background-position: center;">
+        <div class="hero">
             <div class="sm:w-[80%]  mx-auto px-2 sm:px-0 py-10">
                 <HPNavbar />
                 <HP02 class="my-12" />
@@ -48,5 +48,10 @@ import HP05 from '@/components/public/HP_Page/HP05.vue';
 </script>
 
 <style  scoped>
-
+.hero {
+    background-image: url('@/assets/images/layout/song.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
 </style>

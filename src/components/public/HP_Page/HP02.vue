@@ -29,7 +29,7 @@
 <style  scoped>
 @media (min-width: 750px) {
     .shape {
-    background-image: url('../../../assets/images/HP02/shape.png');
+    background-image: url('@/assets/images/HP02/shape.png');
     background-repeat: no-repeat;
     background-size: contain;
 }
