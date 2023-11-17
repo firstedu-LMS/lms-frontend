@@ -25,7 +25,7 @@
       </aside>
    <!-- :class="sideBar ? 'sm:w-5/6 w-screen' : 'w-[calc(100vw_-_60px)]'" -->
       <div  :class="sideBar ? 'sm:w-5/6 w-[calc(100vw_-_50px)]' : 'w-[calc(100vw_-_50px)]'"  class="transition-all ease-in-out">
-        <nav class="sticky top-0 flex justify-end w-full p-2 text-white shadow-lg bg-blue-2">
+        <nav class="sticky top-0 z-50 flex justify-end w-full p-2 text-white shadow-lg bg-blue-2">
           <router-link :to="{name : 'HP_Page'}">
             <span class="material-icons-sharp">home</span>
           </router-link>
