@@ -1,7 +1,7 @@
 <template>
     <div id="side" class="bg-white">
         <router-link to="/">
-            <img class="w-1/3 m-1 mx-auto" src="../../../public/images/layout/logo.png" alt="">
+            <img class="w-1/3 m-1 mx-auto" src="@/assets/images/layout/logo.png" alt="">
         </router-link>
         <ul class="py-2 mx-2 text-sm border-b-2 border-gray">
             <li>
