@@ -38,6 +38,7 @@ import StudentAssignmentScoresPage from '@/pages/student/StudentAssignmentScores
 //instructors
 import InstructorDashboardLayout from '@/layouts/instructor/InstructorDashboardLayout.vue'
 import InstructorProfilePage from '@/pages/instructor/InstructorProfilePage.vue'
+import InstructorCoursePage from '@/pages/instructor/InstructorCoursePage.vue'
 
 import TokenService from "@/services/TokenService";
 
@@ -197,6 +198,11 @@ const routes = [
         path : '',
         name : 'InstructorProfilePage',
         component : InstructorProfilePage
+      },
+      {
+        path : 'courses',
+        name : 'InstructorCoursePage',
+        component : InstructorCoursePage
       }
     ]
   }
