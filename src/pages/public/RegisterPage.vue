@@ -2,7 +2,7 @@
     <div>
         <HPNavbar/>
         <div class="flex justify-center mt-6 sm:items-center sm:mx-20 sm:shadow-xl">
-            <img :src="image" class="hidden w-2/3 sm:block" alt="">
+            <img src="@/assets/images/layout/auth.jpg" class="hidden w-2/3 sm:block" alt="">
             <form @submit.prevent="register" class="p-4 sm:w-1/3">
                 <h1 class="text-2xl font-semibold text-center text-blue-2">Register Here</h1>
                 <div class="px-4 py-2">
@@ -54,7 +54,6 @@ import axios from 'axios'
         },
         data(){
             return {
-                image : './images/layout/auth.jpg',
                 error : {},
                 form : {
                     name : '',

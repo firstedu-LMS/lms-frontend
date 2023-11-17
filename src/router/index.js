@@ -10,20 +10,6 @@ import HCD_Page from "@/pages/public/HCD_Page.vue"
 import RegisterPage from "@/pages/public/RegisterPage.vue"
 import LoginPage from "@/pages/public/LoginPage.vue"
 
-
-import AdminDashboardLayout from '@/layouts/admin/AdminDashboardLayout.vue'
-import AdminDashboardPage from '@/pages/admin/AdminDashboardPage.vue'
-
-import AdminApplicationPage from '@/pages/admin/AdminApplicationPage.vue'
-import AdminInstructorPage from '@/pages/admin/AdminInstructorPage.vue'
-import AdminCareerPage from "@/pages/admin/AdminCareerPage.vue"
-import AdminCoursePage from "@/pages/admin/AdminCoursePage.vue"
-import AdminBatchPage from '@/pages/admin/AdminBatchPage.vue'
-import AdminWeekPage from "@/pages/admin/AdminWeekPage.vue"
-import AdminAssignmentPage from '@/pages/admin/AdminAssignmentPage.vue'
-import AdminLessonPage from "@/pages/admin/AdminLessonPage.vue"
-import AdminEnrollmentPage from "@/pages/admin/AdminEnrollmentPage.vue"
-
 import StudentDashboardLayout from '@/layouts/student/StudentDashboardLayout.vue'
 import StudentProfilePage from "@/pages/student/StudentProfilePage.vue";
 import StudentCoursePage from "@/pages/student/StudentCoursePage.vue"
@@ -78,68 +64,6 @@ const routes = [
     component: HJD_Page
   },
 
-  {
-    path : '/admin',
-    name : 'AdminDashboardLayout',
-    component : AdminDashboardLayout,
-    meta : {
-      middleware : "admin"
-    },
-    children : [
-      {
-        path : '',
-        name : 'AdminDashboardPage',
-        component : AdminDashboardPage
-      },
-      {
-        path : 'applications',
-        name : 'AdminApplicationPage',
-        component : AdminApplicationPage
-      },
-      {
-        path : 'instructors',
-        name : 'AdminInstructorPage',
-        component : AdminInstructorPage
-      },
-      {
-        path : 'careers',
-        name : 'AdminCareerPage',
-        component : AdminCareerPage
-      },
-      {
-        path : 'courses',
-        name : 'AdminCoursePage',
-        component : AdminCoursePage
-      },
-      {
-        path : 'enrollments',
-        name : 'AdminEnrollmentPage',
-        component : AdminEnrollmentPage
-      },
-      {
-        path : 'courses/:course_id/batches',
-        name : 'AdminBatchPage',
-        component : AdminBatchPage
-      },
-      {
-        path : 'courses/:course_id/batches/:batch_id/weeks',
-        name : 'AdminWeekPage',
-        component : AdminWeekPage
-      },
-      {
-        path : 'courses/:course_id/batches/:batch_id/assignments',
-        name : 'AdminAssignmentPage',
-        component : AdminAssignmentPage
-      },
-      {
-        path : 'courses/:course_id/batches/:batch_id/weeks/:week_id/lessons',
-        name : 'AdminLessonPage',
-        component : AdminLessonPage
-      },
-    ]
-  },
-
-
   //student
   {
     path : '/student',
@@ -192,6 +116,9 @@ const routes = [
     path : '/instructor',
     name : 'InstructorDashboardLayout',
     component : InstructorDashboardLayout,
+    meta : {
+      middleware : 'instructor'
+    },
     children : [
       {
         path : '',
