@@ -193,6 +193,9 @@ const routes = [
     path : '/instructor',
     name : 'InstructorDashboardLayout',
     component : InstructorDashboardLayout,
+    meta : {
+      middleware : 'instructor'
+    },
     children : [
       {
         path : '',
