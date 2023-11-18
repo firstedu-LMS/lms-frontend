@@ -1,5 +1,6 @@
 <template>
     <div>
+        <SuccessDialog message="hi" />
         <div v-if="assignment.file && assignment.file.file" class="flex justify-between px-1 m-2 sm:m-8 sm:px-6 bg-gray-2">
             <img class="w-12 sm:w-16" src="/images/layout/pdf-svgrepo-com.svg" alt="">
             <p class="hidden my-auto font-bold sm:block">Download Your Assignments Paper</p>
@@ -20,21 +21,28 @@
             <img class="mt-2 ml-2 w-14 sm:ml-8"  src="/images/layout/pdf-svgrepo-com.svg" alt="">
             <p class="mx-3 my-2">{{ this.FileName }}</p>
         </div>
-        <button @click="UploadPdf" class="px-4 mx-2 my-3 text-white rounded-lg bg-blue-2 sm:mx-8">Upload</button>
+        <button @click="UploadPdf" :disabled="loading" class="px-4 mx-2 my-3 text-white rounded-lg bg-blue-2 sm:mx-8">Upload</button>
     </div>
 </template>
 
 <script>
 import ApiService from '@/services/ApiService';
 import filePath from '../../services/public/filePath';
+import SuccessDialog from '@/components/dialog/SuccessDialog.vue';
+
     export default {
+        components : {
+            SuccessDialog
+        },  
         data () {
             return {
                 filePath : filePath,
                 id : this.$route.params.id,
                 assignment : {},
                 submission : {},
-                FileName : ''
+                FileName : '',
+                loading : true,
+                uploaded : true,
             }
         },
         mounted () {
@@ -50,22 +58,28 @@ import filePath from '../../services/public/filePath';
                 this.$refs.Upload.click();
             },
             InputFileUpload(e){
+                this.loading = true;
                 this.FileName = e.target.files[0].name;
                 let ev = e.target.files[0];
                 let fd = new FormData();
                 fd.append('submission_file',ev);
                 ApiService.post('students/assignment/submission-file' ,fd).then((res) => {
                     this.submission.submission_file_id = res.data.data.id;
+                    this.loading = false;
                 }).catch((res) => {
                     console.log(res);
+                    this.loading = false;
                 })
             },
             UploadPdf () {
+                this.loading = true;
                 this.submission.assignment_id = this.id;
                 ApiService.post('students/submissions',this.submission).then((res) => {
                     console.log(res);
+                    this.loading = false;
                 }).catch((res) => {
                     console.log(res);
+                    this.loading = false;
                 })
             }
         },

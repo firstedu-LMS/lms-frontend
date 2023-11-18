@@ -7,14 +7,14 @@
         <div class="flex justify-center w-full sm:w-[45%]">
             <img @click="previewImg = true" :src="filePath.imagePath(profile.image)" class="cursor-pointer w-[240px] h-[240px] rounded-full border-[0.4rem] border-green" alt="">
         </div>
-        <div class="w-full sm:w-[45%] sm:p-0 p-6">
+        <div class="w-full sm:w-[45%] sm:p-0 p-3 mt-6 sm:mt-0">
             <h1 class="text-3xl font-semibold">{{ profile.name }}</h1>
-            <h3 class="my-6 text-xl font-semibold">Student Id  &raquo; [ <span class="text-green">{{ profile.student_id }}</span> ]</h3>
-            <h3 class="my-6 text-xl font-semibold">Joined at  &raquo; [ <span class="text-green">{{ profile.created_at }}</span> ]</h3>
+            <h3 class="my-4 text-xl font-semibold">Student Id  &raquo; [ <span class="text-green">{{ profile.student_id }}</span> ]</h3>
+            <h3 class="my-4 text-xl font-semibold">Joined at  &raquo; [ <span class="text-green">{{ profile.created_at }}</span> ]</h3>
         </div>
     </div>
     <div class="w-full sm:flex justify-evenly bg-[#f2efef]">
-        <div class="w-full sm:w-[45%] px-2 pt-4 pb-8">
+        <div class="w-full sm:w-[45%] px-1 pt-4 pb-8">
             <h1 class="font-semibold underline text-blue-2">PERSONAL INFORMATIONS</h1>
             <button @click="editing = true" v-if="!editing" class="float-right text-blue-2">edit</button>
             <form class="text-sm">
@@ -43,7 +43,7 @@
                 </div>
             </form>
         </div>
-        <div class="w-full sm:w-[45%] px-2 pt-4 pb-8">
+        <div class="w-full sm:w-[45%] px-1 pt-4 pb-8">
             <h1 class="font-semibold underline text-blue-2">ACTIVITIES</h1>
             <button class="float-right text-[#f2efef]">.</button>
             <div class="text-sm">

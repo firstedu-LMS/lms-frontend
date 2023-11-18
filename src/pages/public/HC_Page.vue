@@ -1,7 +1,7 @@
 <template>
     <div>
         <HPNavbar />
-        <div class="sm:w-[90%] p-4 sm:px-0 mx-auto">
+        <div class="sm:w-[90%] p-2 sm:px-0 mx-auto">
             <HC01 />
         </div>
     </div>

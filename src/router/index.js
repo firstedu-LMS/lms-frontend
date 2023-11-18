@@ -29,9 +29,16 @@ import StudentProfilePage from "@/pages/student/StudentProfilePage.vue";
 import StudentCoursePage from "@/pages/student/StudentCoursePage.vue"
 import StudentCourseDetailPage from "@/pages/student/StudentCourseDetailPage.vue"
 import StudentLessonDetailPage from "@/pages/student/StudentLessonDetailPage.vue"
-import StudentAssignmentsPage from '@/pages/student/StudentAssignmentsPage'
 
-import StudentAssignmentPage from '@/pages/student/StudentAssignmentPage';
+import StudentAssignmentsPage from '@/pages/student/StudentAssignmentsPage.vue'
+import StudentAssignmentPage from '@/pages/student/StudentAssignmentPage.vue';
+import StudentAssignmentScoresPage from '@/pages/student/StudentAssignmentScoresPage.vue'
+
+
+//instructors
+import InstructorDashboardLayout from '@/layouts/instructor/InstructorDashboardLayout.vue'
+import InstructorProfilePage from '@/pages/instructor/InstructorProfilePage.vue'
+import InstructorCoursePage from '@/pages/instructor/InstructorCoursePage.vue'
 
 import TokenService from "@/services/TokenService";
 
@@ -159,6 +166,11 @@ const routes = [
         component : StudentCourseDetailPage
       },
       {
+        path : ':course_id/assignments-scores',
+        name : 'StudentAssignmentScoresPage',
+        component : StudentAssignmentScoresPage
+      },
+      {
         path : 'courses/:student_id/:course_id/:batch_id/:week_id',
         name : 'StudentLessonDetailPage',
         component : StudentLessonDetailPage
@@ -173,7 +185,28 @@ const routes = [
         name : 'StudentAssignmentPage',
         component : StudentAssignmentPage
       },
+    ]
+  },
 
+  //instructors
+  {
+    path : '/instructor',
+    name : 'InstructorDashboardLayout',
+    component : InstructorDashboardLayout,
+    meta : {
+      middleware : 'instructor'
+    },
+    children : [
+      {
+        path : '',
+        name : 'InstructorProfilePage',
+        component : InstructorProfilePage
+      },
+      {
+        path : 'courses',
+        name : 'InstructorCoursePage',
+        component : InstructorCoursePage
+      }
     ]
   }
 ];
