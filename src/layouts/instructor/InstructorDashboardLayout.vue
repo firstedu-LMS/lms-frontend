@@ -48,7 +48,7 @@
         sideItems: [
           {
             name: "Profile",
-            path: "StudentProfilePage",
+            path: "InstructorProfilePage",
             icon : 'account_circle'
           },
           {
