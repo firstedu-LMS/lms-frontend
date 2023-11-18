@@ -7,6 +7,7 @@
                 <span @click="$refs.profileImage.click()" style="cursor:pointer;margin-left:1.5rem; background-color:rgb(243, 243, 239); padding:0.5rem;border-radius:50%;font-size:15px;z-index: 0.1;position: absolute;top: 0.5rem;right: 0.5rem;" class="material-icons" title="edit profile photo">edit</span>
             </div>
         </div>
+
         <div class="z-10 flex flex-wrap items-center justify-center py-12">
             <div @click.self="edit = editName = false;" class="flex justify-center w-full sm:w-[45%]">
                 <img @click="previewImage = !previewImage" v-if="user.image && user.image.image" :src="filePath.imagePath(user.image.image)" class="cursor-pointer w-[240px] h-[240px] rounded-full border-[0.4rem] border-blue-3" alt="">
@@ -98,7 +99,7 @@ import filePath from '@/services/public/filePath';
                 finishedCourse : 0,
                 editing : false,
                 editName : false,
-                previewImage : true,
+                previewImage : false,
                 classes : {
                     inputGroups : 'border bg-white flex w-full border-[#f2efef] p-2',
                     labels : 'w-[40%] p-2 border-r block border-[#f2efef] text-sm',

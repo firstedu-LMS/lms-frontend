@@ -97,12 +97,7 @@ import ApiService from '@/services/ApiService'
                     console.log(res);
                     this.$emit('reload')
                     this.getQues();
-                //     let i = this.lesson_array.findIndex((id)=>{
-                //     return this.lesson_id == id
-                // })
-                // if (i +1 <= this.lesson_array.length){
-                //     this.nextLesson = this.lesson_array[i +1] 
-                // }
+
                     this.loading =false
                 }).catch((res) => {
                     console.log(res);
@@ -120,5 +115,10 @@ import ApiService from '@/services/ApiService'
 </script>
 
 <style scoped>
-
+progress::-webkit-progress-bar {
+   background-color: rgb(202, 195, 195);
+}
+progress::-webkit-progress-value {
+   background-color: rgb(17, 216, 17);
+}
 </style>
