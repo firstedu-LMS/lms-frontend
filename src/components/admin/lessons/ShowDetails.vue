@@ -94,7 +94,6 @@
 import ApiService from '@/services/ApiService';
 import filePath from '../../../services/public/filePath';
     export default {
-
         props : {
             id : {
                 required  : true
