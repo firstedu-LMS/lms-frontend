@@ -11,21 +11,21 @@
             <div @click.self="edit = editName = false;" class="flex justify-center w-full sm:w-[45%]">
                 <img @click="previewImage = !previewImage" v-if="user.image && user.image.image" :src="filePath.imagePath(user.image.image)" class="cursor-pointer w-[240px] h-[240px] rounded-full border-[0.4rem] border-blue-3" alt="">
             </div>
-            <div @click.self="edit = editName = false;" class="w-full sm:w-[45%] sm:p-0 p-2 sm:text-xl font-semibold relative">
+            <div @click.self="edit = editName = false;" class="w-full sm:w-[45%] sm:p-0 p-2 sm:text-xl text-sm font-semibold relative">
                 <form @submit.prevent="updateName" class="my-6">
-                    <span class="inline-block sm:w-[30%]">Instructor Name </span>
+                    <span class="inline-block sm:w-[30%] sm:text-end">Instructor Name</span>
                     &raquo; &nbsp;
                     [ <input :style="{borderBottom : editName ? '1px blue solid' : '' , width : `${user.name.length + 2}ch`}"  :disabled="!editName" v-if="user.name" class="text-center bg-transparent outline-none text-blue-3" v-model="user.name" /> ]
-                    <span v-if="!editName" title="Edit Name" @click="editName = !editName" style="cursor:pointer;margin-left:1.5rem; background-color:rgb(243, 243, 239); padding:0.5rem;border-radius:50%;font-size:15px;z-index: 0.1;" class="material-icons">edit</span>
+                    <span v-if="!editName" title="Edit Name" @click="editName = !editName" style="cursor:pointer;background-color:rgb(243, 243, 239); padding:0.3rem;border-radius:50%;font-size:15px;z-index: 0.1;margin-left: 0.5rem;" class="material-icons">edit</span>
                     <span @click="editName = !editName" v-if="editName" class="mx-3 text-xs cursor-pointer text-blue-3">cancel</span>
                     <button v-if="editName" class="text-xs text-blue-3">save</button>
                 </form>
                 <h3 class="my-6">
-                    <span class="inline-block sm:w-[30%]">Instructor ID </span>
+                    <span class="inline-block sm:w-[30%] w-1/3 sm:text-end">Instructor ID </span>
                     &raquo;&nbsp;&nbsp;
                     [ <span class="text-blue-3">{{ instructor.instructor_id }}</span> ]</h3>
                 <h3 class="my-6">
-                    <span class="inline-block sm:w-[30%]">Joined At </span>
+                    <span class="inline-block sm:w-[30%] w-1/3 sm:text-end">Joined At </span>
                     &raquo;&nbsp;&nbsp;
                      [ <span class="text-blue-3">{{ instructor.created_at }}</span> ]</h3>
             </div>
@@ -33,11 +33,11 @@
         
         <div @click.self="edit = editName = false;" class="w-full sm:flex justify-evenly bg-[#f2efef]">
             <div class="w-full sm:w-[45%] px-2 pt-4 pb-8">
-                <h1 class="text-xl font-semibold text-blue-3">PERSONAL INFORMATIONS</h1>
-                <button @click="editing = true" v-if="!editing" class="float-right text-blue-3">edit</button>
-                <form @submit.prevent="editInstructor" class="text-sm">
-                    <button v-if="editing" class="float-right ml-4 text-base text-blue-3">save</button>
-                    <span v-if="editing" @click="editing = false" class="float-right text-base cursor-pointer text-blue-3">cancel</span>
+                <h1 class="font-semibold sm:text-xl text-blue-3">PERSONAL INFORMATIONS</h1>
+                <button @click="editing = true" v-if="!editing" class="float-right my-1 text-blue-3">edit</button>
+                <form @submit.prevent="editInstructor" class="text-xs sm:text-sm">
+                    <button v-if="editing" class="float-right my-1 ml-4 text-base text-blue-3">save</button>
+                    <span v-if="editing" @click="editing = false" class="float-right my-1 text-base cursor-pointer text-blue-3">cancel</span>
                     <div :class="classes.inputGroups">
                         <label :class="classes.labels" for="email">Email</label>
                         <p :class="classes.inputs">{{ user.email }}</p>
@@ -62,9 +62,9 @@
                 </form>
             </div>
             <div class="w-full sm:w-[45%] px-2 pt-4 pb-8">
-                <h1 class="text-xl font-semibold text-blue-3">ACTIVITIES</h1>
-                <button class="float-right text-[#f2efef]">.</button>
-                <div class="text-sm">
+                <h1 class="font-semibold sm:text-xl text-blue-3">ACTIVITIES</h1>
+                <button class="float-right my-1 text-[#f2efef]">.</button>
+                <div class="text-xs sm:text-sm">
                     <div :class="classes.inputGroups">
                         <p :class="classes.labels">Current courses</p>
                         <p :class="classes.inputs" class="text-center">{{ currentCourse }}</p>
@@ -98,10 +98,10 @@ import filePath from '@/services/public/filePath';
                 finishedCourse : 0,
                 editing : false,
                 editName : false,
-                previewImage : true,
+                previewImage : false,
                 classes : {
                     inputGroups : 'border bg-white flex w-full border-[#f2efef] p-2',
-                    labels : 'w-[40%] p-2 border-r block border-[#f2efef] text-sm',
+                    labels : 'w-[40%] p-2 border-r block border-[#f2efef]',
                     inputs : 'w-[60%] p-2 bg-transparent outline-none'
                 },
             }

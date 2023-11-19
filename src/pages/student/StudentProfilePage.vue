@@ -1,5 +1,5 @@
 <template>
-  <div class="text-gray-1">
+  <div class="text-gray">
     <div v-if="previewImg" @click.self="previewImg = !previewImg" class="fixed top-0 left-0 z-50 w-screen h-screen p-4 bg-opacity-90 bg-gray-2">
         <img :src="filePath.imagePath(profile.image)" class="absolute w-11/12 rounded sm:w-1/3 top-1/2 left-1/2" style="transform: translate(-50% , -50%);" alt="">
     </div>
