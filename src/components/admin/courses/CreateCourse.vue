@@ -61,7 +61,7 @@
             </div>
   
             <div class="w-1/2 my-2">
-                <img v-if="previewImage" :src="previewImage" style="height: 150px;"  alt="hello">
+                <img v-if="previewImage" :src="previewImage" style="height: 150px;"  alt="">
             </div>
             
             <div class="flex w-full my-2">
