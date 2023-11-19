@@ -1,6 +1,6 @@
 <template>
     <div>
-        <SuccessDialog message="hi" />
+        <SuccessDialog v-if="uploaded" @reload="$router.go(-1)" message="Upload Assignment" />
         <div v-if="assignment.file && assignment.file.file" class="flex justify-between px-1 m-2 sm:m-8 sm:px-6 bg-gray-2">
             <img class="w-12 sm:w-16" src="/images/layout/pdf-svgrepo-com.svg" alt="">
             <p class="hidden my-auto font-bold sm:block">Download Your Assignments Paper</p>
@@ -42,7 +42,7 @@ import SuccessDialog from '@/components/dialog/SuccessDialog.vue';
                 submission : {},
                 FileName : '',
                 loading : true,
-                uploaded : true,
+                uploaded : false,
             }
         },
         mounted () {
@@ -77,6 +77,7 @@ import SuccessDialog from '@/components/dialog/SuccessDialog.vue';
                 ApiService.post('students/submissions',this.submission).then((res) => {
                     console.log(res);
                     this.loading = false;
+                    this.uploaded = true;
                 }).catch((res) => {
                     console.log(res);
                     this.loading = false;

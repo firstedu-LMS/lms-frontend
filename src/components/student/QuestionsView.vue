@@ -1,13 +1,9 @@
 <template>
     <div>
         <div v-if="questions.length">
-            <div class="w-full bg-white rounded-md">
-                <div v-if="score" class="py-1 text-center text-white rounded-md bg-oragne" :class="`w-[${score}]`">
-                    {{ score }}
-                </div>
-                <div v-else class="py-1 text-center rounded-full">
-                    0%
-                </div>
+            <div class="relative flex items-center">
+                <label class="absolute z-50 left-1/2 text-white" for="success">{{ score }}%</label>
+                <progress class="z-10 w-full h-8 my-2 text-center bg-indigo" :value="score" id="success" max="100"> 32% </progress>
             </div>
 
             <form  @submit.prevent="submitQuestion" class="px-3">
@@ -68,7 +64,7 @@ import ApiService from '@/services/ApiService'
         },
         methods: {
             getQues(){
-                ApiService.get(`students/question/${this.lesson_id}`).then((res) => {
+                ApiService.get(`students/question/${this.$route.params.student_id}/${this.lesson_id}`).then((res) => {
                 this.questions = res.data.data.question
                 let correctAnswer = []
                 correctAnswer = res.data.data.question
@@ -76,10 +72,8 @@ import ApiService from '@/services/ApiService'
                     let data = correctAnswer[index].answer;
                     this.trueAnswer.push(data)
                 }
-                let score = res.data.data.score.toString()
-                if (score) {
-                    this.score = score + "%";   
-                }          
+                this.score = res.data.data.score
+                    
             }).catch((res) => {
                 console.log(res);
             })
@@ -119,6 +113,6 @@ progress::-webkit-progress-bar {
    background-color: rgb(202, 195, 195);
 }
 progress::-webkit-progress-value {
-   background-color: rgb(17, 216, 17);
+   background-color: rgb(204, 179, 38);
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
     <div class="p-2">
+        <SuccessDialog v-if="weekCompleted" message="All lessons of this week are completed." @reload="$router.push({name : 'StudentCourseDetailPage'})" />
         <div class="flex items-center justify-between mb-6">
             <button @click="$router.go(-1)" class="sm:ml-4">
                 <span class="material-icons-outlined">arrow_back</span>
@@ -44,9 +45,10 @@ import ApiService from '@/services/ApiService';
 import filePath from '@/services/public/filePath';
 import AssignmentsView from '@/components/student/AssignmentView.vue';
 import QuestionsView from '@/components/student/QuestionsView.vue';
+import SuccessDialog from '@/components/dialog/SuccessDialog.vue';
     export default {
         components : {
-            AssignmentsView , QuestionsView
+            AssignmentsView , QuestionsView , SuccessDialog
         },
         data () {
             return {
@@ -61,6 +63,7 @@ import QuestionsView from '@/components/student/QuestionsView.vue';
                 showAssignments : false,
                 showQuestions : false,
                 lessonIdForQues : 0,
+                weekCompleted : true
             }
         },
         async mounted () {
@@ -83,7 +86,7 @@ import QuestionsView from '@/components/student/QuestionsView.vue';
                     this.showLesson = true
                     this.showAssignments = this.showQuestions = false;
                 } else {
-                    alert('complete previous lessons')
+                    alert('complete prejvious lessons')
                 }
             },
             showAssignmentsFun() {
@@ -101,7 +104,10 @@ import QuestionsView from '@/components/student/QuestionsView.vue';
                 this.lessonIdForQues = id;
             },
             nextLesson(id) {
-                this.lessons.forEach((lesson , index) => {
+                if (this.lessons[0].id == id) {
+                    this.weekCompleted = true;
+                } else {
+                    this.lessons.forEach((lesson , index) => {
                     if (lesson.id == id) {
                         this.changeActiveLesson(this.lessons[index + 1])
                     } else {
@@ -109,6 +115,7 @@ import QuestionsView from '@/components/student/QuestionsView.vue';
                         this.showLesson = true;
                     }
                 })
+                }
             }
         }
     }
