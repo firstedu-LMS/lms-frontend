@@ -73,8 +73,8 @@ export default {
     return {
         classes : {
             inputGroups : 'border bg-white flex w-full border-[#f2efef]',
-            labels : 'w-[40%] p-2 border-r block border-[#f2efef] text-sm',
-            inputs : 'w-[60%] p-2 bg-transparent outline-none'
+            labels : 'w-[40%] p-2 border-r block  border-[#f2efef] text-sm',
+            inputs : 'w-[60%] p-2 bg-transparent  outline-none'
         },
         editing : false,
         profile: "",
