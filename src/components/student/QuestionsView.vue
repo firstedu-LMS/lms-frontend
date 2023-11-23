@@ -49,9 +49,10 @@
 <script>
 import ApiService from '@/services/ApiService'
     export default {
-        props : ["lesson_id","lesson_array"],
+        props : ["lesson_id"],
         data() {
             return {
+                student_id : this.$route.params.student_id,
                 questions : [],
                 answers : [],
                 trueAnswer: [],
@@ -68,7 +69,7 @@ import ApiService from '@/services/ApiService'
         },
         methods: {
             getQues(){
-                ApiService.get(`students/question/${this.lesson_id}`).then((res) => {
+                ApiService.get(`students/question/${this.student_id}/${this.lesson_id}`).then((res) => {
                 this.questions = res.data.data.question
                 let correctAnswer = []
                 correctAnswer = res.data.data.question
