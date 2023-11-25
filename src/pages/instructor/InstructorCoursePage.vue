@@ -1,25 +1,21 @@
 <template>
-    <div>
-        <h1 class="m-6 text-2xl font-bold">Courses</h1>
-        <card-component color="blue-3" :name="course.course.name" :image="course.course.image.image" v-for="course in courses" :key="course.id">
-            <template v-slot:body>
-                <p>{{ course.name }}</p>
-            </template>
-            <template v-slot:action>
-                <router-link class="block w-full" to="/">Go to Weeks</router-link>
-            </template>
-        </card-component>
+    <div class="sm:p-8 p-1">
+        <h1 class="text-2xl font-bold">Courses</h1>
+        <div v-for="course in courses" :key="course.id" class="bg-gray-1 p-2 sm:flex my-10 shadow-lg sm:w-2/3 rounded-lg">
+            <img class="sm:w-1/3 w-full rounded-lg" :src="filePath.imagePath(course.image)" ref="image" alt="">
+            <div class="py-4 sm:px-4">
+                <h1 class="text-xl font-bold mb-3">{{ course.course_name }}</h1>
+                <p>{{ course.batch_name }}</p>
+                <button class="bg-blue-2 py-0.5 px-2 text-white mt-4">Go to Week</button>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import ApiService from '@/services/ApiService';
 import filePath from '@/services/public/filePath';
-import CardComponent from '@/components/layout/CardComponent.vue';
     export default {
-        components : {
-            CardComponent
-        },
         data () {
             return {
                 filePath : filePath,
