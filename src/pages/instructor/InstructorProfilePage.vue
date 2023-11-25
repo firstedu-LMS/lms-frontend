@@ -109,6 +109,7 @@ import filePath from '@/services/public/filePath';
         },
         mounted() {
             ApiService.get('instructors/profile').then((res) => {
+                console.log(res);
                 this.instructor = res.data.data.instructor;
                 this.cv = res.data.data.cv;
                 this.user = res.data.data.user;

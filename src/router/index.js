@@ -40,6 +40,7 @@ import InstructorDashboardLayout from '@/layouts/instructor/InstructorDashboardL
 import InstructorProfilePage from '@/pages/instructor/InstructorProfilePage.vue'
 import InstructorCoursePage from '@/pages/instructor/InstructorCoursePage.vue'
 import InstructorSettingsPage from "@/pages/instructor/InstructorSettingsPage.vue";
+import InstructorWeekPage from '@/pages/instructor/InstructorWeekPage.vue'
 
 import TokenService from "@/services/TokenService";
 
@@ -207,6 +208,11 @@ const routes = [
         path : 'courses',
         name : 'InstructorCoursePage',
         component : InstructorCoursePage
+      },
+      {
+        path : 'courses/:course_id/:batch_id/weeks',
+        name : 'InstructorWeekPage',
+        component : InstructorWeekPage
       },
       {
         path : 'settings',
