@@ -1,9 +1,9 @@
 <template>
     <div>
         <h1 class="m-6 text-2xl font-bold">Courses</h1>
-        <card-component color="blue-3" :name="course.course.name" :image="course.course.image.image" v-for="course in courses" :key="course.id">
+        <card-component :name="course.course_name" :image="course.image" v-for="course in courses" :key="course.id">
             <template v-slot:body>
-                <p>{{ course.name }}</p>
+                <p>{{ course.batch_name }}</p>
             </template>
             <template v-slot:action>
                 <router-link class="block w-full" to="/">Go to Weeks</router-link>
