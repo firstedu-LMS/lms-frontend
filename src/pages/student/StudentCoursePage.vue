@@ -49,7 +49,7 @@
 import ApiService from '@/services/ApiService'
 import filePath from '@/services/public/filePath'
 import CardComponent from '@/components/layout/CardComponent.vue'
-
+import { useAuthStore } from '@/stores/auth'
     export default {
         components : {
             CardComponent
@@ -60,16 +60,12 @@ import CardComponent from '@/components/layout/CardComponent.vue'
                 profile : {},
                 course_per_student : [],
                 filePath : filePath,
+                authStore : useAuthStore()
             }
         },
-        async mounted(){
-            await ApiService.get('students/user').then((res) => {
-                this.profile = res.data;
-                console.log(this.profile);
-            }).catch((res) => {
-                console.log(res);
-            })
-            await ApiService.get(`students/course-per-students/${this.profile.id}`).then((res) => {
+        mounted(){
+            this.profile = this.authStore.user.student;
+            ApiService.get(`students/course-per-students/${this.profile.id}`).then((res) => {
                 this.course_per_student  = res.data.data
                 console.log(res.data.data);
             }).catch((res) => {

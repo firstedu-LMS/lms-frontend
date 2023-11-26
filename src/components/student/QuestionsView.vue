@@ -2,8 +2,8 @@
     <div>
         <div v-if="questions.length">
             <div class="relative flex items-center">
-                <label class="absolute z-50 left-1/2 text-white" for="success">{{ score }}%</label>
-                <progress class="z-10 w-full h-8 my-2 text-center bg-indigo" :value="score" id="success" max="100"> 32% </progress>
+                <label class="absolute z-50 text-white left-1/2" for="success">{{ score }}%</label>
+                <progress class="z-10 w-full h-8 my-2 text-center" :value="score" id="success" max="100"> 32% </progress>
             </div>
 
             <form  @submit.prevent="submitQuestion" class="px-3">
@@ -111,9 +111,9 @@ import ApiService from '@/services/ApiService'
 
 <style scoped>
 progress::-webkit-progress-bar {
-   background-color: rgb(202, 195, 195);
+   background-color: rgb(223, 213, 213);
 }
 progress::-webkit-progress-value {
-   background-color: rgb(204, 179, 38);
+   background-color: rgb(17, 216, 17);
 }
 </style>

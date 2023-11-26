@@ -15,7 +15,11 @@
 <script>
 import ApiService from '@/services/ApiService';
 import filePath from '@/services/public/filePath';
+import CardComponent from '@/components/layout/CardComponent.vue';
     export default {
+        components : {
+          CardComponent  
+        },
         data () {
             return {
                 filePath : filePath,

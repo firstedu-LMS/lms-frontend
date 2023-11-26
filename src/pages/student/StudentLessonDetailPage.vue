@@ -34,7 +34,6 @@
                 <button @click="showQuestionsFun(active_lesson.id)" class="bg-blue-2 px-4 py-1.5 text-white">Go to questions &raquo;</button>
             </div>
 
-            <AssignmentsView class="mb-12 sm:w-2/3" v-if="showAssignments" />
             <QuestionsView @nextLesson="nextLesson" @reload="getLessons"  :lesson_id="lessonIdForQues"  class="mb-12 sm:w-2/3" v-if="showQuestions" />
         </div>
     </div>
@@ -43,12 +42,11 @@
 <script>
 import ApiService from '@/services/ApiService';
 import filePath from '@/services/public/filePath';
-import AssignmentsView from '@/components/student/AssignmentView.vue';
 import QuestionsView from '@/components/student/QuestionsView.vue';
 import SuccessDialog from '@/components/dialog/SuccessDialog.vue';
     export default {
         components : {
-            AssignmentsView , QuestionsView , SuccessDialog
+            QuestionsView , SuccessDialog
         },
         data () {
             return {
@@ -60,7 +58,6 @@ import SuccessDialog from '@/components/dialog/SuccessDialog.vue';
                 lessons : [],
                 active_lesson : {},
                 showLesson : true,
-                showAssignments : false,
                 showQuestions : false,
                 lessonIdForQues : 0,
                 weekCompleted : true
