@@ -16,9 +16,9 @@
                 <form @submit.prevent="updateName" class="my-6">
                     <span class="inline-block sm:w-[30%] sm:text-end">Instructor Name</span>
                     &raquo; &nbsp;
-                    [ <input :style="{borderBottom : editName ? '1px blue solid' : '' , width : `${user.name.length + 2}ch`}"  :disabled="!editName" v-if="user.name" class="text-center bg-transparent outline-none text-blue-3" v-model="user.name" /> ]
-                    <span v-if="!editName" title="Edit Name" @click="editName = !editName" style="cursor:pointer;background-color:rgb(243, 243, 239); padding:0.3rem;border-radius:50%;font-size:15px;z-index: 0.1;margin-left: 0.5rem;" class="material-icons">edit</span>
-                    <span @click="editName = !editName" v-if="editName" class="mx-3 text-xs cursor-pointer text-blue-3">cancel</span>
+                    [ <input ref="nameInput" :style="{borderBottom : editName ? '1px blue solid' : '' , width : `${user.name.length + 2}ch`}"  :disabled="!editName" v-if="user.name" class="text-center bg-transparent outline-none text-blue-3" v-model="user.name" /> ]
+                    <span v-if="!editName" title="Edit Name" @click="showEditForm" style="cursor:pointer;background-color:rgb(243, 243, 239); padding:0.3rem;border-radius:50%;font-size:15px;z-index: 0.1;margin-left: 0.5rem;" class="material-icons">edit</span>
+                    <span @click="editName = false" v-if="editName" class="mx-3 text-xs cursor-pointer text-blue-3">cancel</span>
                     <button v-if="editName" class="text-xs text-blue-3">save</button>
                 </form>
                 <h3 class="my-6">
@@ -35,7 +35,7 @@
         <div @click.self="edit = editName = false;" class="w-full sm:flex justify-evenly bg-[#f2efef]">
             <div class="w-full sm:w-[45%] px-2 pt-4 pb-8">
                 <h1 class="font-semibold sm:text-xl text-blue-3">PERSONAL INFORMATIONS</h1>
-                <button @click="editing = true" v-if="!editing" class="float-right my-1 text-blue-3">edit</button>
+                <button @click="showEditInfo" v-if="!editing" class="float-right my-1 text-blue-3">edit</button>
                 <form @submit.prevent="editInstructor" class="text-xs sm:text-sm">
                     <button v-if="editing" class="float-right my-1 ml-4 text-base text-blue-3">save</button>
                     <span v-if="editing" @click="editing = false" class="float-right my-1 text-base cursor-pointer text-blue-3">cancel</span>
@@ -45,7 +45,7 @@
                     </div>
                     <div :class="classes.inputGroups">
                         <label :class="classes.labels" for="phone">Phone Number</label>
-                        <input :disabled="!editing" v-model="instructor.phone" :style="{borderBottom : editing ? '1px blue solid' : ''}" :class="classes.inputs" type="text">
+                        <input ref="phNo" :disabled="!editing" v-model="instructor.phone" :style="{borderBottom : editing ? '1px blue solid' : ''}" :class="classes.inputs" type="text">
                     </div>
                     <div :class="classes.inputGroups">
                         <label :class="classes.labels" for="address">Address</label>
@@ -120,6 +120,18 @@ import filePath from '@/services/public/filePath';
             })
         },
         methods : {
+            showEditForm() {
+                this.editName = true;
+                this.$nextTick(() => {
+                    this.$refs.nameInput.focus()
+                })
+            },
+            showEditInfo() {
+                this.editing = true;
+                this.$nextTick(() => {
+                    this.$refs.phNo.focus()
+                })
+            },
             editInstructor () {
                 let obj = {
                     phone : this.instructor.phone,
