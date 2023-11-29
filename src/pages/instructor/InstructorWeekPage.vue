@@ -1,16 +1,18 @@
 <template>
     <div>
-        <div class="flex justify-between sm:p-6 p-1">
-            <div class="flex sm:p-4">
-                <span style=" font-size: xx-large;" class="material-icons-outlined">arrow_back</span>
-                <h1 class="text-2xl font-bold sm:mx-4 ">Weeks</h1>
+        <div class="flex justify-between p-1 sm:p-6">
+            <div class="flex items-center sm:p-4">
+                <span @click="$router.go(-1)" style=" font-size: 1.8rem;cursor: pointer;margin-right: 10px;" class="material-icons-outlined">west</span>
+                <span v-if="weeks.length && weeks[0].course">{{ weeks[0].course.name }}</span>
+                <span class="material-icons-outlined">chevron_right</span>
+                <span>Weeks</span>
             </div>
-            <button @click="createWeek" class="text-blue sm:px-16">
-                <span style="font-size: xx-large" class="material-icons-sharp">add_circle</span>
+            <button @click="createWeek" class="text-blue-2 sm:px-16">
+                <span style="font-size: 2rem" class="material-icons-sharp">add_circle</span>
             </button>
         </div>
-        <div v-for="week in weeks" :key="week.id" class="sm:px-24 p-2 sm:p-0">
-            <router-link to="/" class="sm:my-6 border-b block w-full">{{ week.week_number }}</router-link>
+        <div v-for="week in weeks" :key="week.id" class="p-2 sm:px-24 sm:p-0">
+            <router-link :to="{name : 'InstructorLessonsPage' , params : {course_id : week.course_id,batch_id : week.batch_id,week_id : week.id}}" class="block w-full border-b sm:my-6 hover:text-blue-2">{{ week.week_number }}</router-link>
         </div>
     </div>
 </template>

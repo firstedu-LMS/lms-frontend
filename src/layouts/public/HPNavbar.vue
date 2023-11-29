@@ -54,6 +54,8 @@ import { useAuthStore } from '@/stores/auth';
                     this.$router.push({name : 'AdminDashboardPage'})
                 } else if (this.authStore.roles.length && this.authStore.roles[0].name == 'student') {
                     this.$router.push({name : 'StudentProfilePage'})
+                } else if (this.authStore.roles.length && this.authStore.roles[0].name == 'instructor') {
+                    this.$router.push({name : 'InstructorProfilePage'})
                 } else {
                     this.$router.push({name : 'LoginPage'})
                 }

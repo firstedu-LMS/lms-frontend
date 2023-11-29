@@ -41,6 +41,9 @@ import InstructorProfilePage from '@/pages/instructor/InstructorProfilePage.vue'
 import InstructorCoursePage from '@/pages/instructor/InstructorCoursePage.vue'
 import InstructorSettingsPage from "@/pages/instructor/InstructorSettingsPage.vue";
 import InstructorWeekPage from '@/pages/instructor/InstructorWeekPage.vue'
+import InstructorLessonsPage from '@/pages/instructor/InstructorLessonsPage.vue'
+import InstructorLessonPage from "@/pages/instructor/InstructorLessonPage.vue";
+import CreateLessonPage from '@/pages/instructor/CreateLessonPage.vue'
 
 import TokenService from "@/services/TokenService";
 
@@ -213,6 +216,21 @@ const routes = [
         path : 'courses/:course_id/:batch_id/weeks',
         name : 'InstructorWeekPage',
         component : InstructorWeekPage
+      },
+      {
+        path : 'courses/:course_id/:batch_id/:week_id/lessons',
+        name : 'InstructorLessonsPage',
+        component : InstructorLessonsPage
+      },
+      {
+        path : 'courses/:course_id/:batch_id/:week_id/lessons/:id',
+        name : 'InstructorLessonPage',
+        component : InstructorLessonPage
+      },
+      {
+        path : 'courses/:course_id/:batch_id/:week_id/lessons/create',
+        name : 'CreateLessonPage',
+        component : CreateLessonPage
       },
       {
         path : 'settings',
