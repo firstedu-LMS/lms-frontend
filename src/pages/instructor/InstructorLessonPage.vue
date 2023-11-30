@@ -3,8 +3,10 @@
         <div v-if="loading" style="transform: translate(-50%,-50%);" class="fixed z-50 top-1/2 left-1/2">
                     loading . . .
         </div>
-        <div class="flex items-center py-4 sm:p-4">
+        <div class="flex flex-wrap items-center py-6 sm:p-6">
                 <span @click="$router.go(-1)" style=" font-size: 1.8rem;cursor: pointer;margin-right: 10px;" class="material-icons-outlined">west</span>
+                <router-link class="hover:text-blue-3" :to="{name : 'InstructorCoursePage'}">Courses</router-link>
+                <span class="material-icons-outlined">chevron_right</span>
                 <router-link class="hover:text-blue-3" :to="{name : 'InstructorWeekPage' , params : {course_id : lesson.course_id , batch_id : lesson.batch_id}}" v-if="lesson && lesson.course">{{ lesson.course.name }}</router-link>
                 <span class="material-icons-outlined">chevron_right</span>
                 <router-link class="hover:text-blue-3" :to="{name : 'InstructorLessonsPage' , params : {course_id : lesson.course_id , batch_id : lesson.batch_id , week_id : lesson.week_id}}" v-if="lesson && lesson.week">{{ lesson.week.week_number }}</router-link>

@@ -1,11 +1,12 @@
 <template>
     <div>
         <div class="flex justify-between p-1 sm:p-6">
-            <div class="flex items-center sm:p-4">
+            <div class="flex flex-wrap items-center sm:p-4">
                 <span @click="$router.go(-1)" style=" font-size: 1.8rem;cursor: pointer;margin-right: 10px;" class="material-icons-outlined">west</span>
+                <router-link class="hover:text-blue-3" :to="{name : 'InstructorCoursePage'}">Courses</router-link>
+                <span class="material-icons-outlined">chevron_right</span>
                 <span v-if="weeks.length && weeks[0].course">{{ weeks[0].course.name }}</span>
                 <span class="material-icons-outlined">chevron_right</span>
-                <span>Weeks</span>
             </div>
             <button @click="createWeek" class="text-blue-2 sm:px-16">
                 <span style="font-size: 2rem" class="material-icons-sharp">add_circle</span>

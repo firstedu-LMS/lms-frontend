@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4">
+    <div class="px-1 py-4 sm:p-4">
         <button @click="$router.go(-1)">
             <span class="material-icons-outlined">arrow_back</span>
         </button>
