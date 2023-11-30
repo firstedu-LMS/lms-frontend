@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-end">
-    <aside :class="sideBar ? 'sm:w-1/6 w-1/2' : 'w-[50px]'" class="h-screen fixed top-0 left-0 border-r border-[#e2e8f0] z-50 bg-white pr-[12px] py-2">
+    <aside :class="sideBar ? 'sm:w-1/6 w-fit' : 'w-[50px]'" class="h-screen fixed top-0 left-0 border-r border-[#e2e8f0] z-50 bg-white pr-[12px] py-2">
       <button @click="sideBar = !sideBar" style="padding-left: 15px;">
         <span class="material-icons-outlined">menu</span>
       </button>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="m-6 text-2xl font-bold">Courses</h1>
+        <h1 class="p-1 text-2xl font-bold sm:p-6">Courses</h1>
         <card-component :name="course.course_name" :image="course.image" v-for="course in courses" :key="course.course_id">
             <template v-slot:body>
                 <p>{{ course.batch_name }}</p>

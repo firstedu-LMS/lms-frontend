@@ -1,14 +1,16 @@
 <template>
     <div>
-        <div class="flex justify-between p-1 py-6 sm:p-6">
-            <div class="flex items-center sm:p-4">
+        <div class="justify-between p-1 py-6 sm:flex sm:p-6">
+            <div class="flex flex-wrap items-center sm:p-4">
                 <span @click="$router.go(-1)" style=" font-size: 1.8rem;cursor: pointer;margin-right: 10px;" class="material-icons-outlined">west</span>
+                <router-link class="hover:text-blue-3" :to="{name : 'InstructorCoursePage'}">Courses</router-link>
+                <span class="material-icons-outlined">chevron_right</span>
                 <router-link class="hover:text-blue-3" :to="{name : 'InstructorWeekPage' , params : {course_id : lessons[0].course.id , batch_id : lessons[0].week.batch_id}}" v-if="lessons.length && lessons[0].course">{{ lessons[0].course.name }}</router-link>
                 <span class="material-icons-outlined">chevron_right</span>
                 <span v-if="lessons.length && lessons[0].week">{{ lessons[0].week.week_number }}</span>
                 <span class="material-icons-outlined">chevron_right</span>
             </div>
-            <div class="my-auto mr-6">
+            <div class="flex justify-center my-6 sm:mr-6 sm:my-auto">
                 <router-link
                     class="px-6 py-2 cursor-pointer rounded-l-md"
                     active-class="text-white bg-cyan-2"
@@ -25,9 +27,9 @@
         </div>
         <div class="px-2 py-6">
                 <div v-for="lesson in lessons" :key="lesson.id" class="p-2 sm:px-24 sm:p-0">
-                    <router-link :to="{name : 'InstructorLessonPage' , params : {course_id : parameters.course_id, batch_id : parameters.batch_id, week_id : parameters.week_id, id : lesson.id}}" class="flex justify-between w-full border-b sm:my-6 hover:text-blue-2">
+                    <router-link :to="{name : 'InstructorLessonPage' , params : {course_id : parameters.course_id, batch_id : parameters.batch_id, week_id : parameters.week_id, id : lesson.id}}" class="justify-between block w-full my-6 border-b sm:flex hover:text-blue-2">
                         <p>{{ lesson.name }}</p>
-                        <p>{{ lesson.created_at }}</p>
+                        <p class="my-2 sm:my-0">{{ lesson.created_at }}</p>
                     </router-link>
                 </div>
         </div>

@@ -11,15 +11,15 @@
                 <h1>{{ assignment.title }}</h1>
                 <div class="flex py-3 sm:py-0"  v-if="assignment.finish">
                     <button class="px-4 py-1 mr-4 text-white bg-green rounded-xl">{{ assignment.test_date }} / {{ assignment.test_time }}</button>
-                    <span class="px-1 py-1 text-white rounded-full material-icons-sharp bg-green">task_alt</span>
+                    <span class="px-1 py-1 text-white rounded-full h-fit material-icons-sharp bg-green">task_alt</span>
                 </div>
                 <div class="flex py-3 sm:py-0" v-else-if="assignment.over_test_date">
                     <button class="px-4 py-1 mr-4 text-white bg-red rounded-xl" disabled>{{ assignment.test_date }} / {{ assignment.test_time }}</button>
-                    <span class="px-1 py-1 text-white rounded-full material-icons-sharp bg-red">highlight_off</span>
+                    <span class="px-1 py-1 text-white rounded-full h-fit material-icons-sharp bg-red">highlight_off</span>
                 </div>
                 <div class="flex py-3 sm:py-0" v-else>
                     <router-link :to="{name : 'StudentAssignmentPage' , params :{id : assignment.id}}" class="px-4 py-1 mr-4 text-white bg-blue-2 rounded-xl">{{ assignment.test_date }} / {{ assignment.test_time }}</router-link>
-                    <span class="px-1 py-1 text-white rounded-full material-icons-sharp bg-blue-2">mobile_friendly</span>
+                    <span class="px-1 py-1 text-white rounded-full h-fit material-icons-sharp bg-blue-2">mobile_friendly</span>
                 </div>
             </div> 
         </div>
