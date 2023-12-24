@@ -48,6 +48,7 @@
 import HPNavbar from '@/layouts/public/HPNavbar.vue'
 import TokenService from '@/services/TokenService'
 import axios from 'axios'
+import filePath from '@/services/public/filePath'
     export default {
         components : {
             HPNavbar
@@ -55,6 +56,7 @@ import axios from 'axios'
         data(){
             return {
                 error : {},
+                filePath : filePath,
                 form : {
                     name : '',
                     image_id : null,
@@ -66,22 +68,25 @@ import axios from 'axios'
             }
         },
         methods : {
-            saveImage(e) {
-                this.loading = true;
-                let form = new FormData();
-                form.set('user_image' , e.target.files[0])
-                this.loading = true
-                axios.post('register/profile' , form).then((res) => {
-                    console.log(res.data.data);
-                    this.form.image_id = res.data.data.id;
-                    this.loading = false
-                }).catch((res) => {
-                    this.error.image = res.response.data && res.response.data.errors ? res.response.data.errors.user_image : "Uploading image failed. Please try again."
-                    setTimeout(() => {
-                        this.error = {};
-                    } , 3000)
-                    this.loading = false
+            async saveImage(e) {
+                filePath.changeFileBase(e.target.files[0]).then((res) => {
+                    console.log('changed =  ',res);
+                }).catch((err) => {
+                    console.log(err);
                 })
+                // this.loading = true;
+                // let form = new FormData();
+                // form.set('user_image' , e.target.files[0])
+                // axios.post('register/profile' , form).then((res) => {
+                //     this.form.image_id = res.data.data.id;
+                //     this.loading = false
+                // }).catch((res) => {
+                //     this.error.image = res.response.data && res.response.data.errors ? res.response.data.errors.user_image : "Uploading image failed. Please try again."
+                //     setTimeout(() => {
+                //         this.error = {};
+                //     } , 3000)
+                //     this.loading = false
+                // })
             },
             register () {
                 this.loading = true
