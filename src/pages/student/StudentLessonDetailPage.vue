@@ -60,7 +60,7 @@ import SuccessDialog from '@/components/dialog/SuccessDialog.vue';
                 showLesson : true,
                 showQuestions : false,
                 lessonIdForQues : 0,
-                weekCompleted : true
+                weekCompleted : false
             }
         },
         async mounted () {
@@ -101,7 +101,7 @@ import SuccessDialog from '@/components/dialog/SuccessDialog.vue';
                 this.lessonIdForQues = id;
             },
             nextLesson(id) {
-                if (this.lessons[0].id == id) {
+                if (this.lessons[this.lessons.length - 1].id == id) {
                     this.weekCompleted = true;
                 } else {
                     this.lessons.forEach((lesson , index) => {

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="flex justify-between text-white ">
-            <h1 v-if="weeks[0]" class="flex items-center p-2 font-semibold text-gray">
+            <!-- <h1 v-if="weeks[0]" class="flex items-center p-2 font-semibold text-gray">
                 <router-link :to="{name : 'AdminCoursePage'}">Courses</router-link>
                 <span style="font-size: 0.9rem; margin: 0px 5px;color: gray;" class="material-icons-sharp">play_arrow</span>
                  <router-link :to="{name : 'AdminBatchPage' , params : {course_id : weeks[0].course.id}}">{{ weeks[0].course.name }}</router-link>
@@ -12,7 +12,7 @@
             </h1>
             <h1 v-else class="flex items-center p-2 font-semibold text-gray">
                 <router-link :to="{name : 'AdminCoursePage'}">Courses</router-link>
-            </h1>
+            </h1> -->
             <div class="flex my-auto mr-6">
 
                 <div class="relative flex flex-col items-center py-0.5 bg-white mx-6 text-gray">
@@ -39,7 +39,7 @@
                 </div>
 
                 <span class="flex" v-if="props.column.field == 'actions'">
-                    <router-link :to="{name : 'AdminLessonPage' , params : {course_id : props.row.course.id , batch_id : props.row.batch.id, week_id : props.row.id}}" class="px-3 text-sm rounded-lg py-0.5 mx-2 text-white bg-indigo flex items-center" >
+                    <router-link :to="{name : 'AdminLessonPage' , params : {course_id : props.row.course.id , batch_id : props.row.batch_id, week_id : props.row.id}}" class="px-3 text-sm rounded-lg py-0.5 mx-2 text-white bg-indigo flex items-center" >
                         Lessons<span style="font-size: 0.8rem;margin-left:4px;" class="material-icons-sharp">check_circle</span>
                     </router-link>
                     <button :disabled="loading" class="px-3 text-sm rounded-lg py-0.5 mx-2 text-white bg-red flex items-center" @click="deleteWeek(props.row.id)">
@@ -87,6 +87,7 @@ import { VueGoodTable } from 'vue-good-table-next'
                 this.loading = true
                 ApiService.get(`admin/weeks/all/${this.$route.params.batch_id}`).then((res) => {
                     this.weeks = res.data.data
+                    console.log(this.weeks);
                     this.loading = false
                 }).catch((res) => {
                     if(res.response.status == 500) {
