@@ -4,8 +4,9 @@
         <img :src="filePath.imagePath(profile.image)" class="absolute w-11/12 rounded sm:w-1/3 top-1/2 left-1/2" style="transform: translate(-50% , -50%);" alt="">
     </div>
     <div class="z-10 flex flex-wrap items-center justify-center py-12">
-        <div class="flex justify-center w-full sm:w-[45%]">
-            <img @click="previewImg = true" :src="filePath.imagePath(profile.image)" class="cursor-pointer w-[240px] h-[240px] rounded-full border-[0.4rem] border-green" alt="">
+        <div v-if="profile && profile.name" class="flex justify-center w-full sm:w-[45%]">
+            <img v-if=" typeof profile.image == 'string'" @click="previewImg = true" :src="filePath.imagePath(profile.image)" class="cursor-pointer w-[240px] h-[240px] rounded-full border-[0.4rem] border-green" alt="">
+            <p v-else class="w-[180px] align-middle bg-gray-1 h-[180px] rounded-full border-[0.4rem] border-green flex items-center justify-center text-[120px]">{{ profile.name.charAt(0) }}</p>
         </div>
         <div class="w-full sm:w-[45%] sm:p-0 p-3 mt-6 sm:mt-0">
             <h1 class="text-3xl font-semibold">{{ profile.name }}</h1>

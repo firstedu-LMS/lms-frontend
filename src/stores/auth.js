@@ -27,6 +27,8 @@ export const useAuthStore = defineStore('auth' , {
                 this.user = data;
                 this.roles  = data.roles;
             }
+            console.log(this.user);
+            console.log(this.roles);
             this.authenticated = true
         },
         destroyAuth(){
