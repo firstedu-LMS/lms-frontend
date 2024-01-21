@@ -159,12 +159,12 @@ import filePath from '@/services/public/filePath';
                 })
             },
             editImage(e) {
-                let fd = new FormData();
-                fd.set('image' , e.target.files[0])
-                ApiService.post('instructors/profile-image-update' , fd).then((res) => {
-                    this.user.image = res.data.data;
-                }).catch((res) => {
-                    console.log(res);
+                filePath.changeFileBase(e.target.files[0]).then((res) => {
+                    return ApiService.post('instructors/profile-image-update' , {user_image : res , name : e.target?.files[0]?.name})
+                }).then((res) => {
+                        console.log(res);
+                }).catch((err) => {
+                    console.log(err);
                 })
             }
         }

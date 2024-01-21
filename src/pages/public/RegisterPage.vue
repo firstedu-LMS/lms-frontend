@@ -47,8 +47,8 @@
 <script>
 import HPNavbar from '@/layouts/public/HPNavbar.vue'
 import TokenService from '@/services/TokenService'
-import axios from 'axios'
 import filePath from '@/services/public/filePath'
+import ApiService from '@/services/ApiService'
     export default {
         components : {
             HPNavbar
@@ -59,7 +59,8 @@ import filePath from '@/services/public/filePath'
                 filePath : filePath,
                 form : {
                     name : '',
-                    image_id : null,
+                    user_image : '',
+                    image_name : '',
                     email : '',
                     password : '',
                     password_confirmation : '',
@@ -69,28 +70,19 @@ import filePath from '@/services/public/filePath'
         },
         methods : {
             async saveImage(e) {
+                this.loading = true;
                 filePath.changeFileBase(e.target.files[0]).then((res) => {
-                    console.log('changed =  ',res);
+                    this.form.image_name = e.target?.files[0].name;
+                    this.form.user_image = res;
+                    this.loading = false;
                 }).catch((err) => {
                     console.log(err);
                 })
-                // this.loading = true;
-                // let form = new FormData();
-                // form.set('user_image' , e.target.files[0])
-                // axios.post('register/profile' , form).then((res) => {
-                //     this.form.image_id = res.data.data.id;
-                //     this.loading = false
-                // }).catch((res) => {
-                //     this.error.image = res.response.data && res.response.data.errors ? res.response.data.errors.user_image : "Uploading image failed. Please try again."
-                //     setTimeout(() => {
-                //         this.error = {};
-                //     } , 3000)
-                //     this.loading = false
-                // })
             },
             register () {
+                console.log(this.form);
                 this.loading = true
-                axios.post('register' , this.form).then((res) => {
+                ApiService.post('register' , this.form).then((res) => {
                     TokenService.setToken(res.data.data.token)
                     this.loading = false
                     this.$router.push({name : "LoginPage"});
@@ -100,7 +92,7 @@ import filePath from '@/services/public/filePath'
                         this.loading = false;
                         setTimeout(() => {
                             this.error = {};
-                        } , 3000)
+                        } , 5000)
                     }
                 })
             }
