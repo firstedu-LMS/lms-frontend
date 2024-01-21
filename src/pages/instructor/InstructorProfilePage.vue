@@ -9,8 +9,9 @@
         </div>
 
         <div class="z-10 flex flex-wrap items-center justify-center py-12">
-            <div @click.self="edit = editName = false;" class="flex justify-center w-full sm:w-[45%]">
+            <div v-if="user" @click.self="edit = editName = false;" class="flex justify-center w-full sm:w-[45%]">
                 <img @click="previewImage = !previewImage" v-if="user.image && user.image.image" :src="filePath.imagePath(user.image.image)" class="cursor-pointer w-[240px] h-[240px] object-cover rounded-full border-[0.4rem] border-blue-3" alt="">
+                <p v-else class="w-[180px] bg-gray-1 h-[180px] rounded-full border-[0.4rem] border-blue-3 flex items-center justify-center text-[120px]">{{ user.name.charAt(0) }}</p>
             </div>
             <div @click.self="edit = editName = false;" class="w-full sm:w-[45%] sm:p-0 p-2 sm:text-xl text-sm font-semibold relative">
                 <form @submit.prevent="updateName" class="my-6">
